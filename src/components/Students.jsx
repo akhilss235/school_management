@@ -178,7 +178,7 @@ import Pagination from "../components/Pagination";
               {students.map((student) => (
                 <tr key={student._id}>
                   <td>
-                    <a href={`/StudentDetails/${student.emisId}`} style={{ textDecoration: "none", color: "#505050" }}>
+                    <a href={`/StudentDetails/${student._id}`} style={{ textDecoration: "none", color: "#505050" }}>
                       {student.emisId}
                     </a>
                   </td>

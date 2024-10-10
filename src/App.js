@@ -82,7 +82,7 @@ function App() {
             />
             {/* PAGES  */}
             <Route
-              path="/StudentDetails"
+              path="/StudentDetails/:id"
               element={withSideBarLayout(<StudentDetails />, true)}
             />
             <Route
@@ -94,7 +94,7 @@ function App() {
               element={withSideBarLayout(<UserAccessnewUpdate />, true)}
             />
             <Route
-              path="/UserAccessnewDetailes"
+              path="/UserAccessnewDetailes/:userId"
               element={withSideBarLayout(<UserAccessnewDetailes />, true)}
             />
             <Route

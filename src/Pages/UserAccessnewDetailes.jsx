@@ -1,84 +1,115 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useParams } from "react-router-dom"; 
+import request from "../Request"; 
+import { useNavigate } from "react-router-dom";
 
 function UserAccessnewDetailes() {
-  return (
-    <>
-      <div style={{ backgroundColor: "#FFFFFF" }} className="p-3 detailsdiv">
-        <div className="d-flex justify-content-between">
-          <div>
-            <h4>
-              <b className="title">User</b>
-            </h4>
-          </div>
+  const { userId } = useParams();
+  const [userDetails, setUserDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-          <div className="d-flex">
-            <p className="DeleteUser">
-              <RiDeleteBinLine /> Delete User
-            </p>
-          </div>
+  const fetchUserDetails = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await request.get(`getUserById/${userId}`);
+      if (response.data) {
+        setUserDetails(response.data.data); // Access the nested data
+      } else {
+        throw new Error("User details not found");
+      }
+    } catch (error) {
+      setError("Error fetching user details");
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      try {
+        await request.delete(`deleteUser/${userId}`); // Make API call to delete user
+        navigate("/UserAccess");
+      } catch (error) {
+        setError("Error deleting user");
+        console.error("Error deleting user:", error);
+      }
+    }
+  };
+  const accessItems = [
+    { label: "Students", key: "isStudent" },
+    { label: "Transaction", key: "isTransaction" },
+    { label: "Account View", key: "isAccountView" },
+    { label: "Reports", key: "isReports" },
+    { label: "Account Master", key: "isAccountMaster" },
+  ];
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="text-danger">{error}</p>;
+
+  return (
+    <div className="container p-3">
+      <div className="bg-white p-3 mb-3 detailsdiv">
+        <div className="d-flex justify-content-between align-items-center">
+          <h4><b className="title">User</b></h4>
+          <p className="DeleteUser" onClick={handleDelete}><RiDeleteBinLine /> Delete User</p>
         </div>
-        <Row className="mt-4 mb-2">
-          <Col  lg={2}>
-            <p className="detailslabel text-break">label</p>
-          </Col>
-          <Col  lg={8}>
-            <p className="detailsvalue text-break">value</p>
-          </Col>
-        </Row>
-        <Row className="mt-2 mb-2">
-          <Col  lg={2}>
-            <p className="detailslabel text-break">label</p>
-          </Col>
-          <Col  lg={8}>
-            <p className="detailsvalue text-break">value</p>
-          </Col>
-        </Row>
+
+        {userDetails && (
+          <>
+            <Row className="mt-4 mb-2">
+              <Col lg={2}><p className="detailslabel">Name</p></Col>
+              <Col lg={8}><p className="detailsvalue">{userDetails.name}</p></Col>
+            </Row>
+            <Row className="mt-2 mb-2">
+              <Col lg={2}><p className="detailslabel">User Name</p></Col>
+              <Col lg={8}><p className="detailsvalue">{userDetails.userName}</p></Col>
+            </Row>
+            <Row className="mt-2 mb-2">
+              <Col lg={2}><p className="detailslabel">Phone Number</p></Col>
+              <Col lg={8}><p className="detailsvalue">{userDetails.phoneNumber}</p></Col>
+            </Row>
+          </>
+        )}
       </div>
 
-      <div style={{ backgroundColor: "#FFFFFF" }} className="p-3 mt-3">
+      <div className="bg-white p-3 mb-3">
         <Row className="mt-4 mb-4">
           <Col>
-            <Form.Label>
-              <b>Access To</b>
-            </Form.Label>
-            <div className="d-flex flex-wrap ">
-              {[
-                "Students",
-                "Transaction",
-                "Account View",
-                "Reports",
-                "Account Master",
-              ].map((item, index) => (
-                <div className="checkbox-wrapper-28 me-5 " key={index}>
+            <Form.Label><b>Access To</b></Form.Label>
+            <div className="d-flex flex-wrap">
+              {userDetails && userDetails.accessTo && accessItems.map(({ label, key }, index) => (
+                <div className="checkbox-wrapper-28 me-3 mb-2" key={index}>
                   <input
                     id={`checkbox-${index}`}
                     type="checkbox"
                     className="promoted-input-checkbox"
+                    checked={userDetails.accessTo[key]}
+                    readOnly
+
                   />
                   <svg>
                     <use xlinkHref="#checkmark-28" />
                   </svg>
                   <label htmlFor={`checkbox-${index}`}>
-                    <b style={{ color: "#505050" }}>{item}</b>
+                    <b style={{color:'#505050'}}>{label}</b>
                   </label>
                 </div>
               ))}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                style={{ display: "none" }}
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" style={{ display: "none" }}>
                 <symbol id="checkmark-28" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeMiterlimit="10"
-                    fill="none"
-                    d="M22.9 3.7l-15.2 16.6-6.6-7.1"
-                  />
+                  <path strokeLinecap="round" strokeMiterlimit="10" fill="none" d="M22.9 3.7l-15.2 16.6-6.6-7.1" />
                 </symbol>
               </svg>
             </div>
@@ -86,27 +117,19 @@ function UserAccessnewDetailes() {
         </Row>
       </div>
 
-      <div className="d-flex justify-content-end">
-        <div>
-          <a href="/UserAccess" style={{ textDecoration: "none" }}>
-            <Button
-              className="Discard "
-              style={{ height: "35px", width: "auto", borderColor: "#FFFFFF" }}
-            >
-              <span style={{ fontSize: "auto" }}>Discard</span>
-            </Button>
-          </a>
-        </div>
-        <div className="mx-3">
-          <Button
-            className="addbuttons"
-            style={{ height: "35px", width: "auto" }}
-          >
-            <span style={{ fontSize: "auto" }}>Set Access</span>
-          </Button>
-        </div>
-      </div>
-    </>
+      {/* <div className="d-flex justify-content-end">
+        <Button
+          className="Discard me-3"
+          style={{ height: "35px" }}
+          onClick={() => window.location.href="/UserAccess"}
+        >
+          Discard
+        </Button>
+        <Button className="addbuttons" style={{ height: "35px" }}>
+          Set Access
+        </Button> */}
+      {/* </div> */}
+    </div>
   );
 }
 
