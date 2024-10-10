@@ -282,6 +282,7 @@ body {
 }
 .modalformclosebtn{
   color:#E4261D;
+  cursor:pointer;
 }
 
 .modalformdiscardbtn {

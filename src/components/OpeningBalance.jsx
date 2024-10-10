@@ -13,6 +13,7 @@ import CashBookEntryUpdate from "../Models/CashBookEntryUpdate";
 import OpeningBalanceDetaies from "../Models/OpeningBalanceDetaies";
 import Request from "../Request"; // Adjust the path as necessary
 
+
 function OpeningBalance() {
   const [modalCashBookEntry, setModalCashBookEntry] = useState(false);
   const [modalOpeningBalanceDetaies, setModalOpeningBalanceDetaies] = useState(false);
