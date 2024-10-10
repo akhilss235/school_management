@@ -23,8 +23,21 @@ import StudentRegister from "./Pages/StudentRegister";
 import StudentRegisterupdate from "./Pages/StudentRegisterupdate";
 
 import withSideBarLayout from "./components/Sidebar";
+import { useEffect } from "react";
+import Request from "./Request";
 
 function App() {
+  // useEffect(()=>{
+  //   const callApi = async()=>{
+  //     try {
+  //       const response = await Request.get("getAccountMaster")
+  //       console.log("response",response)
+  //     } catch (error) {
+  //       console.log("error", error)
+  //     }
+  //   }
+  //   callApi()
+  // },[])
   return (
     <div className="App">
       <>
