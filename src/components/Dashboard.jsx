@@ -28,21 +28,25 @@ function Dashboard() {
       img:CashAmount,
       title:"Cash Amount",
       designImg:CashAmount2,
-      bgColor:"#E0F9FC"
+      bgColor:"#E0F9FC",
+      backTitle:"totalCash"
+      
     },
     {
       id:2,
       img:BankAmount,
       title:"Bank Amount",
       designImg:BankAmount2,
-      bgColor:"#FCEAEB"
+      bgColor:"#FCEAEB",
+      backTitle:"totalBank"
     },
     {
       id:3,
       img:DiocesanAmount,
-      title:"Cash Amount",
+      title:"Diocesan Amount",
       designImg:DiocesanAmount2,
-      bgColor:"#E6F7EE"
+      bgColor:"#E6F7EE",
+      backTitle:"totalDiocesan"
     },
   ] 
   return (
@@ -57,28 +61,28 @@ function Dashboard() {
         <Row className="p-3">
           {
             dashboardDetails.map((item)=>(
-              <Col>
+              <Col key={item.id}>
                 <Card
                   style={{
-                    backgroundColor: item.bgColor,
+                    backgroundColor: item?.bgColor,
                     borderRadius: "30px",
                     height: "13rem",
                   }}
                 >
                   <div className="d-flex pt-3 px-3">
                     <div>
-                      <img src={item.img} alt="Cash Amount" />
+                      <img src={item?.img} alt="Cash Amount" />
                     </div>
                     <div className="mx-4">
                       <h1 className=" d-flex">
-                        <b className="CashAmount"> ₹ {getAmountWithCommas(dashBoard[0]?.totalCash || 0)}</b>
+                        <b className="CashAmount"> ₹ {getAmountWithCommas(dashBoard[0]?.[item?.backTitle] || 0)}</b>
                       </h1>
-                      <p style={{ color: "#9F9F9F" }}>{item.title}</p>
+                      <p style={{ color: "#9F9F9F" }}>{item?.title}</p>
                     </div>
                   </div>
                   <div className="d-flex justify-content-end">
                     <img
-                      src={item.designImg}
+                      src={item?.designImg}
                       alt="Cash Amount"
                       style={{ background: "cover", height: "100%" }}
                     />
