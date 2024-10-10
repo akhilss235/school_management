@@ -1,8 +1,7 @@
-
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const getPageNumbers = () => {
@@ -24,33 +23,31 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div className='flex items-center justify-center'>
-      <div className="flex items-center space-x-2">
+    <div className='pagination-container'>
+      <button
+        className={`pagination-button ${currentPage === 1 ? 'disabled' : ''}`}
+        onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+        <IoIosArrowBack size={20} />
+      </button>
+      {getPageNumbers().map((number, index) => (
         <button
-          className={`p-2 ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-500'}`}
-          onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
+          key={index}
+          className={`page-number ${currentPage === number ? 'selected' : ''}`}
+          onClick={() => typeof number === 'number' && onPageChange(number)}
+          disabled={typeof number !== 'number'}
         >
-          <IoIosArrowBack size={25}/>
+          {number}
         </button>
-        {getPageNumbers().map((number, index) => (
-          <button
-            key={index}
-            className={`p-2 w-10 h-10 rounded-[50%] font-semibold ${currentPage === number ? 'bg-blue-500 text-white' : 'text-gray-700'}`}
-            onClick={() => typeof number === 'number' && onPageChange(number)}
-            disabled={typeof number !== 'number'}
-          >
-            {number}
-          </button>
-        ))}
-        <button
-          className={`p-2 ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-blue-500'}`}
-          onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          <IoIosArrowForward  size={25}/>
-        </button>
-      </div>
+      ))}
+      <button
+        className={`pagination-button ${currentPage === totalPages ? 'disabled' : ''}`}
+        onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
+        <IoIosArrowForward size={20} />
+      </button>
     </div>
   );
 };

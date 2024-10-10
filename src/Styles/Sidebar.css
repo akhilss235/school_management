@@ -18,7 +18,7 @@ width: 25px;
   display: flex;
   color: #505050;
   padding: 10px 10px;
-  font-size: 20px;
+  font-size: 16px;
   gap: 20px;
   text-decoration: none;
   transition: all 0.5s;
@@ -26,13 +26,13 @@ width: 25px;
 }
 .linkss2.active {
   color: #3474eb !important;
-  border-radius: 0px 15px 15px 0px;
+  border-radius: 0px 13px 13px 0px;
 border-left: 4px solid #3474eb;
 
 }
 .linkss2:hover {
   color: #3474eb;
-  border-radius: 0px 15px 15px 0px;
+  border-radius: 0px 13px 13px 0px;
   border-left: 4px solid #3474eb;
 
 }
@@ -42,7 +42,7 @@ border-left: 4px solid #3474eb;
 .linkss.active {
   color: #3474eb !important;
   background-color: #e6efff;
-  border-radius: 0px 15px 15px 0px;
+  border-radius: 0px 13px 13px 0px;
 border-left: 4px solid #3474eb;
 
 }
@@ -50,14 +50,14 @@ border-left: 4px solid #3474eb;
 .sub-link.active {
   color: #3474eb !important;
   /* background-color: #f3f9ff; */
-  border-radius: 0px 15px 15px 0px;
+  border-radius: 0px 13px 13px 0px;
   border-left: 4px solid #3474eb;
 
 }
 
 .linkss:hover {
   color: #3474eb;
-  border-radius: 0px 15px 15px 0px;
+  border-radius: 0px 13px 13px 0px;
   border-left: 4px solid #3474eb;
 
 }
@@ -85,15 +85,15 @@ border-left: 4px solid #3474eb;
 .link:hover {
   
   color: red;
-  border-radius: 0px 15px 15px 0px;
+  border-radius: 0px 13px 13px 0px;
   border-left: 4px solid #3474eb;
 
 }
 .link {
   display: flex;
   color: #505050;
-  padding: 10px 10px;
-  font-size: 20px;
+  padding: 8px 8px;
+  font-size: auto;
   /* padding-top: 30px; */
   gap: 20px;
   text-decoration: none;
@@ -101,7 +101,7 @@ border-left: 4px solid #3474eb;
   align-items: center;
 }
 .sidebar {
-  width: 280px;
+  width: 250px !important;
 }
 
 @media (max-width: 1400px) {
