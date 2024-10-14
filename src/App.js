@@ -21,6 +21,8 @@ import UserAccessnewUpdate from "./Pages/UserAccessnewUpdate";
 import UserAccessnewDetailes from "./Pages/UserAccessnewDetailes";
 import StudentRegister from "./Pages/StudentRegister";
 import StudentRegisterupdate from "./Pages/StudentRegisterupdate";
+import StudentRegisterclone from "./Pages/StudentRegisterclone";
+
 
 import withSideBarLayout from "./components/Sidebar";
 import { useEffect } from "react";
@@ -90,7 +92,7 @@ function App() {
               element={withSideBarLayout(<UserAccessnew />, true)}
             />{" "}
             <Route
-              path="/UserAccessnewUpdate"
+              path="/UserAccessnewUpdate/:userId"
               element={withSideBarLayout(<UserAccessnewUpdate />, true)}
             />
             <Route
@@ -117,6 +119,10 @@ function App() {
             <Route
               path="/OpeningBalanceDetaies"
               element={withSideBarLayout(<OpeningBalanceDetaies />, true)}
+            />
+                        <Route
+              path="/StudentRegisterclone"
+              element={withSideBarLayout(<StudentRegisterclone />, true)}
             />
           </Routes>
         </Router>

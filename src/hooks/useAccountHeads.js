@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Request from "../Request"; // Adjust the import path according to your project structure
+import request from "../Request"; // Adjust the import path according to your project structure
 
 const useAccountHeads = () => {
     const [accountHeads, setAccountHeads] = useState([]);
@@ -8,7 +8,7 @@ const useAccountHeads = () => {
     useEffect(() => {
         // Fetch account heads
         const fetchAccountHeads = () => {
-            Request.get("getAccountMaster")
+            request.get("getAccountMaster")
                 .then((response) => {
                     const data = response.data.data; // Adjust based on your API response structure
                     

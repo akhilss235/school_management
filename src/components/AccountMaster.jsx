@@ -9,183 +9,230 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { LuPenLine } from "react-icons/lu";
 import AccountMasterEntry from "../Models/AccountMasterEntry";
 import AccountMasterUpdate from "../Models/AccountMasterUpdate";
-import Request from "../Request"; // Adjust the path as necessary
+import request from "../Request"; // Adjust the path as necessary
 import { RiDeleteBinLine } from "react-icons/ri";
+import Pagination from "../components/Pagination";
+import AccountHead from "../Pages/AccountHead";
 
 function AccountMaster() {
-  const [modalCashBookEntry, setModalCashBookEntry] = useState(false);
-  const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] =
-    useState(false);
+    const [modalCashBookEntry, setModalCashBookEntry] = useState(false);
+    const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] = useState(false);
+    const [accountData, setAccountData] = useState([]);
+    const [selectedAccounts, setSelectedAccounts] = useState({});
+    const [searchTerm, setSearchTerm] = useState("");
+    const [fromDate, setFromDate] = useState("");
+    const [toDate, setToDate] = useState("");
+    const [selectedAccountHead, setSelectedAccountHead] = useState("");
+    const itemsPerPage = 10;
 
-  useEffect(() => {
+    const [currentPage, setCurrentPage] = useState(() => {
+        const savedPage = sessionStorage.getItem("currentPage");
+        return savedPage ? Number(savedPage) : 1;
+    });
+
+    const [totalPages, setTotalPages] = useState(0);
+    const [selectedAccountId, setSelectedAccountId] = useState(null);
+
     const fetchData = async () => {
-      try {
-        const response = await Request.get("/api/Students");
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+        try {
+            const response = await request.get(`/getAccountMaster?search=${searchTerm}&fromDate=${fromDate}&toDate=${toDate}&accountHead=${selectedAccountHead}&page=${currentPage}&limit=${itemsPerPage}`);
+            if (Array.isArray(response.data.data)) {
+                setAccountData(response.data.data);
+                setTotalPages(Math.ceil(response.data.total / itemsPerPage));
+            } else {
+                console.error("Expected response.data.data to be an array", response.data.data);
+                setAccountData([]);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setAccountData([]);
+        }
     };
 
-    fetchData();
-  }, []);
+    useEffect(() => {
+        fetchData();
+    }, [searchTerm, currentPage, fromDate, toDate, selectedAccountHead]); // Include selectedAccountHead as a dependency
 
-  return (
-    <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
-      <div className="d-flex justify-content-between">
-        <div>
-          <h4>
-            <b className="title">Account Master</b>
-          </h4>
-        </div>
-        <div>
-          <Button
-            className="Delete"
-            onClick={() => setModalCashBookEntry(true)}
-          >
-            <span style={{ fontSize: "auto" }}>
-              <RiDeleteBinLine /> Delete
-            </span>
-          </Button>
-        </div>
-      </div>
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+        setCurrentPage(1);
+    };
 
-      <div className="row mb-2 mt-5 d-flex justify-content-between align-items-center">
-        {/* Filter Button */}
-        <div className="col-auto mt-2">
-          <div
-            className="card d-flex align-items-center justify-content-center filterbody"
-            style={{ height: "30px" }}
-          >
-            <IconContext.Provider
-              value={{ className: "react-icons", size: "1.5em" }}
-            >
-              <div className="d-flex align-items-center">
-                <GoFilter className="Filteric" />
-                <span className="Filteric p-2">Filter</span>
-              </div>
-            </IconContext.Provider>
-          </div>
-        </div>
+    const handleFromDateChange = (event) => {
+        setFromDate(event.target.value);
+        setCurrentPage(1);
+    };
 
-        {/* Class Dropdown */}
-        <div className="col-auto mt-2">
-          <InputGroup className="InputGroupText">
-            <InputGroup.Text
-              id="basic-addon1"
-              style={{ backgroundColor: "#FFFFFF" }}
-            >
-              Account Head :
-            </InputGroup.Text>
-            <Form.Select
-              aria-describedby="basic-addon1"
-              style={{ borderLeft: "none" }}
-            >
-              <option value="">All</option>
-              <option value="">Class A</option>
-            </Form.Select>
-          </InputGroup>
-        </div>
-        <div className="col-auto mt-2">
-          <InputGroup>
-            <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
-              From :
-            </InputGroup.Text>
-            <Form.Control
-              id="Fromdate"
-              type="date"
-              name="Fromdate"
-              style={{ fontSize: "small", borderLeft: "none" }}
-            />
-          </InputGroup>
-        </div>
+    const handleToDateChange = (event) => {
+        setToDate(event.target.value);
+        setCurrentPage(1);
+    };
 
-        {/* To Date */}
-        <div className="col-auto mt-2">
-          <InputGroup>
-            <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
-              To :
-            </InputGroup.Text>
-            <Form.Control
-              id="todate"
-              type="date"
-              name="todate"
-              style={{ fontSize: "small", borderLeft: "none" }}
-            />
-          </InputGroup>
-        </div>
-        <div className="col-auto mt-2">
-          <Form.Control placeholder="Search...." type="text" />
-        </div>
-        {/* New Student Button */}
-        <div className="col-auto">
-          <Button
-            className="addbuttons"
-            onClick={() => setModalCashBookEntry(true)}
-          >
-            <span style={{ fontSize: "auto" }}>
-              <FiPlus />
-              New Account Head
-            </span>
-          </Button>
-        </div>
-      </div>
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
-      {/* Table */}
-      <div className="table-responsive">
-        <Table responsive="xl">
-          <thead style={{ color: "#505050" }}>
-            <tr style={{ color: "#505050" }}>
-              <th>
-                <div>
-                  <div class="checkbox-wrapper-13">
-                    <input id="c1-13" type="checkbox" />
-                  </div>
+    const handleCheckboxChange = (accountId) => {
+        setSelectedAccounts((prev) => ({
+            ...prev,
+            [accountId]: !prev[accountId],
+        }));
+    };
+
+    const handleSelectAll = () => {
+        const allSelected = accountData.every(account => selectedAccounts[account._id]);
+        const newSelected = {};
+        accountData.forEach(account => {
+            newSelected[account._id] = !allSelected;
+        });
+        setSelectedAccounts(newSelected);
+    };
+
+    const isAnySelected = Object.values(selectedAccounts).some(value => value);
+
+    const handleEditClick = (accountId) => {
+        setSelectedAccountId(accountId);
+        setModalCashBookEntryUpdate(true);
+    };
+
+    return (
+        <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
+            <div className="d-flex justify-content-between">
+                <h4 className="title"><b>Account Master</b></h4>
+                {isAnySelected && (
+                    <Button style={{ backgroundColor: 'white', color: 'red', borderColor: 'red' }}>
+                        <RiDeleteBinLine /> Delete
+                    </Button>
+                )}
+            </div>
+
+            <div className="row mb-2 mt-4 align-items-center">
+                <div className="col-auto mt-2">
+                    <div className="card d-flex align-items-center justify-content-center filterbody" style={{ height: "30px" }}>
+                        <IconContext.Provider value={{ className: "react-icons", size: "1.5em" }}>
+                            <div className="d-flex align-items-center">
+                                <GoFilter className="Filteric" />
+                                <span className="Filteric p-2">Filter</span>
+                            </div>
+                        </IconContext.Provider>
+                    </div>
                 </div>
-              </th>
-              <th>Created on</th>
-              <th>Account Head</th>
-              <th>Sub Account Head</th>
-              <th>Action</th>
-          
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td> <div>
-                  <div class="checkbox-wrapper-13">
-                    <input id="c1-13" type="checkbox" />
-                  </div>
-                </div></td>
-              <td>CATHEDRAL NURSERY AND PRIMARY</td>
-              <td>ADVANCE FROM MANAGEMENT</td>
-   
-              <td>Rs. 30,500</td>
-              <td>
-                <div className="d-flex">
-                  <LuPenLine
-                    style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                    onClick={() => setModalCashBookEntryUpdate(true)}
-                  />
+
+                <div className="col-auto mt-2">
+                    <AccountHead onSelect={setSelectedAccountHead} /> {/* Pass setter function to AccountHead */}
                 </div>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
 
-      {/* Modals */}
-      <AccountMasterEntry
-        open={modalCashBookEntry}
-        onClose={() => setModalCashBookEntry(false)}
-      />
+                <div className="col-auto mt-2">
+                    <InputGroup>
+                        <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
+                            From:
+                        </InputGroup.Text>
+                        <Form.Control
+                            type="date"
+                            value={fromDate}
+                            onChange={handleFromDateChange}
+                            style={{ fontSize: "small", borderLeft: "none" }}
+                        />
+                    </InputGroup>
+                </div>
 
-      <AccountMasterUpdate
-        open={modalCashBookEntryUpdate}
-        onClose={() => setModalCashBookEntryUpdate(false)}
-      />
-    </div>
-  );
+                <div className="col-auto mt-2">
+                    <InputGroup>
+                        <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
+                            To:
+                        </InputGroup.Text>
+                        <Form.Control
+                            type="date"
+                            value={toDate}
+                            onChange={handleToDateChange}
+                            style={{ fontSize: "small", borderLeft: "none" }}
+                        />
+                    </InputGroup>
+                </div>
+
+                <div className="col-auto mt-2">
+                    <Form.Control
+                        placeholder="Search...."
+                        type="text"
+                        value={searchTerm}
+                        onChange={handleSearch}
+                    />
+                </div>
+
+                <div className="col-auto">
+                    <Button className="addbuttons" onClick={() => setModalCashBookEntry(true)}>
+                        <FiPlus /> New Account Head
+                    </Button>
+                </div>
+            </div>
+
+            {/* Table */}
+            <div className="table-responsive">
+                <Table responsive>
+                    <thead style={{ color: "#505050" }}>
+                        <tr>
+                            <th>
+                                <div className="checkbox-wrapper-13">
+                                    <input
+                                        id="select-all"
+                                        type="checkbox"
+                                        checked={accountData.length > 0 && accountData.every(account => selectedAccounts[account._id])}
+                                        onChange={handleSelectAll}
+                                    />
+                                </div>
+                            </th>
+                            <th>Created on</th>
+                            <th>Account Head</th>
+                            <th>Sub Account Head</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {accountData.map(account => (
+                            <tr key={account._id}>
+                                <td>
+                                    <div className="checkbox-wrapper-13">
+                                        <input
+                                            id={`checkbox-${account._id}`}
+                                            type="checkbox"
+                                            checked={!!selectedAccounts[account._id]}
+                                            onChange={() => handleCheckboxChange(account._id)}
+                                        />
+                                    </div>
+                                </td>
+                                <td>{new Date(account.createdAt).toLocaleDateString()}</td>
+                                <td>{account.accountHead}</td>
+                                <td>{account.subAccountHead || 'N/A'}</td>
+                                <td>
+                                    <div className="d-flex">
+                                        <LuPenLine
+                                            style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                                            onClick={() => handleEditClick(account._id)}
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
+            {/* Modals */}
+            <AccountMasterEntry
+                open={modalCashBookEntry}
+                onClose={() => setModalCashBookEntry(false)}
+            />
+            <AccountMasterUpdate
+                open={modalCashBookEntryUpdate}
+                onClose={() => setModalCashBookEntryUpdate(false)}
+                accountId={selectedAccountId}
+            />
+        </div>
+    );
 }
 
 export default AccountMaster;

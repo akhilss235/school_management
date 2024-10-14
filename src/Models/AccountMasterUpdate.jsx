@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Row, Col, Button} from 'react-bootstrap';
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
-function AccountMasterUpdate({ open, onClose }) {
+function AccountMasterUpdate({ open, onClose, accountId }) {
   const [inputValue, setInputValue] = useState("");
   const [subAccountHeads, setSubAccountHeads] = useState([]);
 
