@@ -1,35 +1,81 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import Request from "../Request"; // Adjust the path as necessary
 import { FaSearch } from "react-icons/fa";
 import { FiDownload } from "react-icons/fi";
 import { IoPrintOutline } from "react-icons/io5";
+import { useCommon } from "../hooks/useCommon";
+import { useReports } from "../hooks/useReports";
+import AccountHead from "../Pages/AccountHead";
+import { SubAccountHead } from "../Pages/SubAccountHead";
+import { GetDate } from "../Pages/Date";
+import { CustomTableColumn } from "../Pages/TransactionMode";
+import { NoData } from "./NoData";
+import Pagination from "./Pagination";
 
 function Reports() {
-  const fetchData = async () => {
-    try {
-      const response = await Request.get("/api/Students");
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  const itemsPerPage = 10;
+  const [rp, setRp] = useState("");
+  const [search, setSearch] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [transactionMode, setTrasactionMode] = useState("");
+  const [selectedAccountHead, setSelectedAccountHead] = useState("");
+  const [selectedSubAccountHead, setSelectedSubAccountHead] = useState("");
+  
+  const { getDate, getAmountWithCommas } = useCommon();
+  const { reportData, reportTotal, handleGetAllReports } = useReports();
+  
+  const [currentPage, setCurrentPage] = useState(() => {
+    const savedPage = sessionStorage.getItem("currentPage");
+    return savedPage ? Number(savedPage) : 1;
+  });
+
+  const accoutHead = (data) => {
+    return data?.length > 18 ? `${data?.slice(0, 15)}...` : data;
   };
 
-  fetchData();
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    const obj = {
+      page: currentPage,
+      limit: itemsPerPage,
+      from: fromDate,
+      to: toDate,
+      accountHead: selectedAccountHead,
+      subAccountHead: selectedSubAccountHead,
+      search: search,
+      rp: rp,
+      transactionMode: transactionMode,
+    };
+    handleGetAllReports(obj);
+  }, [
+    currentPage,
+    fromDate,
+    toDate,
+    selectedAccountHead,
+    selectedSubAccountHead,
+    search,
+    rp,
+    transactionMode,
+    search,
+  ]);
 
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
-    <div className="d-flex justify-content-between">
-      <div>
-      <h4>
-        <b className="title">Reports</b>
-      </h4>
-      </div>
-      <div>
-      <div className="d-flex align-items-center">
+      <div className="d-flex justify-content-between">
+        <div>
+          <h4>
+            <b className="title">Reports</b>
+          </h4>
+        </div>
+        <div>
+          <div className="d-flex align-items-center">
             <Button
               variant="link"
               className="text-center me-3"
@@ -54,74 +100,71 @@ function Reports() {
             </Button>
           </div>
         </div>
-    </div>
+      </div>
 
       <div className="row mb-2 mt-5 ">
         <div className="col-sm-6 mt-2">
-          <Form.Label>Receipt/Payment</Form.Label>
-
-          <Form.Select aria-describedby="basic-addon1">
-            <option value="">All</option>
-            <option value="">Class A</option>
-          </Form.Select>
+          <CustomTableColumn title={"Receipt/Payment"} selectedItem={rp} setSelectedItem={setRp}/>
         </div>
 
         {/* Section Dropdown */}
         <div className="col mt-2">
           <Form.Label>Select Account Head</Form.Label>
-
-          <Form.Select aria-describedby="basic-addon1">
-            <option value="">All</option>
-            <option value="">Section A</option>
-          </Form.Select>
+          <AccountHead onSelect={setSelectedAccountHead} isTitle={false} />
         </div>
       </div>
       <div className="row mb-2 mt-2 ">
         <div className="col-sm-6 mt-2">
           <Form.Label>Select Sub Account Head</Form.Label>
-
-          <Form.Select aria-describedby="basic-addon1">
-            <option value="">All</option>
-            <option value="">Class A</option>
-          </Form.Select>
+          <SubAccountHead
+            onSelect={setSelectedSubAccountHead}
+            isTitle={false}
+          />
         </div>
 
         {/* Section Dropdown */}
         <div className="col d-flex mt-2">
           <div>
-            <Form.Label>From Date:</Form.Label>
-            <Form.Control type="date" />
+            <GetDate
+              title={"From"}
+              selectedDate={fromDate}
+              setSelectedDate={setFromDate}
+            />
           </div>
           <div className="mx-2">
-            <Form.Label>To Date:</Form.Label>
-            <Form.Control type="date" />
+            <GetDate
+              title={"To"}
+              selectedDate={toDate}
+              setSelectedDate={setToDate}
+            />
           </div>
           <div className="mt-2">
-  <InputGroup className="mt-4 mx-2" style={{ borderRadius: '150px', overflow: 'hidden' }}>
-    <InputGroup.Text
-      id="basic-addon1"
-      style={{
-        backgroundColor: '#3474EB',
-        color: '#FFFFFF',
-      }}
-    >
-      <FaSearch style={{ color: '#FFFFFF' }} />
-    </InputGroup.Text>
-    <Form.Control
-      type="text"
-      placeholder="search...."
-      style={{
-        fontSize: 'small',
-        borderLeft: 'none',
-        backgroundColor: '#3474EB',
-        color: '#FFFFFF',
-      }}
-      className="placeholder-white" // Add a class for custom styling
-    />
-  </InputGroup>
-</div>
-
-
+            <InputGroup
+              className="mt-4 mx-2"
+              style={{ borderRadius: "150px", overflow: "hidden" }}
+            >
+              <InputGroup.Text
+                id="basic-addon1"
+                style={{
+                  backgroundColor: "#3474EB",
+                  color: "#FFFFFF",
+                }}
+              >
+                <FaSearch style={{ color: "#FFFFFF" }} />
+              </InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="search...."
+                style={{
+                  fontSize: "small",
+                  borderLeft: "none",
+                  backgroundColor: "#3474EB",
+                  color: "#FFFFFF",
+                }}
+                className="placeholder-white" // Add a class for custom styling
+              />
+            </InputGroup>
+          </div>
         </div>
       </div>
 
@@ -140,32 +183,43 @@ function Reports() {
               <th>P. Cash</th>
               <th>P. Bank</th>
               <th>P. Diocesan</th>
-            
             </tr>
           </thead>
           <tbody>
-            <tr style={{ cursor: "pointer" }}>
-              <td>
-                <a
-                  href="/StudentDetails"
-                  style={{ textDecoration: "none", color: "#505050" }}
-                >
-                  20240015678
-                </a>
-              </td>
-
-              <td>Emma Thomas</td>
-              <td>I</td>
-              <td>A</td>
-              <td>Olivier Thomas</td>
-              <td>Male</td>
-              <td>07/14/2016</td>
- 
-<td>hhh</td>
-            </tr>
+            {
+              reportData.length > 0 &&
+              reportData.map((data)=>(
+                  <tr key={data._id} style={{ cursor: "pointer" }}>
+                    <td>
+                      <a
+                      href="/StudentDetails"
+                      style={{ textDecoration: "none", color: "#505050" }}
+                    >
+                      {getDate(data.date)}
+                    </a>
+                    </td>
+                    <td>{accoutHead(data.narration) || "-"}</td>
+                    <td>Rs. {getAmountWithCommas(data.r.cash || 0)}</td>
+                    <td>Rs. {getAmountWithCommas(data.r.bank || 0)}</td>
+                    <td>Rs. {getAmountWithCommas(data.r.diocesan || 0)}</td>
+                    <td>Rs. {getAmountWithCommas(data.p.cash || 0)}</td>
+                    <td>Rs. {getAmountWithCommas(data.p.bank || 0)}</td>
+                    <td>Rs. {getAmountWithCommas(data.p.diocesan || 0)}</td>
+                  </tr>
+                ))
+            }
           </tbody>
         </Table>
+        <NoData model={reportData} />
       </div>
+      {
+        reportData.length !== 0 &&
+        <Pagination
+            currentPage={currentPage}
+            totalPages={Math.ceil(reportTotal / itemsPerPage)}
+            onPageChange={handlePageChange}
+        />
+      }
     </div>
   );
 }

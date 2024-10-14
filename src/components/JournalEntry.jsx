@@ -33,7 +33,7 @@ function JournalEntry() {
     useState(false);
   const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] =
     useState(false);
-  const itemsPerPage = 2
+  const itemsPerPage = 10
   const [rp, setRp] = useState("");
   const [search, setSearch] = useState("");
   const [toDate, setToDate] = useState("");
@@ -191,7 +191,6 @@ function JournalEntry() {
         <NoData model={journalData}/>
       </div>
       {
-
         journalData.length !== 0 &&
         <Pagination
             currentPage={currentPage}

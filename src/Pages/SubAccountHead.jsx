@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import useAccountHeads from '../hooks/useAccountHeads';
 
 
-export const SubAccountHead = ({onSelect}) => {
+export const SubAccountHead = ({onSelect, isTitle=true}) => {
     const {subAccountHeads} = useAccountHeads()
     const [selectedHead, setSelectedHead] = useState("");
 
@@ -16,9 +16,12 @@ export const SubAccountHead = ({onSelect}) => {
 
   return (
     <InputGroup>
-        <InputGroup.Text id="basic-addon1" style={{ backgroundColor: "#FFFFFF" }}>
-            Sub Account Head :
-        </InputGroup.Text>
+        {
+            isTitle &&
+            <InputGroup.Text id="basic-addon1" style={{ backgroundColor: "#FFFFFF" }}>
+                Sub Account Head :
+            </InputGroup.Text>
+        }
         <Form.Select 
             aria-describedby="basic-addon1" 
             style={{ borderLeft: "none" }}

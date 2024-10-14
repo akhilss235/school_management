@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import useAccountHeads from '../hooks/useAccountHeads';
 
-function AccountHead({ onSelect }) {
+function AccountHead({ onSelect, isTitle=true }) {
     const {accountHeads} = useAccountHeads()
     const [selectedHead, setSelectedHead] = useState("");
 
@@ -16,9 +16,12 @@ function AccountHead({ onSelect }) {
     return (
         <div>
             <InputGroup className="InputGroupText">
-                <InputGroup.Text id="basic-addon1" style={{ backgroundColor: "#FFFFFF" }}>
-                    Account Head:
-                </InputGroup.Text>
+                {
+                    isTitle &&
+                    <InputGroup.Text id="basic-addon1" style={{ backgroundColor: "#FFFFFF" }}>
+                        Account Head:
+                    </InputGroup.Text>
+                }          
                 <Form.Select
                     aria-describedby="basic-addon1"
                     style={{ borderLeft: "none" }}

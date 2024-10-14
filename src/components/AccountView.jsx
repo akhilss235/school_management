@@ -14,6 +14,14 @@ import AccountViewDetailes from "../Models/AccountViewDetailes";
 import Request from "../Request"; // Adjust the path as necessary
 import { FiDownload } from "react-icons/fi";
 import { IoPrintOutline } from "react-icons/io5";
+import { GetDate } from "../Pages/Date";
+import { Search } from "../Pages/Search";
+import AccountHead from "../Pages/AccountHead";
+import { CustomTableColumn } from "../Pages/TransactionMode";
+import { useCommon } from "../hooks/useCommon";
+import { useAccountView } from "../hooks/useAccountView";
+import { NoData } from "./NoData";
+import Pagination from "./Pagination";
 
 function AccountView() {
   const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] =
@@ -23,18 +31,53 @@ function AccountView() {
   const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] =
     useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await Request.get("/api/Students");
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const { getDate, getAmountWithCommas } = useCommon();
+  const { accountViewData, accountViewTotal, handleAllAccountView } =
+    useAccountView();
 
-    fetchData();
-  }, []);
+  const itemsPerPage = 10;
+  const [rp, setRp] = useState("");
+  const [search, setSearch] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [transactionMode, setTrasactionMode] = useState("");
+  const [selectedAccountHead, setSelectedAccountHead] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(() => {
+    const savedPage = sessionStorage.getItem("currentPage");
+    return savedPage ? Number(savedPage) : 1;
+  });
+
+  const accoutHead = (data) => {
+    return data?.length > 18 ? `${data?.slice(0, 15)}...` : data;
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    const params = {
+      page: currentPage,
+      limit: itemsPerPage,
+      from: fromDate,
+      to: toDate,
+      accountHead: selectedAccountHead,
+      search: search,
+      rp: rp,
+      transactionMode: transactionMode,
+    };
+    handleAllAccountView(params);
+  }, [
+    currentPage,
+    fromDate,
+    toDate,
+    selectedAccountHead,
+    search,
+    rp,
+    transactionMode,
+    search,
+  ]);
 
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
@@ -74,12 +117,8 @@ function AccountView() {
 
       <div className="row">
         <div className="col-sm-3">
-        <Form.Label size='lg'>Select Cash Book Head</Form.Label>
-
-          <Form.Select size="lg" aria-describedby="basic-addon1">
-            <option value="">Main Cash Book (HM)</option>
-            <option value="">Class A</option>
-          </Form.Select>
+          <Form.Label size="lg">Select Cash Book Head</Form.Label>
+          <AccountHead onSelect={setSelectedAccountHead} isTitle={false} />
         </div>
         <div className="col-sm-9">
           <div className="row mb-2  d-flex justify-content-between align-items-center">
@@ -102,38 +141,18 @@ function AccountView() {
 
             {/* Class Dropdown */}
             <div className="col-auto mt-2">
-              <InputGroup size="sm">
-                <InputGroup.Text
-                  id="basic-addon1"
-                  style={{ backgroundColor: "#FFFFFF" }}
-                >
-                  Receipt/Payment :
-                </InputGroup.Text>
-                <Form.Select
-                  aria-describedby="basic-addon1"
-                  style={{ borderLeft: "none" }}
-                >
-                  <option value="">All</option>
-                  <option value="">Class A</option>
-                </Form.Select>
-              </InputGroup>
+              <CustomTableColumn
+                title={"Receipt/Payment"}
+                selectedItem={rp}
+                setSelectedItem={setRp}
+              />
             </div>
             <div className="col-auto mt-2">
-              <InputGroup size="sm">
-                <InputGroup.Text
-                  id="basic-addon1"
-                  style={{ backgroundColor: "#FFFFFF" }}
-                >
-                  Tra.Mode :
-                </InputGroup.Text>
-                <Form.Select
-                  aria-describedby="basic-addon1"
-                  style={{ borderLeft: "none" }}
-                >
-                  <option value="">All</option>
-                  <option value="">Class A</option>
-                </Form.Select>
-              </InputGroup>
+              <CustomTableColumn
+                title={"Tra.Mode"}
+                selectedItem={transactionMode}
+                setSelectedItem={setTrasactionMode}
+              />
             </div>
 
             <div className="col-auto mt-2">
@@ -149,42 +168,21 @@ function AccountView() {
             </div>
 
             <div className="d-flex col-auto ">
-              <InputGroup style={{ height: "35px" }} size="sm">
-                <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
-                  From :
-                </InputGroup.Text>
-                <Form.Control
-                  id="Fromdate"
-                  type="date"
-                  size="sm"
-                  name="Fromdate"
-                  style={{ fontSize: "small", borderLeft: "none" }}
-                />
-              </InputGroup>
+              <GetDate
+                title={"From"}
+                selectedDate={fromDate}
+                setSelectedDate={setFromDate}
+              />
             </div>
             <div className="d-flex col-auto ">
-              <InputGroup style={{ height: "35px" }} size="sm">
-                <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
-                  To :
-                </InputGroup.Text>
-                <Form.Control
-                  id="todate"
-                  size="sm"
-                  type="date"
-                  name="todate"
-                  style={{ fontSize: "small", borderLeft: "none" }}
-                />
-              </InputGroup>
+              <GetDate
+                title={"To"}
+                selectedDate={toDate}
+                setSelectedDate={setToDate}
+              />
             </div>
             <div className="col-auto mt-2">
-              <Form.Control
-                id="Search"
-           
-                type="text"
-                placeholder="Search"
-                name="Search"
-                style={{ fontSize: "small" }}
-              />
+              <Search search={search} setSearch={setSearch} />
             </div>
           </div>
         </div>
@@ -196,47 +194,50 @@ function AccountView() {
           <thead style={{ color: "#505050" }}>
             <tr style={{ color: "#505050" }}>
               <th>Date</th>
-              <th>Receipt/ Payment</th>
-              <th>Tra. Mode</th>
-              <th>Account Head</th>
-              <th>Sub Account Head</th>
               <th>Narration</th>
+              <th>Tra. Mode</th>
+              <th>Receipt/Payment</th>
               <th>Amount</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>07/10/2024</td>
-              <td>CATHEDRAL NURSERY AND PRIMARY</td>
-              <td>ADVANCE FROM MANAGEMENT</td>
-              <td>Rs. 30,500</td>
-              <td>Rs. 30,500</td>
-              <td>Rs. 30,500</td>
-              <td>Rs. 30,500</td>
-              <td>
-                <div className="d-flex">
-                <div>
-                <LiaEyeSolid
-                    style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                    className="mx-1"
-                    onClick={() => setModalOpeningBalanceDetaies(true)}
-                  />
-                </div>
-                <div>
-                <LuPenLine
-                    style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                    onClick={() => setModalCashBookEntryUpdate(true)}
-                  />
-                  </div>
-            
-    
-                </div>
-              </td>
-            </tr>
+            {accountViewData.length > 0 &&
+              accountViewData.map((data) => (
+                <tr key={data._id} style={{ fontSize: "15px" }}>
+                  <td>{getDate(data.date)}</td>
+                  <td>{data.rp}</td>
+                  <td>{data.transactionMode}</td>
+                  <td>{accoutHead(data.accountHead) || "-"}</td>
+                  <td>{accoutHead(data.subAccountHead) || "-"}</td>
+                  <td>{accoutHead(data.narration) || "-"}</td>
+                  <td>Rs. {getAmountWithCommas(data.amount || 0)}</td>
+                  <td>
+                    <div className="d-flex">
+                      <LiaEyeSolid
+                        style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                        className="mx-3"
+                        onClick={() => setModalOpeningBalanceDetaies(true)}
+                      />
+                      <LuPenLine
+                        style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                        onClick={() => setModalCashBookEntryUpdate(true)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </Table>
+        <NoData model={accountViewData} />
       </div>
+      {accountViewData.length !== 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(accountViewTotal / itemsPerPage)}
+          onPageChange={handlePageChange}
+        />
+      )}
 
       {/* Modals */}
       <AccountViewCashEnter
