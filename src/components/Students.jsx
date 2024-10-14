@@ -22,7 +22,7 @@ import Pagination from "../components/Pagination";
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await request.get(`/getAllStudent?search=${searchTerm}&page=${currentPage}&limit=${itemsPerPage}`);
+        const response = await request.get(`getAllStudent?search=${searchTerm}&page=${currentPage}&limit=${itemsPerPage}`);
         setStudents(response.data.data || []);
         setTotalPages(Math.ceil(response.data.total / itemsPerPage)); // Set total pages for pagination
       } catch (error) {
@@ -178,7 +178,7 @@ import Pagination from "../components/Pagination";
               {students.map((student) => (
                 <tr key={student._id}>
                   <td>
-                    <a href={`/StudentDetails/${student._id}`} style={{ textDecoration: "none", color: "#505050" }}>
+                    <a href={`/StudentDetails/${student.emisId}`} style={{ textDecoration: "none", color: "#505050" }}>
                       {student.emisId}
                     </a>
                   </td>

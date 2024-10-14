@@ -6,13 +6,11 @@ const useAccountHeads = () => {
     const [subAccountHeads, setSubAccountHeads] = useState([]);
 
     useEffect(() => {
-        // Fetch account heads
         const fetchAccountHeads = () => {
             request.get("getAccountMaster")
                 .then((response) => {
                     const data = response.data.data; // Adjust based on your API response structure
                     
-                    // Extract unique account heads and sub account heads
                     const uniqueAccountHeads = [...new Set(data.map(account => account.accountHead))];
                     const uniqueSubAccountHeads = [...new Set(data.map(account => account.subAccountHead))];
 
@@ -24,10 +22,10 @@ const useAccountHeads = () => {
                 });
         };
 
-        fetchAccountHeads(); // Call the fetch function
+        fetchAccountHeads(); 
     }, []);
 
-    return { accountHeads, subAccountHeads }; // Return only accountHeads and subAccountHeads
+    return { accountHeads, subAccountHeads }; 
 };
 
 export default useAccountHeads;

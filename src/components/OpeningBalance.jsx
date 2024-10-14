@@ -11,26 +11,22 @@ import { LiaEyeSolid } from "react-icons/lia";
 import CashBookEntry from "../Models/CashBookEntry";
 import CashBookEntryUpdate from "../Models/CashBookEntryUpdate";
 import OpeningBalanceDetaies from "../Models/OpeningBalanceDetaies";
-import Request from "../Request"; // Adjust the path as necessary
-
+import { useOpening } from "../hooks/useOpening";
+import { useCommon } from "../hooks/useCommon";
 
 function OpeningBalance() {
+  const {getAmountWithCommas, getDate} = useCommon()
+  const {openingBalanceData, handleGetAllOpeningBalance} = useOpening()
   const [modalCashBookEntry, setModalCashBookEntry] = useState(false);
   const [modalOpeningBalanceDetaies, setModalOpeningBalanceDetaies] = useState(false);
   const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] = useState(false);
 
-  // Fetch data when the component mounts
+  const accoutHead = (data)=>{ 
+    return data?.length > 18 ? `${data?.slice(0, 15)}...` : data
+  }
+  
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await Request.get("/api/Students");
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    handleGetAllOpeningBalance(15)
   }, []);
 
   return (
@@ -122,27 +118,31 @@ function OpeningBalance() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>07/10/2024</td>
-              <td>CATHEDRAL NURSERY AND PRIMARY</td>
-              <td>ADVANCE FROM MANAGEMENT</td>
-              <td>Rs. 30,500</td>
-              <td>Rs. 30,500</td>
-              <td>Rs. 30,500</td>
-              <td>
-                <div className="d-flex">
-                  <LiaEyeSolid
-                    style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                    className="mx-3"
-                    onClick={() => setModalOpeningBalanceDetaies(true)}
-                  />
-                  <LuPenLine
-                    style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                    onClick={() => setModalCashBookEntryUpdate(true)}
-                  />
-                </div>
-              </td>
-            </tr>
+            {
+              openingBalanceData.map((data)=>(
+                <tr key={data._id} style={{fontSize:"15px"}}>
+                  <td>{getDate(data.date)}</td>
+                  <td>{data.accountHead}</td>
+                  <td>{accoutHead(data.subAccountHead) || "-"}</td>
+                  <td>Rs. {getAmountWithCommas(data.amount.cash || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.amount.bank || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.amount.diocesan || 0)}</td>
+                  <td>
+                    <div className="d-flex">
+                      <LiaEyeSolid
+                        style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                        className="mx-3"
+                        onClick={() => setModalOpeningBalanceDetaies(true)}
+                      />
+                      <LuPenLine
+                        style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                        onClick={() => setModalCashBookEntryUpdate(true)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))
+            }
           </tbody>
         </Table>
       </div>

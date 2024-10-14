@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
+import { useOpening } from "../hooks/useOpening";
+import { useCommon } from "../hooks/useCommon";
 
 function DashboardTable() {
+  const { openingBalanceData, handleGetAllOpeningBalance} = useOpening();
+  const {getAmountWithCommas, getDate} = useCommon()
+
+  useEffect(()=>{
+    handleGetAllOpeningBalance(5)
+  },[])
+  const accoutHead = (data)=>{ 
+    return data?.length > 18 ? `${data?.slice(0, 15)}...` : data
+  }
+
   return (
     <div>
   <Card className="p-3 m-3">
@@ -38,14 +50,18 @@ function DashboardTable() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>07/10/2024</td>
-              <td>CATHEDRAL NURSERY AND PRIMARY</td>
-              <td>ADVANCE FROM MANAGEMENT</td>
-              <td>Rs. 30,500</td>
-              <td>Rs. 30,500</td>
-              <td>Rs. 30,500</td>
-            </tr>
+            {
+              openingBalanceData.map((data)=>(
+                <tr key={data._id} style={{fontSize:"15px"}}>
+                  <td>{getDate(data.date)}</td>
+                  <td>{accoutHead(data.accountHead)}</td>
+                  <td>{accoutHead(data.subAccountHead) || "-"}</td>
+                  <td>Rs. {getAmountWithCommas(data.amount.cash || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.amount.bank || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.amount.diocesan || 0)}</td>
+                </tr>
+              ))
+            }
           </tbody>
         </Table>
       

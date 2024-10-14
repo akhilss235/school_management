@@ -35,6 +35,11 @@ export const useLogin = () => {
                     setFormData(initialValue)
                     navigate("/dashboard");
                     localStorage.setItem("token", response.data.item);
+                }else{
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        form: response.data.message || "Login failed. Please try again."
+                    }));
                 }
             } catch (error) {
                 console.error("Login error:", error);

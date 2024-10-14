@@ -5,7 +5,7 @@ import { useLogin } from "../hooks/useLogin";
 
 function Login() {
   const { formData, handleSubmit, onChange, errors } = useLogin();
-
+    console.log("errors", errors)
     return (
         <div className="Login">
             <div className="containers p-3">
@@ -37,6 +37,7 @@ function Login() {
                         />
                         {errors.password && <p className="errors" style={{color:"red"}}>Password is required</p>}
                     </div>
+                    {errors.form &&  <p className="errors" style={{color:"red"}}>{errors.form}</p>}
                     <Button className="LOGINBTN p-3 mt-4" type="submit" onClick={(e)=>handleSubmit(e)}>
                         Login
                     </Button>
