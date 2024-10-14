@@ -7,7 +7,7 @@ const useAccountHeads = () => {
 
     useEffect(() => {
         const fetchAccountHeads = () => {
-            request.get("getAccountMaster")
+            request.get("getAccountMasterWithoutLimit")
                 .then((response) => {
                     const data = response.data.data; // Adjust based on your API response structure
                     

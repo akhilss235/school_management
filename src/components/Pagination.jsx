@@ -4,6 +4,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+  
   const getPageNumbers = () => {
     const pageNumbers = [];
     if (totalPages <= 5) {

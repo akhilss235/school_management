@@ -4,6 +4,7 @@ import request from '../Request'
 export const useOpening = () => {
 
     const [openingBalanceData, setOpeningBalanceData] = useState([])
+    const [openingBalanceTotal, setOpeningBalanceTotal] = useState([])
     
     const handleGetAllOpeningBalance = async(limit = 10, page = 1, from = "", to = "", accountHead = "", subAccountHead = "") => {
         try {
@@ -17,9 +18,8 @@ export const useOpening = () => {
             if (limit) params.append("limit", limit);
     
             const response = await request.get(`getAllOpeningBalance?${params.toString()}`);
-            
-            console.log("response", response);
             setOpeningBalanceData(response.data.data);
+            setOpeningBalanceTotal(response.data.total)
         } catch (error) {
             console.log("error at openingBalance", error);
         }
@@ -27,6 +27,8 @@ export const useOpening = () => {
 
   return {
     openingBalanceData,
+    openingBalanceTotal,
     handleGetAllOpeningBalance
+
   }
 }

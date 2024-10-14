@@ -11,29 +11,56 @@ import { LiaEyeSolid } from "react-icons/lia";
 import JournalEntryCashEntry from "../Models/JournalEntryCashEntry";
 import AdminPower from "../Models/AdminPower";
 import JournalEntryDetailes from "../Models/JournalEntryDetailes";
-import Request from "../Request"; // Adjust the path as necessary
+import request from "../Request"; 
 import { FiDownload } from "react-icons/fi";
 import { IoPrintOutline } from "react-icons/io5";
+import { useJournal } from "../hooks/useJournal";
+import { GetDate } from "../Pages/Date";
+import AccountHead from "../Pages/AccountHead";
+import { SubAccountHead } from "../Pages/SubAccountHead";
+import { Search } from "../Pages/Search";
+import { useCommon } from "../hooks/useCommon";
+import Pagination from "./Pagination";
+import { CustomTableColumn } from "../Pages/TransactionMode";
+import { NoData } from "./NoData";
 
 function JournalEntry() {
+
+  const {journalData, journalTotal, handleGetAllJournalData} = useJournal()
+  const {getDate, getAmountWithCommas} = useCommon()
   const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] = useState(false);
   const [modalOpeningBalanceDetaies, setModalOpeningBalanceDetaies] =
     useState(false);
   const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] =
     useState(false);
+  const itemsPerPage = 2
+  const [rp, setRp] = useState("");
+  const [search, setSearch] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [transactionMode, setTrasactionMode] = useState("")
+  const [selectedAccountHead, setSelectedAccountHead] = useState("");
+  const [selectedSubAccountHead, setSelectedSubAccountHead] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await Request.get("/api/Students");
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const [currentPage, setCurrentPage] = useState(() => {
+    const savedPage = sessionStorage.getItem("currentPage");
+    return savedPage ? Number(savedPage) : 1;
+  });
 
-    fetchData();
-  }, []);
+  const accoutHead = (data)=>{ 
+    return data?.length > 18 ? `${data?.slice(0, 15)}...` : data
+  }
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+
+  useEffect(()=>{
+    const obj = {page:currentPage, limit:itemsPerPage ,from:fromDate , to:toDate, accountHead:selectedAccountHead, subAccountHead:selectedSubAccountHead, search:search, rp:rp, transactionMode:transactionMode}
+    handleGetAllJournalData(obj)
+  },[currentPage, fromDate , toDate, selectedAccountHead, selectedSubAccountHead, search, rp, transactionMode, search])
+
 
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
@@ -57,30 +84,8 @@ function JournalEntry() {
 
       <div className="d-flex justify-content-between mt-5">
         <div className="d-flex">
-          <InputGroup style={{height:'35px'}}>
-            <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
-              From :
-            </InputGroup.Text>
-            <Form.Control
-              id="Fromdate"
-              type="date"
-                 size="sm"
-              name="Fromdate"
-              style={{ fontSize: "small", borderLeft: "none" }}
-            />
-          </InputGroup>
-          <InputGroup style={{height:'35px'}} className="mx-1">
-            <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
-              To :
-            </InputGroup.Text>
-            <Form.Control
-              id="todate"
-              size="sm"
-              type="date"
-              name="todate"
-              style={{ fontSize: "small", borderLeft: "none" }}
-            />
-          </InputGroup>
+          <GetDate title={"From"} selectedDate={fromDate} setSelectedDate={setFromDate} />
+          <GetDate title={"To"} selectedDate={toDate} setSelectedDate={setToDate} />          
         </div>
        {/* Download and Print Icons */}
       <div className="d-flex align-items-center">
@@ -117,89 +122,23 @@ function JournalEntry() {
 
         {/* Class Dropdown */}
         <div className="col-auto mt-2">
-          <InputGroup    size="sm">
-            <InputGroup.Text
-              id="basic-addon1"
-              style={{ backgroundColor: "#FFFFFF" }}
-            >
-              Receipt/Payment :
-            </InputGroup.Text>
-            <Form.Select
-              aria-describedby="basic-addon1"
-              style={{ borderLeft: "none" }}
-            >
-              <option value="">All</option>
-              <option value="">Class A</option>
-            </Form.Select>
-          </InputGroup>
+          <CustomTableColumn title={"Receipt/Payment"} selectedItem={rp} setSelectedItem={setRp}/>
         </div>
 
         <div className="col-auto mt-2">
-          <InputGroup    size="sm">
-            <InputGroup.Text
-              id="basic-addon1"
-              style={{ backgroundColor: "#FFFFFF" }}
-            >
-              Tra.Mode:
-            </InputGroup.Text>
-            <Form.Select
-              aria-describedby="basic-addon1"
-              style={{ borderLeft: "none" }}
-            >
-              <option value="">All</option>
-              <option value="sectionA">Section A</option>
-            </Form.Select>
-          </InputGroup>
+          <CustomTableColumn title={"Tra.Mode"} selectedItem={transactionMode} setSelectedItem={setTrasactionMode}/>
         </div>
 
 
         <div className="col-auto mt-2">
-        <InputGroup    size="sm">
-            <InputGroup.Text
-              id="basic-addon1"
-              style={{ backgroundColor: "#FFFFFF" }}
-            >
-             Account Head :
-            </InputGroup.Text>
-            <Form.Select
-              aria-describedby="basic-addon1"
-              style={{ borderLeft: "none" }}
-            >
-              <option value="">All</option>
-              <option value="sectionA">Section A</option>
-            </Form.Select>
-          </InputGroup>
-        </div>
-
- 
-        <div className="col-auto mt-2">
-        <InputGroup    size="sm">
-            <InputGroup.Text
-              id="basic-addon1"
-              style={{ backgroundColor: "#FFFFFF" }}
-            >
-            Sub Account Head :
-            </InputGroup.Text>
-            <Form.Select
-
-              aria-describedby="basic-addon1"
-              style={{ borderLeft: "none" }}
-            >
-              <option value="">All</option>
-              <option value="sectionA">Section A</option>
-            </Form.Select>
-          </InputGroup>
+          <AccountHead onSelect={setSelectedAccountHead}/>
         </div>
         <div className="col-auto mt-2">
-            <Form.Control
-              id="Search"
-              size="sm"
-              type="text"
-              placeholder="Search"
-              name="Search"
-              style={{ fontSize: "small" }}
-            />
-          </div>
+          <SubAccountHead onSelect={setSelectedSubAccountHead} />
+        </div>
+        <div className="col-auto mt-2">
+          <Search search={search} setSearch={setSearch}/>
+        </div>
 
       </div>
 
@@ -220,31 +159,46 @@ function JournalEntry() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>07/10/2024</td>
-              <td>CATHEDRAL NURSERY AND PRIMARY</td>
-              <td>ADVANCE FROM MANAGEMENT</td>
-              <td>Rs. 30,500</td>
-              <td>Rs. 30,500</td>
-              <td>Rs. 30,500</td>
-              <td>Rs. 30,500</td>
-              <td>
-                <div className="d-flex">
-                  <LiaEyeSolid
-                    style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                    className="mx-3"
-                    onClick={() => setModalOpeningBalanceDetaies(true)}
-                  />
-                  <LuPenLine
-                    style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                    onClick={() => setModalCashBookEntryUpdate(true)}
-                  />
-                </div>
-              </td>
-            </tr>
+            {
+              journalData.length > 0 &&
+              journalData.map((data)=>(
+                  <tr key={data._id} style={{fontSize:"15px"}}>
+                    <td>{getDate(data.date)}</td>
+                    <td>{data.rp}</td>
+                    <td>{data.transactionMode}</td>
+                    <td>{accoutHead(data.accountHead) || "-"}</td>
+                    <td>{accoutHead(data.subAccountHead) || "-"}</td>
+                    <td>{accoutHead(data.narration) || "-"}</td>
+                    <td>Rs. {getAmountWithCommas(data.amount || 0)}</td>
+                    <td>
+                      <div className="d-flex">
+                        <LiaEyeSolid
+                          style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                          className="mx-3"
+                          onClick={() => setModalOpeningBalanceDetaies(true)}
+                        />
+                        <LuPenLine
+                          style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                          onClick={() => setModalCashBookEntryUpdate(true)}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))
+            }
           </tbody>
         </Table>
+        <NoData model={journalData}/>
       </div>
+      {
+
+        journalData.length !== 0 &&
+        <Pagination
+            currentPage={currentPage}
+            totalPages={Math.ceil(journalTotal / itemsPerPage)}
+            onPageChange={handlePageChange}
+        />
+      }
 
       {/* Modals */}
       <JournalEntryCashEntry

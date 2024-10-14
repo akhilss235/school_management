@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import request from "../Request"; // Adjust the path as necessary
+import useAccountHeads from '../hooks/useAccountHeads';
 
 function AccountHead({ onSelect }) {
-    const [accountHeads, setAccountHeads] = useState([]);
+    const {accountHeads} = useAccountHeads()
     const [selectedHead, setSelectedHead] = useState("");
-
-    useEffect(() => {
-        const fetchAccountHeads = async () => {
-            try {
-                const response = await request.get("getAccountMaster"); // Adjust the endpoint as needed
-                const data = response.data.data; // Adjust based on your API response structure
-                setAccountHeads(data);
-            } catch (error) {
-                console.error("Error fetching account heads:", error);
-            }
-        };
-
-        fetchAccountHeads();
-    }, []);
 
     const handleSelectChange = (event) => {
         const selectedValue = event.target.value;
         setSelectedHead(selectedValue);
-        onSelect(selectedValue); // Notify parent component of selected value
+        onSelect(selectedValue);
     };
 
     return (
@@ -40,9 +26,9 @@ function AccountHead({ onSelect }) {
                     onChange={handleSelectChange}
                 >
                     <option value="">All</option>
-                    {accountHeads.map(head => (
-                        <option key={head.accountHead} value={head.accountHead}>
-                            {head.accountHead}
+                    {accountHeads.map((accountHead, index) => (
+                        <option key={index} value={accountHead}>
+                            {accountHead}
                         </option>
                     ))}
                 </Form.Select>
