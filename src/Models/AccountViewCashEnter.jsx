@@ -2,27 +2,33 @@ import { useState, useRef, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Table, Form, Row, Col, Button } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import AccountHead from "../Pages/AccountHead";
+import { useAccountView } from "../hooks/useAccountView";
+import { MainBalance } from "../components/MainBalance";
 
-function AccountViewCashEnter({ open, onClose }) {
-  const [formData, setFormData] = useState({
-    date: "",
-    narration: "",
-    receiptPayment: "",
-    transactionMode: "",
-    amount: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value, 
-    });
+function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
+  
+  const { formData, errors, handleAccountHeadSelect,   handleChange, handleSubmitPost, handleGetAccountViewById, handleUpdate } = useAccountView()
+  console.log("edit", edit)
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    let status = 0
+    if(edit){
+      status = await handleUpdate(selectedId)
+    }else{
+      status = await handleSubmitPost()
+    }
+    if(status === 201 || status === 200){
+      onClose()
+    }
   };
 
-  const handleSubmit = () => {
-    console.log("Form data submitted:", formData);
-  };
+  useEffect(()=>{
+    if(edit){
+      handleGetAccountViewById(selectedId)
+    }
+  },[selectedId])
+  
   return (
     <Modal
       show={open}
@@ -63,7 +69,17 @@ function AccountViewCashEnter({ open, onClose }) {
                     onChange={handleChange}
                   />
                 </Col>
+              {errors?.date && <p style={{color:"red"}}>{errors?.date}</p>}
               </Row>
+            </Col>
+            <Col sm={12} lg={6} className="d-flex flex-column justify-content-between">
+              <Row>
+                <Col>
+                  <Form.Label column sm={12}>Account Head</Form.Label>
+                </Col>
+              </Row>
+              <AccountHead onSelect={handleAccountHeadSelect} isTitle={false} data={formData?.accountHead}/>
+              {errors?.accountHead && <p style={{color:"red"}}>{errors?.accountHead}</p>}
             </Col>
           </Row>
 
@@ -84,7 +100,9 @@ function AccountViewCashEnter({ open, onClose }) {
                     onChange={handleChange}
                   />
                 </Col>
+                {errors?.narration && <p style={{color:"red"}}>{errors?.narration}</p>}
               </Row>
+
             </Col>
 
             <Col lg={6} className="d-flex flex-column justify-content-between">
@@ -96,8 +114,8 @@ function AccountViewCashEnter({ open, onClose }) {
               <Row>
                 <Col>
                   <Form.Select
-                    name="receiptPayment"
-                    value={formData.receiptPayment}
+                    name="rp"
+                    value={formData.rp}
                     onChange={handleChange}
                   >
                     <option value="">Select any one</option>
@@ -106,6 +124,7 @@ function AccountViewCashEnter({ open, onClose }) {
                   </Form.Select>
                 </Col>
               </Row>
+              {errors?.rp && <p style={{color:"red"}}>{errors?.rp}</p>}
             </Col>
           </Row>
 
@@ -126,10 +145,11 @@ function AccountViewCashEnter({ open, onClose }) {
                     <option value="">Select Mode</option>
                     <option value="cash">Cash</option>
                     <option value="bank">Bank</option>
-                    <option value="online">Online</option>
+                    <option value="online">Diocesan</option>
                   </Form.Select>
                 </Col>
               </Row>
+              {errors?.transactionMode && <p style={{color:"red"}}>{errors?.transactionMode}</p>}
             </Col>
 
             <Col lg={6} className="d-flex flex-column justify-content-between">
@@ -141,7 +161,7 @@ function AccountViewCashEnter({ open, onClose }) {
               <Row>
                 <Col>
                   <Form.Control
-                    type="text"
+                    type="number"
                     name="amount"
                     placeholder="Enter Amount"
                     value={formData.amount}
@@ -149,6 +169,7 @@ function AccountViewCashEnter({ open, onClose }) {
                   />
                 </Col>
               </Row>
+            {errors?.amount && <p style={{color:"red"}}>{errors?.amount}</p>}
             </Col>
           </Row>
 
@@ -159,7 +180,7 @@ function AccountViewCashEnter({ open, onClose }) {
               </Button>
             </Col>
             <Col xs={"auto"}>
-              <Button className="fw-600 modalformsavebtn" onClick={handleSubmit}>
+              <Button className="fw-600 modalformsavebtn" onClick={(e)=>handleSubmit(e)}>
                 Save
               </Button>
             </Col>
@@ -167,91 +188,8 @@ function AccountViewCashEnter({ open, onClose }) {
         </Form>
       </div>
     </Modal.Body>
-
-      <Modal.Body style={{ borderColor: "#3474EB" }}>
-        <div className="p-3 ">
-          <div
-            style={{
-              textAlign: "center",
-              borderTop: "2px solid #3474EB",
-              borderBottom: "2px solid #3474EB",
-            }}
-          >
-            <h4 className="mt-3 mb-3">
-              <b style={{ textAlign: "center", color: "#00A62F" }}>
-                Closing Balance as on 25/10/2024
-              </b>
-            </h4>
-          </div>
-
-          <Row className=" mt-2 mb-3 ">
-            <Col
-              style={{
-                textAlign: "start",
-              }}
-              className="mx-5"
-            >
-              <div>
-                <h5>
-                  <b className="title ">MAIN CASH BOOK BALANCE</b>
-                </h5>
-              </div>
-              <div
-                className="d-flex justify-content-start mt-4"
-                style={{ textAlign: "center" }}
-              >
-                <div>
-                  {" "}
-                  <h5>
-                    <b className="title">C/B CASH :</b>
-                  </h5>
-                </div>
-                <div className="mx-4">
-                  {" "}
-                  <h5>
-                    <b>599485.86</b>
-                  </h5>
-                </div>
-              </div>
-              <div
-                className="d-flex justify-content-start"
-                style={{ textAlign: "center" }}
-              >
-                <div>
-                  {" "}
-                  <h5>
-                    <b className="title">C/B BANK :</b>
-                  </h5>
-                </div>
-                <div className="mx-4">
-                  {" "}
-                  <h5>
-                    <b>599485.86</b>
-                  </h5>
-                </div>
-              </div>
-
-              <div
-                className="d-flex justify-content-start"
-                style={{ textAlign: "center" }}
-              >
-                <div>
-                  {" "}
-                  <h5>
-                    <b className="title">C/B DIO :</b>
-                  </h5>
-                </div>
-                <div className="mx-4">
-                  {" "}
-                  <h5>
-                    <b style={{ color: "red" }}>599485.86</b>
-                  </h5>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </Modal.Body>
+    <MainBalance />
+     
     </Modal>
   );
 }

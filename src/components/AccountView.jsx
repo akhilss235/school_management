@@ -24,17 +24,13 @@ import { NoData } from "./NoData";
 import Pagination from "./Pagination";
 
 function AccountView() {
-  const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] =
-    useState(false);
-  const [modalOpeningBalanceDetaies, setModalOpeningBalanceDetaies] =
-    useState(false);
-  const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] =
-    useState(false);
+  const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] = useState(false);
+  const [modalOpeningBalanceDetaies, setModalOpeningBalanceDetaies] = useState(false);
 
   const { getDate, getAmountWithCommas } = useCommon();
-  const { accountViewData, accountViewTotal, handleAllAccountView } =
-    useAccountView();
+  const { accountViewData, accountViewTotal, handleAllAccountView} = useAccountView();
 
+  const [selectedId, setSelectedId] = useState("")
   const itemsPerPage = 10;
   const [rp, setRp] = useState("");
   const [search, setSearch] = useState("");
@@ -42,6 +38,7 @@ function AccountView() {
   const [fromDate, setFromDate] = useState("");
   const [transactionMode, setTrasactionMode] = useState("");
   const [selectedAccountHead, setSelectedAccountHead] = useState("");
+  const [isEdit , setIsEdit] = useState(false)
 
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = sessionStorage.getItem("currentPage");
@@ -77,7 +74,18 @@ function AccountView() {
     rp,
     transactionMode,
     search,
+    modalJournalEntryCashEntry
   ]);
+
+  const handleOpenModal = (id)=>{
+    setModalOpeningBalanceDetaies(true)
+    setSelectedId(id)
+  }
+  const handleUpdateModel = (id)=>{
+    setModalJournalEntryCashEntry(true)
+    setSelectedId(id)
+    setIsEdit(true)
+  }
 
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
@@ -206,22 +214,20 @@ function AccountView() {
               accountViewData.map((data) => (
                 <tr key={data._id} style={{ fontSize: "15px" }}>
                   <td>{getDate(data.date)}</td>
-                  <td>{data.rp}</td>
-                  <td>{data.transactionMode}</td>
-                  <td>{accoutHead(data.accountHead) || "-"}</td>
-                  <td>{accoutHead(data.subAccountHead) || "-"}</td>
                   <td>{accoutHead(data.narration) || "-"}</td>
+                  <td>{data.transactionMode}</td>
+                  <td>{data.rp}</td>
                   <td>Rs. {getAmountWithCommas(data.amount || 0)}</td>
                   <td>
                     <div className="d-flex">
                       <LiaEyeSolid
                         style={{ fontSize: "1.5rem", color: "#3474EB" }}
                         className="mx-3"
-                        onClick={() => setModalOpeningBalanceDetaies(true)}
+                        onClick={() => handleOpenModal(data._id)}
                       />
                       <LuPenLine
                         style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                        onClick={() => setModalCashBookEntryUpdate(true)}
+                        onClick={() => handleUpdateModel(data._id)}
                       />
                     </div>
                   </td>
@@ -242,16 +248,19 @@ function AccountView() {
       {/* Modals */}
       <AccountViewCashEnter
         open={modalJournalEntryCashEntry}
+        edit={isEdit}
+        selectedId={selectedId}
         onClose={() => setModalJournalEntryCashEntry(false)}
       />
       <AccountViewDetailes
         open={modalOpeningBalanceDetaies}
+        selectedId={selectedId}
         onClose={() => setModalOpeningBalanceDetaies(false)}
       />
-      <AccountViewUpate
+      {/* <AccountViewUpate
         open={modalCashBookEntryUpdate}
         onClose={() => setModalCashBookEntryUpdate(false)}
-      />
+      /> */}
     </div>
   );
 }

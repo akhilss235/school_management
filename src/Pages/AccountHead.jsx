@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import useAccountHeads from '../hooks/useAccountHeads';
 
-function AccountHead({ onSelect, isTitle=true }) {
+function AccountHead({ onSelect, isTitle=true, data }) {
     const {accountHeads} = useAccountHeads()
     const [selectedHead, setSelectedHead] = useState("");
 
@@ -12,6 +12,12 @@ function AccountHead({ onSelect, isTitle=true }) {
         setSelectedHead(selectedValue);
         onSelect(selectedValue);
     };
+
+    useEffect(()=>{
+        if(data){
+            setSelectedHead(data)
+        }
+    },[])
 
     return (
         <div>

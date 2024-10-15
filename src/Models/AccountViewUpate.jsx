@@ -2,8 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Table, Form, Row, Col, Button } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import AccountHead from "../Pages/AccountHead";
+import { useAccountView } from "../hooks/useAccountView";
 
-function CashBookEntryUpdate({ open, onClose }) {
+function CashBookEntryUpdate({ open, onClose, selectedId }) {
+  const {handleAccountHeadSelect} = useAccountView()
   return (
     <Modal
       show={open}
@@ -46,6 +49,15 @@ function CashBookEntryUpdate({ open, onClose }) {
                   </Col>
                 </Row>
               </Col>
+              <Col sm={12} lg={6} className="d-flex flex-column justify-content-between">
+              <Row>
+                <Col>
+                  <Form.Label column sm={12}>Account Head</Form.Label>
+                </Col>
+              </Row>
+              <AccountHead onSelect={handleAccountHeadSelect} isTitle={false} />
+              {/* {errors?.accountHead && <p style={{color:"red"}}>{errors?.accountHead}</p>} */}
+            </Col>
               <Col
                 lg={6}
                 className="d-flex flex-column justify-content-between"
@@ -235,6 +247,4 @@ function CashBookEntryUpdate({ open, onClose }) {
   );
 }
 
-
-
-export default CashBookEntryUpdate
+export default CashBookEntryUpdate;
