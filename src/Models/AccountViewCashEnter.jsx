@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Table, Form, Row, Col, Button } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -8,7 +8,8 @@ import { MainBalance } from "../components/MainBalance";
 
 function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
   
-  const { formData, errors, handleAccountHeadSelect,   handleChange, handleSubmitPost, handleGetAccountViewById, handleUpdate } = useAccountView()
+  const { formData, errors, handleAccountHeadSelect,   handleChange, handleSubmitPost, handleGetAccountViewById, handleUpdate, initialValue, setFormData } = useAccountView()
+  
   const handleSubmit = async(e) => {
     e.preventDefault();
     let status = 0
@@ -21,12 +22,17 @@ function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
       onClose()
     }
   };
+  console.log("isEdit", edit)
+
 
   useEffect(()=>{
     if(edit && selectedId){
       handleGetAccountViewById(selectedId)
+    }else if(!edit){
+      console.log("calling all autobots")
+      setFormData(initialValue)
     }
-  },[selectedId])
+  },[edit])
   
   return (
     <Modal
@@ -77,7 +83,7 @@ function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
                   <Form.Label column sm={12}>Account Head</Form.Label>
                 </Col>
               </Row>
-              <AccountHead onSelect={handleAccountHeadSelect} isTitle={false} data={formData?.accountHead}/>
+              <AccountHead onSelect={handleAccountHeadSelect} isTitle={false} data={formData?.accountHead || "All"}/>
               {errors?.accountHead && <p style={{color:"red"}}>{errors?.accountHead}</p>}
             </Col>
           </Row>

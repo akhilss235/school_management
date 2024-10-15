@@ -68,7 +68,6 @@ function CashBookEntry({ open, onClose, initialData }) {
       return;
     }
 
-    // Ensure amounts are numbers before sending
     const payload = {
       ...formData,
       cash: Number(formData.cash),

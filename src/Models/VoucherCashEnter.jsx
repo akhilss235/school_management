@@ -8,26 +8,27 @@ import useAccountHeads from '../hooks/useAccountHeads'; // Adjust the import pat
 import { toast } from 'react-toastify'; // Import toast
 
 
-function VoucherCashEnter({ open, onClose }) {
-  const { accountHeads, subAccountHeads } = useAccountHeads();
-  const [formData, setFormData] = useState({
+function VoucherCashEnter({ open, onClose, edit, selectedId }) {
+  const initialValue = {
     accountHead: "",
     remarks: "",
     cash: 0,
     bank: 0,
-    voucherNo: "",
-  });
+    voucherNo: 0,
+  };
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState(initialValue)
+  const {accountHeads} = useAccountHeads()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: name === "cash" || name === "bank" 
-        ? value === "" ? "" : Number(value)  // Allow empty string, otherwise convert to number
-        : value,  // For other fields, keep as string
+        ? value === "" ? "" : Number(value)  
+        : value, 
     }));
     
     setErrors((prevErrors) => ({ ...prevErrors, [name]: null }));
@@ -53,23 +54,42 @@ function VoucherCashEnter({ open, onClose }) {
       setLoading(false);
       return;
     }
-
-
-    request.post("addVoucher", formData)
-      .then((response) => {
+      const url = edit ? request.put(`updateVoucher/${selectedId}` ,formData) :request.post("addVoucher", formData)
+      
+      url.then((response) => {
         console.log("Form submitted successfully:", response.data);
-        toast.success("Voucher added successfully!"); // Show success toast
-        onClose();
+        if(response.status === 201){
+          toast.success("Voucher added successfully!"); 
+          onClose();
+        }
       })
       .catch((err) => {
         console.error("Error submitting form:", err);
-        toast.error("Error submitting form. Please try again."); // Show error toast
+        toast.error(err.response?.data?.message); 
         setErrors({ submit: "Error submitting form. Please try again." });
       })
       .finally(() => {
         setLoading(false);
       });
+    
   };
+
+  useEffect(()=>{
+    if(selectedId && edit){
+          const handleGetVoucherData = async()=>{ 
+            try {
+                const response = await request.get(`getVoucherById/${selectedId}`)
+                setFormData(response.data.data)
+            } catch (error) {
+              console.log("error at fetching single voucher data", error)
+            }
+          }
+          handleGetVoucherData()
+      
+    }else if(!edit){
+      setFormData(initialValue)
+    }
+  },[edit])
 
   return (
     <Modal show={open} onHide={onClose} size="xl" centered>

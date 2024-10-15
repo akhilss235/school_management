@@ -1,94 +1,87 @@
 
-import { useState, useRef, useEffect } from "react";
+import { useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Form, Row, Col, Button } from "react-bootstrap";
 import { InputGroup} from 'react-bootstrap';
 import { AiFillEyeInvisible,AiFillEye  } from "react-icons/ai";
-import VoucherUpdate from "../Models/VoucherUpdate";
+import request from "../Request";
 
-function VoucherAdmin({ open, onClose }) {
-    const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] = useState(false);
+function VoucherAdmin({ open, onClose, setModalJournalEntryCashEntry }) {
+    const [adminPassword, setAdminPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [modalJournalEntryUpdate, setModalJournalEntryUpdate] = useState(false);
+
+    const handleVerify = async () => {
+        if (!adminPassword) return alert("Please enter your password.");
+
+        setLoading(true);
+        try {
+            const response = await request.post('checkAdmin', { password: adminPassword });
+            if (response.status === 201) {
+                setModalJournalEntryCashEntry(true);
+                onClose(); 
+            } else {
+                alert("Failed to verify admin password.");
+            }
+        } catch (error) {
+            console.error("Error verifying admin password:", error);
+            alert("An error occurred while verifying the password.");
+        } finally {
+            setLoading(false);
+        }
+    };
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
     };
     
-    const inputStyle = {
-      backgroundColor: 'white !important', // Change this to your desired background color
-      borderRight: 'none',
-    };
-  
-    const iconStyle = {
-      cursor: 'pointer',
-      backgroundColor: 'white !important', // Same background color for consistency
-      borderLeft: 'none',
-    };
-  
   return (
     <>
     <Modal show={open} onHide={onClose} size="md" centered>
-      {/* <Modal.Header closeButton>
-        <Modal.Title>AdminPower</Modal.Title>
-      </Modal.Header> */}
-      <Modal.Body>
-      <div className="container-fluid p-3">
-      <Form className='adminpowerform roboto-font stylelabel'>
-        <Row className='justify-content-between align-items-center mt-2 mb-2'>
-          <Col xs={'auto'}>
-            <span className='modalformheading'>Admin Power</span>
-          </Col>
-        </Row>
-        <Row>
-          <Col className='text-break'>
-            <p style={{color:'#898989'}}>Authorization is required to edit the informations.</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col className='d-flex flex-column justify-content-between'>
-            <Row>
-              <Col>
-                <Form.Label column sm={12}>Enter Admin Password</Form.Label>
-              </Col>
-            </Row>
-            <Row>
-              <Col className='inputpasswordeye'>
-                <InputGroup>
-                  <Form.Control
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Enter password"
-                    style={inputStyle} // Apply custom styles here
-                  />
-                  <InputGroup.Text onClick={togglePasswordVisibility}>
-                    {showPassword ? <AiFillEye size={20} /> : <AiFillEyeInvisible  size={20}/>}
-                  </InputGroup.Text>
-                </InputGroup>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-
-        <Row className='justify-content-end align-items-center my-4 gy-2'>
-          <Col xs={'auto'}>
-            <Button className='fw-600 modalformdiscardbtn'>
-              Cancel
-            </Button>
-          </Col>
-          <Col xs={'auto'}>
-            <Button className='fw-600 modalformsavebtn'>
-              Verify
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </div>
-      </Modal.Body>
-
-    </Modal>
-    <VoucherUpdate
-        open={modalJournalEntryCashEntry}
-        onClose={() => setModalJournalEntryCashEntry(false)}
-      />
+            <Modal.Body>
+                <div className="container-fluid p-3">
+                    <Form className='adminpowerform'>
+                        <Row className='mb-2'>
+                            <Col>
+                                <span className='modalformheading'>Admin Power</span>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <p style={{ color: '#898989' }}>Authorization is required to edit the information.</p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Label>Enter Admin Password</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        type={showPassword ? 'text' : 'password'}
+                                        placeholder="Enter password"
+                                        value={adminPassword}
+                                        onChange={(e) => setAdminPassword(e.target.value)}
+                                    />
+                                    <InputGroup.Text onClick={togglePasswordVisibility}>
+                                        {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+                                    </InputGroup.Text>
+                                </InputGroup>
+                            </Col>
+                        </Row>
+                        <Row className='justify-content-end my-4'>
+                            <Col xs={'auto'}>
+                                <Button onClick={onClose}>Cancel</Button>
+                            </Col>
+                            <Col xs={'auto'}>
+                                <Button onClick={handleVerify} disabled={loading}>
+                                    {loading ? "Verifying..." : "Verify"}
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                </div>
+            </Modal.Body>
+        </Modal>
     </>
 
   );

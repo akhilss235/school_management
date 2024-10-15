@@ -17,7 +17,7 @@ function AccountHead({ onSelect, isTitle=true, data }) {
         if(data){
             setSelectedHead(data)
         }
-    },[])
+    },[data])
 
     return (
         <div>

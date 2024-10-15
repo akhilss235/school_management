@@ -108,6 +108,8 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
     }
   }, [accountId, edit]);
 
+
+
   return (
     <Modal show={open} onHide={onClose} size="xl" centered>
       <Modal.Body>

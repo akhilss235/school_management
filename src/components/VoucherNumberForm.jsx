@@ -31,8 +31,9 @@ function VoucherNumberForm() {
   const itemsPerPage = 10;
 
   const [search, setSearch] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
   const [selectedAccountHead, setSelectedAccountHead] = useState("");
-
   const { getAmountWithCommas } = useCommon();
   const { voucherData, voucherTotal, handleGetAllVoucher } = useVoucher();
 
@@ -57,7 +58,19 @@ function VoucherNumberForm() {
       search: search,
     };
     handleGetAllVoucher(obj);
-  }, [selectedAccountHead, search, currentPage]);
+  }, [selectedAccountHead, search, currentPage, modalJournalEntryCashEntry ]);
+
+  const handleOpenAdminModal = (id)=>{
+    setModalCashBookEntryUpdate(true)
+    setIsEdit(true)
+    setSelectedId(id)
+  }
+
+  const handleOpenPostModel = ()=>{
+    setModalJournalEntryCashEntry(true)
+    setIsEdit(false)
+  }
+
 
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
@@ -125,7 +138,7 @@ function VoucherNumberForm() {
         <div className="col-auto mt-2">
           <Button
             className="addbuttons"
-            onClick={() => setModalJournalEntryCashEntry(true)}
+            onClick={handleOpenPostModel}
           >
             <span>
               <FiPlus /> Voucher Number
@@ -162,7 +175,7 @@ function VoucherNumberForm() {
                         
                         <LuPenLine
                           style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                          onClick={() => setModalCashBookEntryUpdate(true)}
+                          onClick={()=>handleOpenAdminModal(data?._id)}
                         />
                       </div>
                     </td>
@@ -185,15 +198,14 @@ function VoucherNumberForm() {
       {/* Modals */}
       <VoucherCashEnter
         open={modalJournalEntryCashEntry}
+        edit={isEdit}
+        selectedId={selectedId}
         onClose={() => setModalJournalEntryCashEntry(false)}
       />
-      {/* <VoucherDetailes
-        open={modalOpeningBalanceDetaies}
-        onClose={() => setModalOpeningBalanceDetaies(false)}
-      /> */}
       <VoucherAdmin
         open={modalCashBookEntryUpdate}
         onClose={() => setModalCashBookEntryUpdate(false)}
+        setModalJournalEntryCashEntry={setModalJournalEntryCashEntry}
       />
     </div>
   );

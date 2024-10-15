@@ -86,6 +86,11 @@ function AccountView() {
     setSelectedId(id)
     setIsEdit(true)
   }
+
+  const handleOpenPostModal = () => {
+    setModalJournalEntryCashEntry(true)
+    setIsEdit(false)
+  }
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
       <div className="d-flex justify-content-between">
@@ -165,7 +170,7 @@ function AccountView() {
             <div className="col-auto mt-2">
               <Button
                 className="addbuttons"
-                onClick={() => setModalJournalEntryCashEntry(true)}
+                onClick={handleOpenPostModal}
               >
                 <span style={{ fontSize: "auto" }}>
                   <FiPlus />
@@ -256,10 +261,6 @@ function AccountView() {
         selectedId={selectedId}
         onClose={() => setModalOpeningBalanceDetaies(false)}
       />
-      {/* <AccountViewUpate
-        open={modalCashBookEntryUpdate}
-        onClose={() => setModalCashBookEntryUpdate(false)}
-      /> */}
     </div>
   );
 }
