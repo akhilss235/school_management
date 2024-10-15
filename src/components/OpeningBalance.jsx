@@ -15,6 +15,7 @@ import AccountHead from "../Pages/AccountHead";
 import { SubAccountHead } from "../Pages/SubAccountHead";
 import { GetDate } from "../Pages/Date";
 import Pagination from "./Pagination";
+import { NoData } from "./NoData";
 
 function OpeningBalance() {
   const { getAmountWithCommas, getDate } = useCommon();
@@ -147,12 +148,14 @@ const handleDETAILESClick = (accountId) => {
           </tbody>
         </Table>
       </div>
-
-      <Pagination
-        currentPage={currentPage}
-        totalPages={Math.ceil(openingBalanceTotal / itemsPerPage)}
-        onPageChange={handlePageChange}
-      />
+      {
+        openingBalanceData.length !== 0 &&
+        <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(openingBalanceTotal / itemsPerPage)}
+          onPageChange={handlePageChange}
+        />
+      }
 
       {/* Modals */}
       <CashBookEntry open={modalCashBookEntry} onClose={() => setModalCashBookEntry(false)} />

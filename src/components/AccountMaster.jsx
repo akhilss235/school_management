@@ -15,6 +15,7 @@ import Pagination from "../components/Pagination";
 import AccountHead from "../Pages/AccountHead";
 import { GetDate } from "../Pages/Date";
 import { NoData } from "./NoData";
+import { toast } from "react-toastify";
 
 function AccountMaster() {
     const [modalCashBookEntry, setModalCashBookEntry] = useState(false);
@@ -73,7 +74,7 @@ function AccountMaster() {
 
     useEffect(() => {
         fetchData();
-    }, [searchTerm, currentPage, fromDate, toDate, selectedAccountHead]); // Include selectedAccountHead as a dependency
+    }, [searchTerm, currentPage, fromDate, toDate, selectedAccountHead]);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -117,12 +118,21 @@ function AccountMaster() {
         setModalCashBookEntryUpdate(true);
     };
 
+    const handleDeleteAccountMaster = async()=>{
+        try {
+            await request.delete(`deleteAccountMaster`, {selectedIds:selectedAccountId})
+            toast.success("deleted successfully")
+        } catch (error) {
+            console.log("error at deleting account master", error)
+        }
+    }
+
     return (
         <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
             <div className="d-flex justify-content-between">
                 <h4 className="title"><b>Account Master</b></h4>
                 {isAnySelected && (
-                    <Button style={{ backgroundColor: 'white', color: 'red', borderColor: 'red' }}>
+                    <Button style={{ backgroundColor: 'white', color: 'red', borderColor: 'red' }} onClick={handleDeleteAccountMaster}>
                         <RiDeleteBinLine /> Delete
                     </Button>
                 )}
@@ -234,7 +244,7 @@ function AccountMaster() {
                 open={modalCashBookEntryUpdate}
                 onClose={() => setModalCashBookEntryUpdate(false)}
                 accountId={selectedAccountId}
-                refreshData={refreshData} // Pass the refresh function here
+                refreshData={refreshData}
             />
         </div>
     );
