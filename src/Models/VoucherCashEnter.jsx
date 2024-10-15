@@ -5,6 +5,9 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import request from "../Request"; // Adjust the path as necessary
 import useAccountHeads from '../hooks/useAccountHeads'; // Adjust the import path
 
+import { toast } from 'react-toastify'; // Import toast
+
+
 function VoucherCashEnter({ open, onClose }) {
   const { accountHeads, subAccountHeads } = useAccountHeads();
   const [formData, setFormData] = useState({
@@ -12,7 +15,7 @@ function VoucherCashEnter({ open, onClose }) {
     remarks: "",
     cash: 0,
     bank: 0,
-    voucherNo: 0,
+    voucherNo: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -22,7 +25,7 @@ function VoucherCashEnter({ open, onClose }) {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === "cash" || name === "bank" || name === "voucherNo"
+      [name]: name === "cash" || name === "bank" 
         ? value === "" ? "" : Number(value)  // Allow empty string, otherwise convert to number
         : value,  // For other fields, keep as string
     }));
@@ -35,8 +38,7 @@ function VoucherCashEnter({ open, onClose }) {
     if (!formData.accountHead) newErrors.accountHead = "Account Head is required.";
     if (isNaN(formData.cash) || formData.cash < 0) newErrors.cash = "Cash must be a positive number.";
     if (isNaN(formData.bank) || formData.bank < 0) newErrors.bank = "Bank must be a positive number.";
-    if (isNaN(formData.voucherNo) || formData.voucherNo < 0) newErrors.voucherNo = "Voucher Number must be a positive number.";
-
+    if (!formData.voucherNo) newErrors.voucherNo = "Voucher Number is required.";
     return newErrors;
   };
 
@@ -56,10 +58,12 @@ function VoucherCashEnter({ open, onClose }) {
     request.post("addVoucher", formData)
       .then((response) => {
         console.log("Form submitted successfully:", response.data);
+        toast.success("Voucher added successfully!"); // Show success toast
         onClose();
       })
       .catch((err) => {
         console.error("Error submitting form:", err);
+        toast.error("Error submitting form. Please try again."); // Show error toast
         setErrors({ submit: "Error submitting form. Please try again." });
       })
       .finally(() => {
@@ -187,7 +191,7 @@ function VoucherCashEnter({ open, onClose }) {
             <Row>
               <Col>
                 <Form.Control 
-                    type="number" 
+                    type="text" 
                     placeholder="" 
                     className=""
                     name="voucherNo"
@@ -216,7 +220,6 @@ function VoucherCashEnter({ open, onClose }) {
         </Row>
       </Form>
     </div>
-
 
 
       </Modal.Body>
