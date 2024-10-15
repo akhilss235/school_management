@@ -52,6 +52,11 @@ function CashBookEntry({ open, onClose, initialData }) {
     if (formData.date !== getTodayDate()) {
       newErrors.date = "The date must be today's date.";
     }
+
+    if (isNaN(formData.cash) || formData.cash < 0) newErrors.cash = "Cash must be a positive number.";
+    if (isNaN(formData.bank) || formData.bank < 0) newErrors.bank = "Bank must be a positive number.";
+    if (isNaN(formData.diocesan) || formData.diocesan < 0) newErrors.diocesan = "Diocesan must be a positive number.";
+
     if (!formData.accountHead) newErrors.accountHead = "Account Head is required.";
     return newErrors;
   };
@@ -171,6 +176,7 @@ function CashBookEntry({ open, onClose, initialData }) {
                       placeholder={`Enter ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`}
                     />
                   </Form.Group>
+                  {errors[field] && <div className="text-danger">{errors[field]}</div>}
                 </Col>
               ))}
             </Row>
