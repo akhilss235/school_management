@@ -6,7 +6,7 @@ import trash from '../img/trash.svg';
 
 
 
-const StudentRegisterclone = ({handleChange ,formData,handleFileChange,selectedFile,handleFileClick,handleFileRemove}) => {
+const StudentUpdateclone = ({handleChange ,formData,handleFileChange,selectedFile,handleFileClick,handleFileRemove}) => {
     return (
         <div>
                       <Row>
@@ -74,8 +74,12 @@ const StudentRegisterclone = ({handleChange ,formData,handleFileChange,selectedF
                 </Row>
                 <Row>
                     <Col>
-                    <Form.Control  type="date" name="dob" value={formData.dob} onChange={handleChange} required />
-
+                    <Form.Control 
+                type="text" 
+                name="dob"
+                value={formData.dob}
+                onChange={handleChange}
+              />
                     
                     </Col>
                 </Row>
@@ -502,4 +506,6 @@ const StudentRegisterclone = ({handleChange ,formData,handleFileChange,selectedF
     );
 }
 
-export default StudentRegisterclone;
+
+
+export default StudentUpdateclone

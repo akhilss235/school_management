@@ -49,6 +49,22 @@ function AccountMaster() {
         }
     };
 
+    const refreshData = async () => {
+        try {
+            const response = await request.get(`/getAccountMaster?search=${searchTerm}&fromDate=${fromDate}&toDate=${toDate}&accountHead=${selectedAccountHead}&page=${currentPage}&limit=${itemsPerPage}`);
+            if (Array.isArray(response.data.data)) {
+                setAccountData(response.data.data);
+                setTotalPages(Math.ceil(response.data.total / itemsPerPage));
+            } else {
+                console.error("Expected response.data.data to be an array", response.data.data);
+                setAccountData([]);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setAccountData([]);
+        }
+    };
+
     useEffect(() => {
         fetchData();
     }, [searchTerm, currentPage, fromDate, toDate, selectedAccountHead]); // Include selectedAccountHead as a dependency
@@ -119,7 +135,7 @@ function AccountMaster() {
                 </div>
 
                 <div className="col-auto mt-2">
-                    <AccountHead onSelect={setSelectedAccountHead} /> {/* Pass setter function to AccountHead */}
+                    <AccountHead onSelect={setSelectedAccountHead} />
                 </div>
 
                 <div className="col-auto mt-2">
@@ -166,7 +182,6 @@ function AccountMaster() {
                 </div>
             </div>
 
-            {/* Table */}
             <div className="table-responsive">
                 <Table responsive>
                     <thead style={{ color: "#505050" }}>
@@ -221,7 +236,6 @@ function AccountMaster() {
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
             />
-            {/* Modals */}
             <AccountMasterEntry
                 open={modalCashBookEntry}
                 onClose={() => setModalCashBookEntry(false)}
@@ -230,6 +244,7 @@ function AccountMaster() {
                 open={modalCashBookEntryUpdate}
                 onClose={() => setModalCashBookEntryUpdate(false)}
                 accountId={selectedAccountId}
+                refreshData={refreshData} // Pass the refresh function here
             />
         </div>
     );

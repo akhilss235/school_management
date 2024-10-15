@@ -104,7 +104,7 @@ function App() {
               element={withSideBarLayout(<StudentRegister />, true)}
             />
             <Route
-              path="/StudentRegisterupdate"
+              path="/StudentRegisterupdate/:_id"
               element={withSideBarLayout(<StudentRegisterupdate />, true)}
             />
             {/* models  */}
