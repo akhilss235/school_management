@@ -5,7 +5,6 @@ import { useLogin } from "../hooks/useLogin";
 
 function Login() {
   const { formData, handleSubmit, onChange, errors } = useLogin();
-    console.log("errors", errors)
     return (
         <div className="Login">
             <div className="containers p-3">

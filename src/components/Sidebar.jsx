@@ -135,7 +135,7 @@
 // export default withSideBarLayout;
 import React, { useState, useEffect } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../Styles/Sidebar.css";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { GoDotFill } from "react-icons/go";
@@ -155,33 +155,37 @@ import AccountMasteract from '../img/Masteractive.png';
 import AccountMaster from '../img/Masterinactive.png';
 import UserAccessact from '../img/UserAccessactive.png';
 import UserAccess from '../img/UserAccess.png';
+import { useLogin } from "../hooks/useLogin";
 
 const Sidebar = ({ children }) => {
+  const { user } = useLogin()
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [activeItemIndex, setActiveItemIndex] = useState(0); // Default to Dashboard
   const [hoveredItemIndex, setHoveredItemIndex] = useState(null);
   
   const location = useLocation();
+  
 
   const menuItem = [
     { path: "/Dashboard", name: "Dashboard", img: [Dashboard, Dashboardact] },
-    { path: "/Students", name: "Students", img: [Students, Studentsact] },
-    { 
-      path: "/OpeningBalance", 
-      name: "Transaction", 
-      img: [Transaction, Transactionact], 
+    user?.accessTo?.isStudent && { path: "/Students", name: "Students", img: [Students, Studentsact] },
+    user?.accessTo?.isTransaction && {
+      path: "/OpeningBalance",
+      name: "Transaction",
+      img: [Transaction, Transactionact],
       subMenu: [
         { path: "/OpeningBalance", name: "Opening Balance" },
         { path: "/JournalEntry", name: "Journal Entry" },
         { path: "/VoucherNumberForm", name: "Voucher Number Form" },
-      ]
+      ],
     },
-    { path: "/AccountView", name: "Account View", img: [AccountView, AccountViewact] },
-    { path: "/Reports", name: "Reports", img: [Reports, Reportsact] },
-    { path: "/AccountMaster", name: "Account Master", img: [AccountMaster, AccountMasteract] },
+    user?.accessTo?.isAccountView && { path: "/AccountView", name: "Account View", img: [AccountView, AccountViewact] },
+    user?.accessTo?.isReports && { path: "/Reports", name: "Reports", img: [Reports, Reportsact] },
+    user?.accessTo?.isAccountMaster && { path: "/AccountMaster", name: "Account Master", img: [AccountMaster, AccountMasteract] },
     { path: "/UserAccess", name: "User Access", img: [UserAccess, UserAccessact] },
-  ];
+  ].filter(Boolean); 
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -215,6 +219,11 @@ const Sidebar = ({ children }) => {
       
         return isActive ? "active" : "";
       };
+
+  const handleLogOut = ()=>{
+    localStorage.removeItem('token');
+    navigate("/")
+  }
 
   return (
     <>
@@ -260,7 +269,7 @@ const Sidebar = ({ children }) => {
           ))}
           <div className="link d-flex" style={{ marginTop: "10%" }}>
             <div className="icon"><FaSignOutAlt /></div>
-            <div style={{ display: isOpen ? "block" : "none" }} className="link_text d-flex">Logout</div>
+            <div style={{ display: isOpen ? "block" : "none" }} className="link_text d-flex" onClick={handleLogOut}>Logout</div>
           </div>
         </div>
         <main className="content">{children}</main>

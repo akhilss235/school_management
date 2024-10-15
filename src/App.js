@@ -21,96 +21,106 @@ import StudentRegister from "./Pages/StudentRegister";
 import StudentRegisterupdate from "./Pages/StudentRegisterupdate";
 import StudentRegisterclone from "./Pages/StudentRegisterclone";
 import withSideBarLayout from "./components/Sidebar";
-import { ToastContainer } from "react-bootstrap";
+import { useLogin } from "./hooks/useLogin";
 
 function App() {
+  const { user } = useLogin()
 
   return (
     <div className="App">
       <>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route
-              path="/Dashboard"
-              element={withSideBarLayout(<Dashboard />, true)}
-            />
-            <Route
-              path="/Students"
-              element={withSideBarLayout(<Students />, true)}
-            />
-            <Route
-              path="/OpeningBalance"
-              element={withSideBarLayout(<OpeningBalance />, true)}
-            />
-            <Route
-              path="/JournalEntry"
-              element={withSideBarLayout(<JournalEntry />, true)}
-            />
-            <Route
-              path="/VoucherNumberForm"
-              element={withSideBarLayout(<VoucherNumberForm />, true)}
-            />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/Dashboard"
+            element={withSideBarLayout(<Dashboard />, true)}
+          />
+          {
+            user?.accessTo?.isStudent &&
+            <>
+              <Route
+                path="/Students"
+                element={withSideBarLayout(<Students />, true)}
+              />
+              <Route
+                path="/StudentDetails/:id"
+                element={withSideBarLayout(<StudentDetails />, true)}
+              />
+              <Route
+                path="/StudentRegister"
+                element={withSideBarLayout(<StudentRegister />, true)}
+              />
+              <Route
+                path="/StudentRegisterupdate/:_id"
+                element={withSideBarLayout(<StudentRegisterupdate />, true)}
+              />
+              <Route
+                path="/StudentRegisterclone"
+                element={withSideBarLayout(<StudentRegisterclone />, true)}
+              />
+            </>
+          }
+          {
+            user?.accessTo?.isTransaction &&
+            <>
+              <Route
+                path="/OpeningBalance"
+                element={withSideBarLayout(<OpeningBalance />, true)}
+              />
+              <Route
+                path="/OpeningBalanceDetaies"
+                element={withSideBarLayout(<OpeningBalanceDetaies />, true)}
+              />
+              <Route
+                path="/JournalEntry"
+                element={withSideBarLayout(<JournalEntry />, true)}
+              />
+              <Route
+                path="/VoucherNumberForm"
+                element={withSideBarLayout(<VoucherNumberForm />, true)}
+              />
+            </>
+          }
+          {
+            user?.accessTo?.isAccountView &&
             <Route
               path="/AccountView"
               element={withSideBarLayout(<AccountView />, true)}
             />
+          }
+          {
+            user?.accessTo?.isReports &&
             <Route
               path="/Reports"
               element={withSideBarLayout(<Reports />, true)}
             />
+          }
+          {
+            user?.accessTo?.isAccountMaster &&
             <Route
               path="/AccountMaster"
               element={withSideBarLayout(<AccountMaster />, true)}
             />
-            <Route
-              path="/UserAccess"
-              element={withSideBarLayout(<UserAccess />, true)}
-            />
-            {/* PAGES  */}
-            <Route
-              path="/StudentDetails/:id"
-              element={withSideBarLayout(<StudentDetails />, true)}
-            />
-            <Route
-              path="/UserAccessnew"
-              element={withSideBarLayout(<UserAccessnew />, true)}
-            />{" "}
-            <Route
-              path="/UserAccessnewUpdate/:userId"
-              element={withSideBarLayout(<UserAccessnewUpdate />, true)}
-            />
-            <Route
-              path="/UserAccessnewDetailes/:userId"
-              element={withSideBarLayout(<UserAccessnewDetailes />, true)}
-            />
-            <Route
-              path="/StudentRegister"
-              element={withSideBarLayout(<StudentRegister />, true)}
-            />
-            <Route
-              path="/StudentRegisterupdate/:_id"
-              element={withSideBarLayout(<StudentRegisterupdate />, true)}
-            />
-            {/* models  */}
-            <Route
-              path="/CashBookEntry"
-              element={withSideBarLayout(<CashBookEntry />, true)}
-            />
-            <Route
-              path="/CashBookEntryUpdate"
-              element={withSideBarLayout(<CashBookEntryUpdate />, true)}
-            />
-            <Route
-              path="/OpeningBalanceDetaies"
-              element={withSideBarLayout(<OpeningBalanceDetaies />, true)}
-            />
-            <Route
-            path="/StudentRegisterclone"
-            element={withSideBarLayout(<StudentRegisterclone />, true)}
-            />
-          </Routes>
-        </Router>
+          }
+          <Route
+            path="/UserAccess"
+            element={withSideBarLayout(<UserAccess />, true)}
+          />
+          {/* PAGES  */}
+          
+          <Route
+            path="/UserAccessnew"
+            element={withSideBarLayout(<UserAccessnew />, true)}
+          />{" "}
+          <Route
+            path="/UserAccessnewUpdate/:userId"
+            element={withSideBarLayout(<UserAccessnewUpdate />, true)}
+          />
+          <Route
+            path="/UserAccessnewDetailes/:userId"
+            element={withSideBarLayout(<UserAccessnewDetailes />, true)}
+          />
+        </Routes>
       </>
     </div>
   );

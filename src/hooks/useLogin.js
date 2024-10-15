@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import request from "../Request";
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,8 @@ export const useLogin = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState(initialValue);
     const [errors, setErrors] = useState({});
+    const [user, setUser] = useState({})
+    const token = localStorage.getItem("token")
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -47,6 +49,23 @@ export const useLogin = () => {
         }
     };
 
-    return { onChange, formData, handleSubmit, errors };
+    useEffect(()=>{
+        if(token){
+            const handleGetUser = async()=>{
+                try {
+                    const response = await request.get("getUser") 
+                    setUser(response.data.data)
+        
+                } catch (error) {
+                    console.log("error at fetching user data", error)
+                    alert(error.response.data.message)
+                }
+            }
+            handleGetUser()
+        }
+    },[])
+
+
+    return { onChange, formData, handleSubmit, errors, user };
 }
 
