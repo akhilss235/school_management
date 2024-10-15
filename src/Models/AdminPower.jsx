@@ -2,29 +2,26 @@ import React, { useState } from "react";
 import { Modal, Form, Row, Col, Button, InputGroup } from "react-bootstrap";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import request from "../Request"; 
+import JournalEntryUpdate from "../Models/JournalEntryUpdate"; 
 
-function AdminPower({ open, onClose, selectedEntry, onUpdate }) {
+const AdminPower = ({ open, onClose, accountId }) => {
     const [adminPassword, setAdminPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [modalJournalEntryUpdate, setModalJournalEntryUpdate] = useState(false);
 
-    const togglePasswordVisibility = () => {
-        setShowPassword((prev) => !prev);
-    };
+    const togglePasswordVisibility = () => setShowPassword(prev => !prev);
 
     const handleVerify = async () => {
-        if (!adminPassword) {
-            alert("Please enter your password.");
-            return;
-        }
+        if (!adminPassword) return alert("Please enter your password.");
 
         setLoading(true);
         try {
             const response = await request.post('checkAdmin', { password: adminPassword });
-            if (response.status===201) {
-                onUpdate(selectedEntry);
-                alert("Entry updated successfully!");
-                onClose(); // Close the modal after successful verification
+            if (response.status === 201) {
+                // Open the JournalEntryUpdate modal with the accountId
+                setModalJournalEntryUpdate(true);
+                onClose(); // Close the current modal
             } else {
                 alert("Failed to verify admin password.");
             }
@@ -37,57 +34,43 @@ function AdminPower({ open, onClose, selectedEntry, onUpdate }) {
     };
 
     return (
+      <>
         <Modal show={open} onHide={onClose} size="md" centered>
             <Modal.Body>
                 <div className="container-fluid p-3">
-                    <Form className='adminpowerform roboto-font stylelabel'>
-                        <Row className='justify-content-between align-items-center mt-2 mb-2'>
-                            <Col xs={'auto'}>
+                    <Form className='adminpowerform'>
+                        <Row className='mb-2'>
+                            <Col>
                                 <span className='modalformheading'>Admin Power</span>
                             </Col>
                         </Row>
                         <Row>
-                            <Col className='text-break'>
-                                <p style={{color:'#898989'}}>Authorization is required to edit the information.</p>
+                            <Col>
+                                <p style={{ color: '#898989' }}>Authorization is required to edit the information.</p>
                             </Col>
                         </Row>
                         <Row>
-                            <Col className='d-flex flex-column justify-content-between'>
-                                <Row>
-                                    <Col>
-                                        <Form.Label column sm={12}>Enter Admin Password</Form.Label>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col className='inputpasswordeye'>
-                                        <InputGroup>
-                                            <Form.Control
-                                                type={showPassword ? 'text' : 'password'}
-                                                placeholder="Enter password"
-                                                value={adminPassword}
-                                                onChange={(e) => setAdminPassword(e.target.value)}
-                                            />
-                                            <InputGroup.Text onClick={togglePasswordVisibility}>
-                                                {showPassword ? <AiFillEye size={20} /> : <AiFillEyeInvisible size={20} />}
-                                            </InputGroup.Text>
-                                        </InputGroup>
-                                    </Col>
-                                </Row>
+                            <Col>
+                                <Form.Label>Enter Admin Password</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        type={showPassword ? 'text' : 'password'}
+                                        placeholder="Enter password"
+                                        value={adminPassword}
+                                        onChange={(e) => setAdminPassword(e.target.value)}
+                                    />
+                                    <InputGroup.Text onClick={togglePasswordVisibility}>
+                                        {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+                                    </InputGroup.Text>
+                                </InputGroup>
                             </Col>
                         </Row>
-
-                        <Row className='justify-content-end align-items-center my-4 gy-2'>
+                        <Row className='justify-content-end my-4'>
                             <Col xs={'auto'}>
-                                <Button className='fw-600 modalformdiscardbtn' onClick={onClose}>
-                                    Cancel
-                                </Button>
+                                <Button onClick={onClose}>Cancel</Button>
                             </Col>
                             <Col xs={'auto'}>
-                                <Button 
-                                    className='fw-600 modalformsavebtn' 
-                                    onClick={handleVerify} 
-                                    disabled={loading}
-                                >
+                                <Button onClick={handleVerify} disabled={loading}>
                                     {loading ? "Verifying..." : "Verify"}
                                 </Button>
                             </Col>
@@ -96,7 +79,15 @@ function AdminPower({ open, onClose, selectedEntry, onUpdate }) {
                 </div>
             </Modal.Body>
         </Modal>
+        
+        {/* Pass accountId to JournalEntryUpdate modal */}
+        <JournalEntryUpdate 
+            open={modalJournalEntryUpdate} 
+            onClose={() => setModalJournalEntryUpdate(false)} 
+            accountId={accountId} 
+        />
+      </>
     );
-}
+};
 
 export default AdminPower;

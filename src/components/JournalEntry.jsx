@@ -37,6 +37,8 @@ function JournalEntry() {
   const [transactionMode, setTrasactionMode] = useState("");
   const [selectedAccountHead, setSelectedAccountHead] = useState("");
   const [selectedSubAccountHead, setSelectedSubAccountHead] = useState("");
+    const [selectedAccountId, setSelectedAccountId] = useState(""); // Added this line
+
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = sessionStorage.getItem("currentPage");
     return savedPage ? Number(savedPage) : 1;
@@ -76,8 +78,9 @@ function JournalEntry() {
   };
 
   const handleEditButtonClick = (data) => {
-    setSelectedJournalEntry(data);
+    setSelectedJournalEntry(data.accountId);
     setModalCashBookEntryUpdate(true);
+
   };
 
   return (
@@ -207,6 +210,7 @@ function JournalEntry() {
         onClose={() => setModalCashBookEntryUpdate(false)}
         selectedEntry={selectedJournalEntry}
         onUpdate={handleUpdateEntry}
+        accountId={selectedAccountId}
       />
     </div>
   );
