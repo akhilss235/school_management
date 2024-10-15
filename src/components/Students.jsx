@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom"; 
+import { useLocation } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { FiPlus, FiDownload } from "react-icons/fi";
@@ -9,54 +9,92 @@ import { IconContext } from "react-icons";
 import InputGroup from "react-bootstrap/InputGroup";
 import { LuPenLine } from "react-icons/lu";
 import request from "../Request"; // Adjust the path as necessary
-import Pagination from "../components/Pagination"; 
+import Pagination from "../components/Pagination";
 
-  function Students() {
-    const [students, setStudents] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
-    const itemsPerPage = 10;
-  
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await request.get(`/getAllStudent?search=${searchTerm}&page=${currentPage}&limit=${itemsPerPage}`);
-        setStudents(response.data.data || []);
-        setTotalPages(Math.ceil(response.data.total / itemsPerPage)); // Set total pages for pagination
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    useEffect(() => {
-      fetchData();
-    }, [currentPage, searchTerm]); // Fetch data when currentPage or searchTerm changes
-  
-    const handleSearch = (event) => {
-      setSearchTerm(event.target.value);
-      setCurrentPage(1); // Reset to first page on search
-    };
-  
-    const handlePageChange = (page) => {
-      setCurrentPage(page);
-    };
-  
-    if (loading) {
-      return <div>Loading...</div>;
+function Students() {
+  const [students, setStudents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [selectedClass, setSelectedClass] = useState("");
+  const [selectedSection, setSelectedSection] = useState("");
+  const [selectedGender, setSelectedGender] = useState(""); // State for gender
+  const itemsPerPage = 10;
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await request.get(`/getAllStudent`, {
+        params: {
+          search: searchTerm,
+          page: currentPage,
+          limit: itemsPerPage,
+          class: selectedClass,
+          section: selectedSection,
+          gender: selectedGender, // Include gender in the request
+        },
+      });
+      setStudents(response.data.data || []);
+      setTotalPages(Math.ceil(response.data.total / itemsPerPage)); // Set total pages for pagination
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
-  
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [currentPage, searchTerm, selectedClass, selectedSection, selectedGender]); // Fetch data when any filter changes
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1); // Reset to first page on search
+  };
+
+  const handleClassChange = (event) => {
+    setSelectedClass(event.target.value);
+    setCurrentPage(1); // Reset to first page on class change
+  };
+
+  const handleSectionChange = (event) => {
+    setSelectedSection(event.target.value);
+    setCurrentPage(1); // Reset to first page on section change
+  };
+
+  const handleGenderChange = (event) => {
+    // New handler for gender
+    setSelectedGender(event.target.value);
+    setCurrentPage(1); // Reset to first page on gender change
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
-      <h4><b className="title">Students</b></h4>
-      <div className="row mb-2 mt-5 d-flex justify-content-between align-items-center" style={{ position: 'sticky' }}>
+      <h4>
+        <b className="title">Students</b>
+      </h4>
+      <div
+        className="row mb-2 mt-5 d-flex justify-content-between align-items-center"
+        style={{ position: "sticky" }}
+      >
         {/* Filter Button */}
         <div className="col-auto mt-2">
-          <div className="card d-flex align-items-center justify-content-center filterbody" style={{ height: "30px" }}>
-            <IconContext.Provider value={{ className: "react-icons", size: "1.5em" }}>
+          <div
+            className="card d-flex align-items-center justify-content-center filterbody"
+            style={{ height: "30px" }}
+          >
+            <IconContext.Provider
+              value={{ className: "react-icons", size: "1.5em" }}
+            >
               <div className="d-flex align-items-center">
                 <GoFilter className="Filteric" />
                 <span className="Filteric p-2">Filter</span>
@@ -68,12 +106,33 @@ import Pagination from "../components/Pagination";
         {/* Class Dropdown */}
         <div className="col-auto mt-2">
           <InputGroup>
-            <InputGroup.Text id="basic-addon1" style={{ backgroundColor: "#FFFFFF" }}>
+            <InputGroup.Text
+              id="basic-addon1"
+              style={{ backgroundColor: "#FFFFFF" }}
+            >
               Class:
             </InputGroup.Text>
-            <Form.Select aria-describedby="basic-addon1" style={{ borderLeft: 'none' }}>
+            <Form.Select
+              aria-describedby="basic-addon1"
+              style={{ borderLeft: "none" }}
+              value={selectedClass}
+              onChange={handleClassChange}
+            >
               <option value="">All</option>
-              <option value="">Class A</option>
+              <option value="I">I</option>
+              <option value="II">II</option>
+              <option value="III">III</option>
+              <option value="IV">IV</option>
+              <option value="V">V</option>
+              <option value="VI">VI</option>
+              <option value="VII">VII</option>
+              <option value="VIII">VIII</option>
+              <option value="IX">IX</option>
+              <option value="X">X</option>
+              <option value="XI">XI</option>
+              <option value="XII">XII</option>
+
+              {/* Add more classes as needed */}
             </Form.Select>
           </InputGroup>
         </div>
@@ -81,12 +140,28 @@ import Pagination from "../components/Pagination";
         {/* Section Dropdown */}
         <div className="col-auto mt-2">
           <InputGroup className="InputGroupText">
-            <InputGroup.Text id="basic-addon1" style={{ backgroundColor: "#FFFFFF" }}>
+            <InputGroup.Text
+              id="basic-addon1"
+              style={{ backgroundColor: "#FFFFFF" }}
+            >
               Section:
             </InputGroup.Text>
-            <Form.Select aria-describedby="basic-addon1" style={{ borderLeft: 'none' }}>
+            <Form.Select
+              aria-describedby="basic-addon1"
+              style={{ borderLeft: "none" }}
+              value={selectedSection}
+              onChange={handleSectionChange}
+            >
               <option value="">All</option>
-              <option value="">Section A</option>
+              <option value="A">Section A</option>
+              <option value="B">Section B</option>
+              <option value="C">Section C</option>
+              <option value="D">Section D</option>
+              <option value="E">Section E</option>
+              <option value="F">Section F</option>
+              <option value="G">Section G</option>
+
+              {/* Add more sections as needed */}
             </Form.Select>
           </InputGroup>
         </div>
@@ -94,13 +169,21 @@ import Pagination from "../components/Pagination";
         {/* Gender Dropdown */}
         <div className="col-auto mt-2">
           <InputGroup className="InputGroupText">
-            <InputGroup.Text id="basic-addon1" style={{ backgroundColor: "#FFFFFF" }}>
+            <InputGroup.Text
+              id="basic-addon1"
+              style={{ backgroundColor: "#FFFFFF" }}
+            >
               Gender:
             </InputGroup.Text>
-            <Form.Select aria-describedby="basic-addon1" style={{ borderLeft: 'none' }}>
+            <Form.Select
+              aria-describedby="basic-addon1"
+              style={{ borderLeft: "none" }}
+              value={selectedGender}
+              onChange={handleGenderChange} // Update the onChange handler
+            >
               <option value="">All</option>
-              <option value="">Male</option>
-              <option value="">Female</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </Form.Select>
           </InputGroup>
         </div>
@@ -124,9 +207,12 @@ import Pagination from "../components/Pagination";
         </div>
 
         {/* New Student Button */}
-        <div className="col-auto mt-2" style={{ position: 'sticky' }}>
-          <a href="/StudentRegister" style={{ textDecoration: "none", color: "#505050" }}>
-            <Button className="addbuttons" style={{ position: 'sticky' }}>
+        <div className="col-auto mt-2" style={{ position: "sticky" }}>
+          <a
+            href="/StudentRegister"
+            style={{ textDecoration: "none", color: "#505050" }}
+          >
+            <Button className="addbuttons" style={{ position: "sticky" }}>
               <span style={{ fontSize: "auto" }}>
                 <FiPlus /> New Student
               </span>
@@ -157,7 +243,10 @@ import Pagination from "../components/Pagination";
               {students.map((student) => (
                 <tr key={student._id}>
                   <td>
-                    <a href={`/StudentDetails/${student.emisId}`} style={{ textDecoration: "none", color: "#505050" }}>
+                    <a
+                      href={`/StudentDetails/${student.emisId}`}
+                      style={{ textDecoration: "none", color: "#505050" }}
+                    >
                       {student.emisId}
                     </a>
                   </td>
@@ -170,8 +259,13 @@ import Pagination from "../components/Pagination";
                   <td>{student.phoneNumber}</td>
                   <td>{student.aadharNumber}</td>
                   <td>
-                    <a href={`/StudentRegisterupdate/${student._id}`} style={{ textDecoration: "none", color: "#505050" }}>
-                      <LuPenLine style={{ fontSize: "1.5rem", color: "#3474EB" }} />
+                    <a
+                      href={`/StudentRegisterupdate/${student._id}`}
+                      style={{ textDecoration: "none", color: "#505050" }}
+                    >
+                      <LuPenLine
+                        style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                      />
                     </a>
                   </td>
                 </tr>
