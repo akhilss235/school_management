@@ -4,7 +4,7 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import request from "../Request"; 
 import JournalEntryUpdate from "../Models/JournalEntryUpdate"; 
 
-const AdminPower = ({ open, onClose, accountId }) => {
+const AdminPower = ({ open, onClose, accountId, setModalJournalEntryCashEntry }) => {
     const [adminPassword, setAdminPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -19,9 +19,8 @@ const AdminPower = ({ open, onClose, accountId }) => {
         try {
             const response = await request.post('checkAdmin', { password: adminPassword });
             if (response.status === 201) {
-                // Open the JournalEntryUpdate modal with the accountId
-                setModalJournalEntryUpdate(true);
-                onClose(); // Close the current modal
+                setModalJournalEntryCashEntry(true);
+                onClose(); 
             } else {
                 alert("Failed to verify admin password.");
             }

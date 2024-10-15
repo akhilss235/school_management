@@ -34,10 +34,11 @@ function JournalEntry() {
   const [search, setSearch] = useState("");
   const [toDate, setToDate] = useState("");
   const [fromDate, setFromDate] = useState("");
+  const [isEdit, setIsEdit] = useState(false)
   const [transactionMode, setTrasactionMode] = useState("");
+  const [selectedAccountId, setSelectedAccountId] = useState("");
   const [selectedAccountHead, setSelectedAccountHead] = useState("");
   const [selectedSubAccountHead, setSelectedSubAccountHead] = useState("");
-    const [selectedAccountId, setSelectedAccountId] = useState(""); // Added this line
 
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = sessionStorage.getItem("currentPage");
@@ -78,10 +79,16 @@ function JournalEntry() {
   };
 
   const handleEditButtonClick = (data) => {
-    setSelectedJournalEntry(data.accountId);
+    setSelectedJournalEntry(data._id);
+    setSelectedAccountId(data._id)
     setModalCashBookEntryUpdate(true);
-
+    setIsEdit(true)
   };
+
+  const handleOpenPostModel = ()=>{
+    setModalJournalEntryCashEntry(true)
+    setIsEdit(false)
+  }
 
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
@@ -89,7 +96,7 @@ function JournalEntry() {
         <h4>
           <b className="title">Journal Entry</b>
         </h4>
-        <Button className="addbuttons" onClick={() => setModalJournalEntryCashEntry(true)}>
+        <Button className="addbuttons" onClick={handleOpenPostModel}>
           <FiPlus /> Enter Opening Balance
         </Button>
       </div>
@@ -199,7 +206,9 @@ function JournalEntry() {
       {/* Modals */}
       <JournalEntryCashEntry
         open={modalJournalEntryCashEntry}
+        edit = {isEdit}
         onClose={() => setModalJournalEntryCashEntry(false)}
+        accountId={selectedAccountId}
       />
       <JournalEntryDetailes
         open={modalOpeningBalanceDetaies}
@@ -208,9 +217,9 @@ function JournalEntry() {
       <AdminPower
         open={modalCashBookEntryUpdate}
         onClose={() => setModalCashBookEntryUpdate(false)}
+        setModalJournalEntryCashEntry={setModalJournalEntryCashEntry}
         selectedEntry={selectedJournalEntry}
         onUpdate={handleUpdateEntry}
-        accountId={selectedAccountId}
       />
     </div>
   );

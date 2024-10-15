@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -7,7 +7,7 @@ import useAccountHeads from "../hooks/useAccountHeads";
 import JournalEntryCashEntryDetailes from "../Pages/JournalEntryCashEntryDetailes";
 import request from "../Request";
 
-function JournalEntryCashEntry({ open, onClose, initialData }) {
+function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
   const getTodayDate = () => new Date().toISOString().split("T")[0];
 
   const [formData, setFormData] = useState({
@@ -74,7 +74,6 @@ function JournalEntryCashEntry({ open, onClose, initialData }) {
         onClose(); // Close modal after successful submission
       })
       .catch((err) => {
-        console.error("Error submitting form:", err);
         setErrors({ submit: "Error submitting form. Please try again." });
         if (err.response) {
           console.error("Server responded with:", err.response.data);
@@ -84,6 +83,33 @@ function JournalEntryCashEntry({ open, onClose, initialData }) {
         setLoading(false);
       });
   };
+
+  useEffect(()=>{
+    if(accountId && edit){
+      const handleGetSingleJournal = async()=>{
+        try {
+          const response = await request.get(`getJournalEntryById/${accountId}`)
+          const fetchedData = response.data.data
+          setFormData({
+            rp: fetchedData.rp || "",
+            transactionMode: fetchedData.transactionMode || "",
+            accountHead: fetchedData.accountHead || "",
+            subAccountHead: fetchedData.subAccountHead || "",
+            amount: fetchedData.amount || "", 
+            diocesan: fetchedData.diocesan || 0,
+            narration: fetchedData.narration || "",
+            date: fetchedData.date || getTodayDate(),
+          });
+
+        } catch (error) {
+          console.log("error at fetching signal journal", error)
+          alert(error?.response?.data.message)
+        }
+      }
+      handleGetSingleJournal()
+    }
+  },[accountId, edit])
+
 
   return (
     <Modal show={open} onHide={onClose} size="xl" centered>
@@ -113,7 +139,7 @@ function JournalEntryCashEntry({ open, onClose, initialData }) {
                   <Form.Control
                     type="date"
                     name="date"
-                    value={formData.date}
+                    value={formData?.date}
                     disabled
                     readOnly
                   />
@@ -127,7 +153,7 @@ function JournalEntryCashEntry({ open, onClose, initialData }) {
                   <Form.Label>Receipt/Payment</Form.Label>
                   <Form.Select
                     name="rp"
-                    value={formData.rp}
+                    value={formData?.rp}
                     onChange={handleInputChange}
                   >
                     <option value="">Select</option>
@@ -145,7 +171,7 @@ function JournalEntryCashEntry({ open, onClose, initialData }) {
                   <Form.Label>Account Head</Form.Label>
                   <Form.Select
                     name="accountHead"
-                    value={formData.accountHead}
+                    value={formData?.accountHead}
                     onChange={handleInputChange}
                   >
                     <option value="">Select Account Head</option>
@@ -165,7 +191,7 @@ function JournalEntryCashEntry({ open, onClose, initialData }) {
                   <Form.Label>Sub Account Head</Form.Label>
                   <Form.Select
                     name="subAccountHead"
-                    value={formData.subAccountHead}
+                    value={formData?.subAccountHead}
                     onChange={handleInputChange}
                   >
                     <option value="">Select Sub Account Head</option>
@@ -185,7 +211,7 @@ function JournalEntryCashEntry({ open, onClose, initialData }) {
                   <Form.Label>Transaction Mode</Form.Label>
                   <Form.Select
                     name="transactionMode"
-                    value={formData.transactionMode}
+                    value={formData?.transactionMode}
                     onChange={handleInputChange}
                   >
                     <option value="">Select Transaction Mode</option>
@@ -205,7 +231,7 @@ function JournalEntryCashEntry({ open, onClose, initialData }) {
                   <Form.Control
                     type="number"
                     name="amount"
-                    value={formData.amount}
+                    value={formData?.amount}
                     onChange={handleInputChange}
                   />
                   {errors.amount && (
@@ -222,7 +248,7 @@ function JournalEntryCashEntry({ open, onClose, initialData }) {
                   <Form.Control
                     type="text"
                     name="narration"
-                    value={formData.narration}
+                    value={formData?.narration}
                     onChange={handleInputChange}
                   />
                   {errors.narration && (
