@@ -3,9 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import useAccountHeads from "../hooks/useAccountHeads";
-import JournalEntryCashEntryDetailes from "../Pages/JournalEntryCashEntryDetailes";
 import request from "../Request";
-import JournalEntryCashEntryDetailessecond from "../Pages/JournalEntryCashEntryDetailessecond";
 
 function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
   const [formData, setFormData] = useState({
@@ -13,7 +11,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
     transactionMode: "",
     accountHead: "",
     subAccountHead: "",
-    amount: "", // Keep as string for initial state
+    amount: "",
     diocesan: 0,
     narration: "",
     date: "",
@@ -25,32 +23,20 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.date) {
-      newErrors.date = "date is required.";
-    }
-
-    if (!formData.rp) {
-      newErrors.rp = "Receipt/Payment selection is required.";
-    }
-    if (formData.amount === "" || formData.amount <= 0) {
-      newErrors.amount = "Amount must be a positive number.";
-    }
-    if (!formData.narration) {
-      newErrors.narration = "Narration is required.";
-    }
+    if (!formData.date) newErrors.date = "Date is required.";
+    if (!formData.rp) newErrors.rp = "Receipt/Payment selection is required.";
+    if (!formData.amount || formData.amount <= 0) newErrors.amount = "Amount must be a positive number.";
+    if (!formData.narration) newErrors.narration = "Narration is required.";
     return newErrors;
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    // Convert the amount input to a number if it's the amount field
     const updatedValue = name === "amount" ? parseFloat(value) : value;
-
     setFormData((prevData) => ({ ...prevData, [name]: updatedValue }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrors({});
@@ -62,33 +48,24 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
       return;
     }
 
-    console.log("Submitting form data:", formData);
-
-    request
-      .post("addJournalEntry", formData)
-      .then((response) => {
-        console.log("Form submitted successfully:", response.data);
-        onClose(); // Close modal after successful submission
-      })
-      .catch((err) => {
-        setErrors({ submit: "Error submitting form. Please try again." });
-        if (err.response) {
-          console.error("Server responded with:", err.response.data);
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const response = await request.put(`updateJournal/${accountId}`, formData);
+      console.log("Form submitted successfully:", response.data);
+      onClose();
+    } catch (err) {
+      setErrors({ submit: "Error submitting form. Please try again." });
+      console.error("Server responded with:", err.response?.data);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    if (accountId && edit) {
-      const handleGetSingleJournal = async () => {
+    const fetchJournalEntry = async () => {
+      if (accountId && edit) {
         try {
-          const response = await request.get(
-            `getJournalEntryById/${accountId}`
-          );
-          const fetchedData = response.data.data;
+          const response = await request.get(`getJournalEntryById/${accountId}`);
+          const fetchedData = response.data.data || {};
           setFormData({
             rp: fetchedData.rp || "",
             transactionMode: fetchedData.transactionMode || "",
@@ -97,15 +74,15 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
             amount: fetchedData.amount || "",
             diocesan: fetchedData.diocesan || 0,
             narration: fetchedData.narration || "",
-            date: fetchedData.date ? fetchedData.date.split("T")[0] : "", // Format date correctly
+            date: fetchedData.date ? fetchedData.date.split("T")[0] : "",
           });
         } catch (error) {
           console.log("Error fetching journal entry:", error);
-          alert(error?.response?.data.message);
+          alert(error?.response?.data?.message || "Error fetching data");
         }
-      };
-      handleGetSingleJournal();
-    }
+      }
+    };
+    fetchJournalEntry();
   }, [accountId, edit]);
 
 
@@ -114,43 +91,35 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
     <Modal show={open} onHide={onClose} size="xl" centered>
       <Modal.Body>
         <div className="container-fluid p-3">
-          <Form
-            className="openingbalanceform roboto-font stylelabel"
-            onSubmit={handleSubmit}
-          >
+          <Form onSubmit={handleSubmit}>
+            {/* Header */}
             <Row className="justify-content-between align-items-center mt-2 mb-3">
-              <Col xs={"auto"}>
-                <span className="modalformheading">Cash Book Entry</span>
-              </Col>
-              <Col xs={"auto"}>
-                <IoIosCloseCircleOutline
-                  size={32}
-                  className="modalformclosebtn"
-                  onClick={onClose}
-                />
+              <Col xs="auto"><span className="modalformheading">Cash Book Entry</span></Col>
+              <Col xs="auto">
+                <IoIosCloseCircleOutline size={32} onClick={onClose} />
               </Col>
             </Row>
 
+            {/* Form Fields */}
             <Row>
               <Col sm={12} lg={6}>
                 <Form.Group>
                   <Form.Label>Date</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="date"
-                    value={formData?.date}
+                  <Form.Control 
+                    type="date" 
+                    name="date" 
+                    value={formData.date} 
+                    onChange={handleInputChange} 
                   />
-                  {errors.date && (
-                    <div className="text-danger">{errors.date}</div>
-                  )}
+                  {errors.date && <div className="text-danger">{errors.date}</div>}
                 </Form.Group>
               </Col>
               <Col sm={12} lg={6}>
                 <Form.Group>
                   <Form.Label>Receipt/Payment</Form.Label>
-                  <Form.Select
-                    name="rp"
-                    value={formData?.rp}
+                  <Form.Select 
+                    name="rp" 
+                    value={formData.rp} 
                     onChange={handleInputChange}
                   >
                     <option value="">Select</option>
@@ -166,9 +135,9 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
               <Col lg={6}>
                 <Form.Group>
                   <Form.Label>Account Head</Form.Label>
-                  <Form.Select
-                    name="accountHead"
-                    value={formData?.accountHead}
+                  <Form.Select 
+                    name="accountHead" 
+                    value={formData.accountHead} 
                     onChange={handleInputChange}
                   >
                     <option value="">Select Account Head</option>
@@ -178,17 +147,15 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
                       </option>
                     ))}
                   </Form.Select>
-                  {errors.accountHead && (
-                    <div className="text-danger">{errors.accountHead}</div>
-                  )}
+                  {errors.accountHead && <div className="text-danger">{errors.accountHead}</div>}
                 </Form.Group>
               </Col>
               <Col lg={6}>
                 <Form.Group>
                   <Form.Label>Sub Account Head</Form.Label>
-                  <Form.Select
-                    name="subAccountHead"
-                    value={formData?.subAccountHead}
+                  <Form.Select 
+                    name="subAccountHead" 
+                    value={formData.subAccountHead} 
                     onChange={handleInputChange}
                   >
                     <option value="">Select Sub Account Head</option>
@@ -206,33 +173,29 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
               <Col lg={6}>
                 <Form.Group>
                   <Form.Label>Transaction Mode</Form.Label>
-                  <Form.Select
-                    name="transactionMode"
-                    value={formData?.transactionMode}
+                  <Form.Select 
+                    name="transactionMode" 
+                    value={formData.transactionMode} 
                     onChange={handleInputChange}
                   >
                     <option value="">Select Transaction Mode</option>
                     <option value="Cash">Cash</option>
                     <option value="Bank">Bank</option>
-                    <option value="diocesan">diocesan</option>
+                    <option value="Diocesan">Diocesan</option>
                   </Form.Select>
-                  {errors.transactionMode && (
-                    <div className="text-danger">{errors.transactionMode}</div>
-                  )}
+                  {errors.transactionMode && <div className="text-danger">{errors.transactionMode}</div>}
                 </Form.Group>
               </Col>
               <Col lg={6}>
                 <Form.Group>
                   <Form.Label>Amount</Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="amount"
-                    value={formData?.amount}
-                    onChange={handleInputChange}
+                  <Form.Control 
+                    type="number" 
+                    name="amount" 
+                    value={formData.amount} 
+                    onChange={handleInputChange} 
                   />
-                  {errors.amount && (
-                    <div className="text-danger">{errors.amount}</div>
-                  )}
+                  {errors.amount && <div className="text-danger">{errors.amount}</div>}
                 </Form.Group>
               </Col>
             </Row>
@@ -241,58 +204,30 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
               <Col>
                 <Form.Group>
                   <Form.Label>Narration</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="narration"
-                    value={formData?.narration}
-                    onChange={handleInputChange}
+                  <Form.Control 
+                    type="text" 
+                    name="narration" 
+                    value={formData.narration} 
+                    onChange={handleInputChange} 
                   />
-                  {errors.narration && (
-                    <div className="text-danger">{errors.narration}</div>
-                  )}
+                  {errors.narration && <div className="text-danger">{errors.narration}</div>}
                 </Form.Group>
               </Col>
             </Row>
 
+            {/* Submission Row */}
             <Row className="justify-content-end align-items-center my-4 gy-2">
-              <Col xs={"auto"}>
-                <Button
-                  className="fw-600 modalformdiscardbtn"
-                  onClick={onClose}
-                >
-                  Discard
-                </Button>
+              <Col xs="auto">
+                <Button className="fw-600" onClick={onClose}>Discard</Button>
               </Col>
-              <Col xs={"auto"}>
-                <Button
-                  className="fw-600 modalformsavebtn"
-                  type="submit"
-                  disabled={loading}
-                >
+              <Col xs="auto">
+                <Button className="fw-600" type="submit" disabled={loading}>
                   {loading ? <Spinner animation="border" size="sm" /> : "Save"}
                 </Button>
               </Col>
             </Row>
           </Form>
         </div>
-
-        <Modal.Body
-          style={{ borderColor: "#3474EB", borderTop: "2px solid #3474EB" }}
-        >
-          <Row className="mt-2 mb-3">
-            <Col
-              style={{
-                textAlign: "start",
-              }}
-              className="mx-5"
-            >
-              <JournalEntryCashEntryDetailes />
-            </Col>
-            <Col className="mx-5" style={{ textAlign: "start" }}>
-              <JournalEntryCashEntryDetailessecond />
-            </Col>
-          </Row>
-        </Modal.Body>
       </Modal.Body>
     </Modal>
   );

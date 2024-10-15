@@ -268,7 +268,7 @@ function Journaladd({ open, onClose, initialData }) {
               <JournalEntryCashEntryDetailes />
             </Col>
             <Col className="mx-5" style={{ textAlign: "start" }}>
-              <JournalEntryCashEntryDetailessecond />
+              <JournalEntryCashEntryDetailessecond accountHead={formData?.accountHead}/>
             </Col>
           </Row>
         </Modal.Body>
