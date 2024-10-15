@@ -5,9 +5,13 @@ import { Form, Row, Col, Button } from "react-bootstrap";
 import trash from "../img/trash.svg";
 import StudentUpdateclone from "../Pages/StudentUpdateclone";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import request from "../Request"; // Adjust the path as necessary
 function StudentRegisterupdate() {
   const { _id } = useParams();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     emisId: "",
     admissionNumber: "",
@@ -41,7 +45,7 @@ function StudentRegisterupdate() {
     tcIssueDate: "",
     studentImg: null,
   });
-  
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -118,7 +122,10 @@ function StudentRegisterupdate() {
 
     setLoading(true);
     try {
-      const response = await request.put(`updateStudent/${_id}`, formDataToSubmit);
+      const response = await request.put(
+        `updateStudent/${_id}`,
+        formDataToSubmit
+      );
       console.log("Success:", response.data);
       setSuccess(true);
       setFormData({
@@ -155,6 +162,8 @@ function StudentRegisterupdate() {
         studentImg: null,
       });
       setSelectedFile(null);
+      navigate("/Students");
+
     } catch (error) {
       console.error("Error:", error);
       setError("Failed to submit the form. Please try again.");
@@ -273,8 +282,18 @@ function StudentRegisterupdate() {
                     onChange={handleChange}
                   >
                     <option value="">Select Class</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    <option value="I">I</option>
+                    <option value="II">II</option>
+                    <option value="III">III</option>
+                    <option value="IV">IV</option>
+                    <option value="V">V</option>
+                    <option value="VI">VI</option>
+                    <option value="VII">VII</option>
+                    <option value="VIII">VIII</option>
+                    <option value="IX">IX</option>
+                    <option value="X">X</option>
+                    <option value="XI">XI</option>
+                    <option value="XII">XII</option>
                     {/* Add more classes as needed */}
                   </Form.Select>
                 </Col>
@@ -301,9 +320,14 @@ function StudentRegisterupdate() {
                     value={formData.section}
                     onChange={handleChange}
                   >
-                    <option value="">Select Class</option>
-
-                    <option>1</option>
+                    <option value="">Select section</option>
+                    <option value="A"> A</option>
+                    <option value="B"> B</option>
+                    <option value="C"> C</option>
+                    <option value="D"> D</option>
+                    <option value="E"> E</option>
+                    <option value="F"> F</option>
+                    <option value="G"> G</option> <option>1</option>
                   </Form.Select>
                 </Col>
               </Row>

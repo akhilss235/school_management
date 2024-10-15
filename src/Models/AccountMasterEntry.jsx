@@ -8,9 +8,26 @@ import request from "../Request"; // Adjust the path as necessary
 function AccountMasterEntry({ open, onClose }) {
   const [accountHead, setAccountHead] = useState("");
   const [subAccountHead, setSubAccountHead] = useState("");
+  const [errors, setErrors] = useState({ accountHead: "", subAccountHead: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Reset errors
+    setErrors({ accountHead: "", subAccountHead: "" });
+
+    // Input validation
+    let isValid = true;
+    if (!accountHead) {
+      setErrors((prev) => ({ ...prev, accountHead: "Account Head is required." }));
+      isValid = false;
+    }
+    if (!subAccountHead) {
+      setErrors((prev) => ({ ...prev, subAccountHead: "Sub Account Head is required." }));
+      isValid = false;
+    }
+
+    if (!isValid) return; // Stop submission if there are errors
 
     const data = {
       accountHead,
@@ -58,6 +75,8 @@ function AccountMasterEntry({ open, onClose }) {
                       placeholder=""
                     />
                   </Col>
+                  {errors.accountHead && <div className="text-danger">{errors.accountHead}</div>}
+
                 </Row>
               </Col>
             </Row>
@@ -77,7 +96,10 @@ function AccountMasterEntry({ open, onClose }) {
                       onChange={(e) => setSubAccountHead(e.target.value)}
                       placeholder=""
                     />
+                                      {errors.subAccountHead && <div className="text-danger">{errors.subAccountHead}</div>}
+
                   </Col>
+
                 </Row>
               </Col>
             </Row>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import request from "../Request";
-import { toast } from 'react-toastify';
 
 export const useAccountView = () => {
   const initialValue = {

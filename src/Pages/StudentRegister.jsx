@@ -4,10 +4,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import trash from "../img/trash.svg";
 import StudentRegisterclone from "../Pages/StudentRegisterclone";
+import { useNavigate } from "react-router-dom";
 
 import request from "../Request"; // Adjust the path as necessary
 
 function StudentRegister() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     emisId: "",
     admissionNumber: "",
@@ -130,6 +133,8 @@ function StudentRegister() {
         studentImg: null,
       });
       setSelectedFile(null);
+      navigate("/Students");
+
     } catch (error) {
       console.error("Error:", error);
       setError("Failed to submit the form. Please try again.");
@@ -140,6 +145,12 @@ function StudentRegister() {
 
   return (
     <div className="container-fluid bg-pale-blue py-3">
+          {error && <div className="alert alert-danger">{error}</div>}
+      {success && (
+        <div className="alert alert-success">
+          Student registered successfully!
+        </div>
+      )}
       <Form className="studentregisterform roboto-font" onSubmit={handleSubmit}>
         <div className=" p-3 bg-white rounded-4">
           <Row className="justify-content-between align-items-center mt-2 mb-3">
@@ -399,12 +410,7 @@ function StudentRegister() {
           </Col>
         </Row>
       </Form>
-      {error && <div className="alert alert-danger">{error}</div>}
-      {success && (
-        <div className="alert alert-success">
-          Student registered successfully!
-        </div>
-      )}
+
     </div>
   );
 }

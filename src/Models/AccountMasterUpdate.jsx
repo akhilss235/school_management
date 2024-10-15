@@ -11,6 +11,7 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
         accountHead: '',
         subAccountHead: ''
     });
+    const [formErrors, setFormErrors] = useState({});
 
     useEffect(() => {
         const fetchAccountData = async () => {
@@ -48,12 +49,29 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
             ...prevData,
             [name]: value
         }));
+        setFormErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: value ? '' : 'This field is required'
+        }));
+    };
+
+    const validateForm = () => {
+        const errors = {};
+        if (!formData.accountHead) errors.accountHead = 'Account Head is required';
+        if (!formData.subAccountHead) errors.subAccountHead = 'Sub Account Head is required';
+        setFormErrors(errors);
+        return Object.keys(errors).length === 0;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
+
+        if (!validateForm()) {
+            setLoading(false);
+            return;
+        }
 
         try {
             const response = await request.put(`updateAccountMaster/${accountId}`, formData);
@@ -96,7 +114,9 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
                                     onChange={handleInputChange}
                                     placeholder="Enter Account Head"
                                     required
+                                    isInvalid={!!formErrors.accountHead}
                                 />
+                                <Form.Control.Feedback type="invalid">{formErrors.accountHead}</Form.Control.Feedback>
                             </Col>
                         </Row>
 
@@ -110,7 +130,9 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
                                     onChange={handleInputChange}
                                     placeholder="Enter Sub Account Head"
                                     required
+                                    isInvalid={!!formErrors.subAccountHead}
                                 />
+                                <Form.Control.Feedback type="invalid">{formErrors.subAccountHead}</Form.Control.Feedback>
                             </Col>
                         </Row>
 

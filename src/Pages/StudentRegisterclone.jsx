@@ -520,7 +520,10 @@ const StudentRegisterclone = ({
                 value={formData.tcStatus}
                 onChange={handleChange}
               >
-                <option value="">Select Class</option>
+                <option value="">Select Status</option>
+                <option value="Issue"> Issue</option>
+                <option value="Discontinue"> Discontinue</option>
+                <option value="Terminal Class"> Terminal Class</option>
 
                 <option>1</option>
                 <option>2</option>
