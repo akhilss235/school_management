@@ -21,13 +21,9 @@ import StudentRegister from "./Pages/StudentRegister";
 import StudentRegisterupdate from "./Pages/StudentRegisterupdate";
 import StudentRegisterclone from "./Pages/StudentRegisterclone";
 import withSideBarLayout from "./components/Sidebar";
-<<<<<<< Updated upstream
 import { useLogin } from "./hooks/useLogin";
-=======
-
 import { ToastContainer } from 'react-toastify'; // Import toast
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast
->>>>>>> Stashed changes
 
 function App() {
   const { user } = useLogin()
@@ -107,7 +103,6 @@ function App() {
               path="/AccountMaster"
               element={withSideBarLayout(<AccountMaster />, true)}
             />
-<<<<<<< Updated upstream
           }
           <Route
             path="/UserAccess"
@@ -128,58 +123,8 @@ function App() {
             element={withSideBarLayout(<UserAccessnewDetailes />, true)}
           />
         </Routes>
-=======
-            <Route
-              path="/UserAccess"
-              element={withSideBarLayout(<UserAccess />, true)}
-            />
-            {/* PAGES  */}
-            <Route
-              path="/StudentDetails/:id"
-              element={withSideBarLayout(<StudentDetails />, true)}
-            />
-            <Route
-              path="/UserAccessnew"
-              element={withSideBarLayout(<UserAccessnew />, true)}
-            />{" "}
-            <Route
-              path="/UserAccessnewUpdate/:userId"
-              element={withSideBarLayout(<UserAccessnewUpdate />, true)}
-            />
-            <Route
-              path="/UserAccessnewDetailes/:userId"
-              element={withSideBarLayout(<UserAccessnewDetailes />, true)}
-            />
-            <Route
-              path="/StudentRegister"
-              element={withSideBarLayout(<StudentRegister />, true)}
-            />
-            <Route
-              path="/StudentRegisterupdate/:_id"
-              element={withSideBarLayout(<StudentRegisterupdate />, true)}
-            />
-            {/* models  */}
-            <Route
-              path="/CashBookEntry"
-              element={withSideBarLayout(<CashBookEntry />, true)}
-            />
-            <Route
-              path="/CashBookEntryUpdate"
-              element={withSideBarLayout(<CashBookEntryUpdate />, true)}
-            />
-            <Route
-              path="/OpeningBalanceDetaies"
-              element={withSideBarLayout(<OpeningBalanceDetaies />, true)}
-            />
-            <Route
-            path="/StudentRegisterclone"
-            element={withSideBarLayout(<StudentRegisterclone />, true)}
-            />
-          </Routes>
-        </Router>
 
         <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick draggable pauseOnHover />
->>>>>>> Stashed changes
       </>
     </div>
   );
