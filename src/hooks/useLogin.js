@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import request from "../Request";
 import { useNavigate } from 'react-router-dom';
-
+import {toast} from "react-toastify"
 export const useLogin = () => {
     const initialValue = { userName: '', password: '' }
     const navigate = useNavigate();
@@ -36,11 +36,11 @@ export const useLogin = () => {
                 if (response.status === 201) {
                     setFormData(initialValue)
                     navigate("/dashboard");
-                    localStorage.setItem("token", response.data.item);
+                    localStorage.setItem("token", response?.data?.item);
                 }else{
                     setErrors((prevErrors) => ({
                         ...prevErrors,
-                        form: response.data.message || "Login failed. Please try again."
+                        form: response?.data.message || "Login failed. Please try again."
                     }));
                 }
             } catch (error) {
@@ -54,11 +54,11 @@ export const useLogin = () => {
             const handleGetUser = async()=>{
                 try {
                     const response = await request.get("getUser") 
-                    setUser(response.data.data)
+                    setUser(response?.data?.data)
         
                 } catch (error) {
                     console.log("error at fetching user data", error)
-                    alert(error.response.data.message)
+                    toast.error(error.response.data.message)
                 }
             }
             handleGetUser()
