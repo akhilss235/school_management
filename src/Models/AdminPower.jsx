@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Modal, Form, Row, Col, Button, InputGroup } from "react-bootstrap";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import request from "../Request"; 
-import JournalEntryUpdate from "../Models/JournalEntryUpdate"; 
+// import JournalEntryUpdate from "../Models/JournalEntryUpdate"; 
 
 const AdminPower = ({ open, onClose, accountId, setModalJournalEntryCashEntry }) => {
     const [adminPassword, setAdminPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [modalJournalEntryUpdate, setModalJournalEntryUpdate] = useState(false);
+    // const [modalJournalEntryUpdate, setModalJournalEntryUpdate] = useState(false);
 
     const togglePasswordVisibility = () => setShowPassword(prev => !prev);
 
@@ -80,11 +80,11 @@ const AdminPower = ({ open, onClose, accountId, setModalJournalEntryCashEntry })
         </Modal>
         
         {/* Pass accountId to JournalEntryUpdate modal */}
-        <JournalEntryUpdate 
+        {/* <JournalEntryUpdate 
             open={modalJournalEntryUpdate} 
             onClose={() => setModalJournalEntryUpdate(false)} 
             accountId={accountId} 
-        />
+        /> */}
       </>
     );
 };

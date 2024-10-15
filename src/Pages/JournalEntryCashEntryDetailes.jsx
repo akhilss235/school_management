@@ -10,6 +10,9 @@ function JournalEntryCashEntryDetailes() {
   useEffect(()=>{
       handleFetchDashboardData()
   },[])
+
+
+
   const mainBalanceDetails = [
     {
         id:1,
@@ -32,13 +35,7 @@ function JournalEntryCashEntryDetailes() {
     <div>
         <div className="p-3">
 
-          <Row className="mt-2 mb-3">
-          <Col
-            style={{
-              textAlign: "start",
-            }}
-            className="mx-5"
-          >
+      
             <div style={{marginBottom:"1rem"}}>
               <h5>
                 <b className="title ">MAIN CASH BOOK BALANCE</b>
@@ -66,23 +63,7 @@ function JournalEntryCashEntryDetailes() {
                     </div>
                 ))
             }
-          </Col>
-            <Col className="mx-5" style={{ textAlign: "start" }}>
-              <h5><b className="title">CATHEDRAL NURSERY AND PRIMARY</b></h5>
-              <div className="d-flex justify-content-start mt-4" style={{ textAlign: "center" }}>
-                <h5><b className="title">C/B CASH :</b></h5>
-                <h5 className="mx-4"><b>599485.86</b></h5>
-              </div>
-              <div className="d-flex justify-content-start" style={{ textAlign: "center" }}>
-                <h5><b className="title">C/B BANK :</b></h5>
-                <h5 className="mx-4"><b>599485.86</b></h5>
-              </div>
-              <div className="d-flex justify-content-start" style={{ textAlign: "center" }}>
-                <h5><b className="title">C/B DIO :</b></h5>
-                <h5 className="mx-4"><b>599485.86</b></h5>
-              </div>
-            </Col>
-          </Row>
+
         </div>  
     </div>
   )

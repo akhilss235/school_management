@@ -22,6 +22,7 @@ import Pagination from "./Pagination";
 import { CustomTableColumn } from "../Pages/TransactionMode";
 import { NoData } from "./NoData";
 import { IoPrintOutline } from "react-icons/io5"; 
+import Journaladd from "../Models/Journaladd";
 
 function JournalEntry() {
   const { journalData, journalTotal, handleGetAllJournalData } = useJournal();
@@ -34,17 +35,17 @@ function JournalEntry() {
   const [search, setSearch] = useState("");
   const [toDate, setToDate] = useState("");
   const [fromDate, setFromDate] = useState("");
-  const [isEdit, setIsEdit] = useState(false)
+  const [isEdit, setIsEdit] = useState(false);
   const [transactionMode, setTrasactionMode] = useState("");
   const [selectedAccountId, setSelectedAccountId] = useState("");
   const [selectedAccountHead, setSelectedAccountHead] = useState("");
   const [selectedSubAccountHead, setSelectedSubAccountHead] = useState("");
-
+  const [modalss, setModalss] = useState(false);
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = sessionStorage.getItem("currentPage");
     return savedPage ? Number(savedPage) : 1;
   });
-  const [selectedJournalEntry, setSelectedJournalEntry] = useState(null);
+  const [selectedJournalEntryId, setSelectedJournalEntryId] = useState(null); // New state for selected entry ID
 
   const accoutHead = (data) => {
     return data?.length > 18 ? `${data?.slice(0, 15)}...` : data;
@@ -79,16 +80,15 @@ function JournalEntry() {
   };
 
   const handleEditButtonClick = (data) => {
-    setSelectedJournalEntry(data._id);
-    setSelectedAccountId(data._id)
+    setSelectedJournalEntryId(data._id); // Set ID for editing
+    setSelectedAccountId(data._id);
     setModalCashBookEntryUpdate(true);
-    setIsEdit(true)
+    setIsEdit(true);
   };
 
-  const handleOpenPostModel = ()=>{
-    setModalJournalEntryCashEntry(true)
-    setIsEdit(false)
-  }
+  const handlePostModel = () => {
+    setModalss(true);
+  };
 
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
@@ -96,7 +96,7 @@ function JournalEntry() {
         <h4>
           <b className="title">Journal Entry</b>
         </h4>
-        <Button className="addbuttons" onClick={handleOpenPostModel}>
+        <Button className="addbuttons" onClick={handlePostModel}>
           <FiPlus /> Enter Opening Balance
         </Button>
       </div>
@@ -181,7 +181,10 @@ function JournalEntry() {
                       <LiaEyeSolid
                         style={{ fontSize: "1.5rem", color: "#3474EB" }}
                         className="mx-3"
-                        onClick={() => setModalOpeningBalanceDetaies(true)}
+                        onClick={() => {
+                          setSelectedJournalEntryId(data._id); // Set selected ID
+                          setModalOpeningBalanceDetaies(true);
+                        }}
                       />
                       <LuPenLine
                         style={{ fontSize: "1.5rem", color: "#3474EB" }}
@@ -206,21 +209,29 @@ function JournalEntry() {
       {/* Modals */}
       <JournalEntryCashEntry
         open={modalJournalEntryCashEntry}
-        edit = {isEdit}
+        edit={isEdit}
         onClose={() => setModalJournalEntryCashEntry(false)}
         accountId={selectedAccountId}
       />
       <JournalEntryDetailes
         open={modalOpeningBalanceDetaies}
         onClose={() => setModalOpeningBalanceDetaies(false)}
+        accountId={selectedAccountId}
+        entryId={selectedJournalEntryId} // Pass the selected journal entry ID
       />
       <AdminPower
         open={modalCashBookEntryUpdate}
         onClose={() => setModalCashBookEntryUpdate(false)}
         setModalJournalEntryCashEntry={setModalJournalEntryCashEntry}
-        selectedEntry={selectedJournalEntry}
+        selectedEntry={selectedJournalEntryId}
         onUpdate={handleUpdateEntry}
       />
+      <Journaladd
+        open={modalss}
+        onClose={() => setModalss(false)}
+      />
+
+      
     </div>
   );
 }

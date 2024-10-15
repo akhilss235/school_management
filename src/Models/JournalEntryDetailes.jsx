@@ -1,88 +1,121 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal, Table, Form, Row, Col, Button } from "react-bootstrap";
+import { Modal, Row, Col } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import request from "../Request"; // Ensure this is the correct import path for your request utility
 
+function JournalEntryDetailes({ open, onClose, accountId, entryId }) {
+  const [formData, setFormData] = useState({
+    rp: "",
+    transactionMode: "",
+    accountHead: "",
+    subAccountHead: "",
+    amount: "",
+    diocesan: 0,
+    narration: "",
+    date: "",
+  });
 
-function JournalEntryDetailes({ open, onClose }) {
+  useEffect(() => {
+    if (entryId) {
+      const handleGetSingleJournal = async () => {
+        try {
+          const response = await request.get(`getJournalEntryById/${entryId}`);
+          const fetchedData = response.data.data;
+          setFormData({
+            rp: fetchedData.rp || "",
+            transactionMode: fetchedData.transactionMode || "",
+            accountHead: fetchedData.accountHead || "",
+            subAccountHead: fetchedData.subAccountHead || "",
+            amount: fetchedData.amount || "",
+            diocesan: fetchedData.diocesan || 0,
+            narration: fetchedData.narration || "",
+            date: fetchedData.date ? fetchedData.date.split("T")[0] : "", // Format date correctly
+          });
+        } catch (error) {
+          console.log("Error fetching journal entry:", error);
+          alert(error?.response?.data.message);
+        }
+      };
+      handleGetSingleJournal();
+    }
+  }, [entryId]);
+
   return (
     <Modal show={open} onHide={onClose} size="lg" centered>
-
       <Modal.Body>
-      <div className="container-fluid p-3">
-      <div className='openingbalanceform roboto-font detailsdiv'>
-        <Row className='justify-content-end align-items-center mt-2 mb-3'>
-          <Col xs={'auto'}>
-            <IoIosCloseCircleOutline size={32} className='modalformclosebtn' onClick={onClose}/>
-          </Col>
-        </Row>
-        <Row>
-          <Col className='text-break'>
-            <Row className='mb-2'>
-              <Col sm={6}>
-                <p className='detailslabel'>Date</p>
-              </Col>
-              <Col sm={6}>
-                <p className='detailsvalue'>15/11/2023</p>
+        <div className="container-fluid p-3">
+          <div className='openingbalanceform roboto-font detailsdiv'>
+            <Row className='justify-content-end align-items-center mt-2 mb-3'>
+              <Col xs={'auto'}>
+                <IoIosCloseCircleOutline size={32} className='modalformclosebtn' onClick={onClose} />
               </Col>
             </Row>
-            <Row className='mb-2'>
-              <Col sm={6}>
-                <p className='detailslabel'>Receipt/Payment</p>
-              </Col>
-              <Col sm={6}>
-                <p className='detailsvalue'>Receipt</p>
+            <Row>
+              <Col className='text-break'>
+                <Row className='mb-2'>
+                  <Col sm={6}>
+                    <p className='detailslabel'>Date</p>
+                  </Col>
+                  <Col sm={6}>
+                    <p className='detailsvalue'>{formData.date}</p>
+                  </Col>
+                </Row>
+                <Row className='mb-2'>
+                  <Col sm={6}>
+                    <p className='detailslabel'>Receipt/Payment</p>
+                  </Col>
+                  <Col sm={6}>
+                    <p className='detailsvalue'>{formData.rp}</p>
+                  </Col>
+                </Row>
+                <Row className='mb-2'>
+                  <Col sm={6}>
+                    <p className='detailslabel'>Transaction Mode</p>
+                  </Col>
+                  <Col sm={6}>
+                    <p className='detailsvalue'>{formData.transactionMode}</p>
+                  </Col>
+                </Row>
+                <Row className='mb-2'>
+                  <Col sm={6}>
+                    <p className='detailslabel'>Account Head</p>
+                  </Col>
+                  <Col sm={6}>
+                    <p className='detailsvalue'>{formData.accountHead}</p>
+                  </Col>
+                </Row>
+                <Row className='mb-2'>
+                  <Col sm={6}>
+                    <p className='detailslabel'>Sub Account Head</p>
+                  </Col>
+                  <Col sm={6}>
+                    <p className='detailsvalue'>{formData.subAccountHead}</p>
+                  </Col>
+                </Row>
+                <Row className='mb-2'>
+                  <Col sm={6}>
+                    <p className='detailslabel'>Amount</p>
+                  </Col>
+                  <Col sm={6}>
+                    <p className='detailsvalue'>₹ {formData.amount}</p>
+                  </Col>
+                </Row>
+                <Row className='mb-2'>
+                  <Col sm={6}>
+                    <p className='detailslabel'>Narration</p>
+                  </Col>
+                  <Col sm={6}>
+                    <p className='detailsvalue'>{formData.narration}</p>
+                  </Col>
+                </Row>
               </Col>
             </Row>
-            <Row className='mb-2'>
-              <Col sm={6}>
-                <p className='detailslabel'>Transaction Mode</p>
-              </Col>
-              <Col sm={6}>
-                <p className='detailsvalue'>Cash</p>
-              </Col>
-            </Row>
-            <Row className='mb-2'>
-              <Col sm={6}>
-                <p className='detailslabel'>Account Head</p>
-              </Col>
-              <Col sm={6}>
-                <p className='detailsvalue'>CATHEDRAL NURSERY AND PRIMARY</p>
-              </Col>
-            </Row>
-            <Row className='mb-2'>
-              <Col sm={6}>
-                <p className='detailslabel'>Sub Account Head</p>
-              </Col>
-              <Col sm={6}>
-                <p className='detailsvalue'>BANK DEPOSIT</p>
-              </Col>
-            </Row>
-            <Row className='mb-2'>
-              <Col sm={6}>
-                <p className='detailslabel'>Amount</p>
-              </Col>
-              <Col sm={6}>
-                <p className='detailsvalue'>₹ 2,500</p>
-              </Col>
-            </Row>
-            <Row className='mb-2'>
-              <Col sm={6}>
-                <p className='detailslabel'>Narration</p>
-              </Col>
-              <Col sm={6}>
-                <p className='detailsvalue'>Lorem ipsum dolor sit amet, consectetur..</p>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </div>
-    </div>
+          </div>
+        </div>
       </Modal.Body>
-
     </Modal>
   );
 }
 
-
-export default JournalEntryDetailes
+export default JournalEntryDetailes;
