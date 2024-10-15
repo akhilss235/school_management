@@ -5,6 +5,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import Request from "../Request";
 import useAccountHeads from "../hooks/useAccountHeads";
 import JournalEntryCashEntryDetailes from "../Pages/JournalEntryCashEntryDetailes";
+import request from "../Request";
 
 function JournalEntryCashEntry({ open, onClose, initialData }) {
   const getTodayDate = () => new Date().toISOString().split("T")[0];
@@ -67,7 +68,7 @@ function JournalEntryCashEntry({ open, onClose, initialData }) {
 
     console.log("Submitting form data:", formData);
 
-    Request.post("addJournalEntry", formData)
+    request.post("addJournalEntry", formData)
       .then((response) => {
         console.log("Form submitted successfully:", response.data);
         onClose(); // Close modal after successful submission

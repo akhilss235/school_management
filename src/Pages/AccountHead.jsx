@@ -30,7 +30,7 @@ function AccountHead({ onSelect, isTitle=true, data }) {
                 }          
                 <Form.Select
                     aria-describedby="basic-addon1"
-                    style={{ borderLeft: "none" }}
+                    style={{ borderLeft: isTitle ? "none" : "" }}
                     value={selectedHead}
                     onChange={handleSelectChange}
                 >

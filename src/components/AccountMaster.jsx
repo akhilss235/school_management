@@ -13,6 +13,8 @@ import request from "../Request"; // Adjust the path as necessary
 import { RiDeleteBinLine } from "react-icons/ri";
 import Pagination from "../components/Pagination";
 import AccountHead from "../Pages/AccountHead";
+import { GetDate } from "../Pages/Date";
+import { NoData } from "./NoData";
 
 function AccountMaster() {
     const [modalCashBookEntry, setModalCashBookEntry] = useState(false);
@@ -35,7 +37,7 @@ function AccountMaster() {
 
     const fetchData = async () => {
         try {
-            const response = await request.get(`/getAccountMaster?search=${searchTerm}&fromDate=${fromDate}&toDate=${toDate}&accountHead=${selectedAccountHead}&page=${currentPage}&limit=${itemsPerPage}`);
+            const response = await request.get(`/getAccountMaster?search=${searchTerm}&from=${fromDate}&to=${toDate}&accountHead=${selectedAccountHead}&page=${currentPage}&limit=${itemsPerPage}`);
             if (Array.isArray(response.data.data)) {
                 setAccountData(response.data.data);
                 setTotalPages(Math.ceil(response.data.total / itemsPerPage));
@@ -48,6 +50,10 @@ function AccountMaster() {
             setAccountData([]);
         }
     };
+
+    useEffect(()=>{
+        fetchData()
+    },[fromDate, toDate])
 
     const refreshData = async () => {
         try {
@@ -139,31 +145,11 @@ function AccountMaster() {
                 </div>
 
                 <div className="col-auto mt-2">
-                    <InputGroup>
-                        <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
-                            From:
-                        </InputGroup.Text>
-                        <Form.Control
-                            type="date"
-                            value={fromDate}
-                            onChange={handleFromDateChange}
-                            style={{ fontSize: "small", borderLeft: "none" }}
-                        />
-                    </InputGroup>
+                    <GetDate title={"From"} selectedDate={fromDate} setSelectedDate={setFromDate} />
                 </div>
 
                 <div className="col-auto mt-2">
-                    <InputGroup>
-                        <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
-                            To:
-                        </InputGroup.Text>
-                        <Form.Control
-                            type="date"
-                            value={toDate}
-                            onChange={handleToDateChange}
-                            style={{ fontSize: "small", borderLeft: "none" }}
-                        />
-                    </InputGroup>
+                    <GetDate title={"To"} selectedDate={toDate} setSelectedDate={setToDate} />
                 </div>
 
                 <div className="col-auto mt-2">
@@ -230,12 +216,16 @@ function AccountMaster() {
                         ))}
                     </tbody>
                 </Table>
+                <NoData model={accountData} />
             </div>
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-            />
+            {
+                accountData.length !== 0 &&
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
+            }
             <AccountMasterEntry
                 open={modalCashBookEntry}
                 onClose={() => setModalCashBookEntry(false)}

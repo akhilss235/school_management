@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import request from "../Request"; // Adjust the path as necessary
 import useAccountHeads from '../hooks/useAccountHeads'; // Adjust the import path
+import request from "../Request";
 
 function CashBookEntry({ open, onClose, initialData }) {
   const getTodayDate = () => {
@@ -76,7 +76,7 @@ function CashBookEntry({ open, onClose, initialData }) {
       diocesan: Number(formData.diocesan),
     };
 
-    Request.post("addOpeningBalance", payload)
+    request.post("addOpeningBalance", payload)
       .then((response) => {
         console.log("Form submitted successfully:", response.data);
         onClose();

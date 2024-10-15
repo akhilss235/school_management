@@ -58,7 +58,7 @@ export const useAccountView = () => {
         return response.status;
       } catch (error) {
         console.log("error at posting acount view", error);
-        alert(error.message)
+        alert(error.response.data.message)
       }
     }
   };

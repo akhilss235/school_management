@@ -155,6 +155,8 @@ function Reports() {
               <Form.Control
                 type="text"
                 placeholder="search...."
+                value={search}
+                onChange={(e)=>setSearch(e.target.value)}
                 style={{
                   fontSize: "small",
                   borderLeft: "none",
@@ -177,12 +179,22 @@ function Reports() {
             <tr>
               <th>Date</th>
               <th>Narration</th>
-              <th>R. Cash</th>
-              <th>R. Bank</th>
-              <th>R. Diocesan</th>
-              <th>P. Cash</th>
-              <th>P. Bank</th>
-              <th>P. Diocesan</th>
+              {
+                rp !== "Payment" &&
+                <>
+                  <th>R. Cash</th>
+                  <th>R. Bank</th>
+                  <th>R. Diocesan</th>
+                </>
+              }
+              {
+                rp !== "Receipt" &&
+                <>
+                  <th>P. Cash</th>
+                  <th>P. Bank</th>
+                  <th>P. Diocesan</th>
+                </>
+              }
             </tr>
           </thead>
           <tbody>
@@ -199,12 +211,22 @@ function Reports() {
                     </a>
                     </td>
                     <td>{accoutHead(data.narration) || "-"}</td>
-                    <td>Rs. {getAmountWithCommas(data.r.cash || 0)}</td>
-                    <td>Rs. {getAmountWithCommas(data.r.bank || 0)}</td>
-                    <td>Rs. {getAmountWithCommas(data.r.diocesan || 0)}</td>
-                    <td>Rs. {getAmountWithCommas(data.p.cash || 0)}</td>
-                    <td>Rs. {getAmountWithCommas(data.p.bank || 0)}</td>
-                    <td>Rs. {getAmountWithCommas(data.p.diocesan || 0)}</td>
+                    {
+                      rp !== "Payment" &&
+                      <>
+                        <td>Rs. {getAmountWithCommas(data.r.cash || 0)}</td>
+                        <td>Rs. {getAmountWithCommas(data.r.bank || 0)}</td>
+                        <td>Rs. {getAmountWithCommas(data.r.diocesan || 0)}</td>
+                      </>
+                    }
+                    {
+                      rp !== "Receipt" &&
+                      <>
+                        <td>Rs. {getAmountWithCommas(data.p.cash || 0)}</td>
+                        <td>Rs. {getAmountWithCommas(data.p.bank || 0)}</td>
+                        <td>Rs. {getAmountWithCommas(data.p.diocesan || 0)}</td>
+                      </>
+                    }
                   </tr>
                 ))
             }

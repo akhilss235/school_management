@@ -24,7 +24,7 @@ export const SubAccountHead = ({onSelect, isTitle=true}) => {
         }
         <Form.Select 
             aria-describedby="basic-addon1" 
-            style={{ borderLeft: "none" }}
+            style={{ borderLeft: isTitle ? "none" : "" }}
             value={selectedHead}
             onChange={handleSelectChange}
         >
