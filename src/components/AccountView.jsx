@@ -86,7 +86,6 @@ function AccountView() {
     setSelectedId(id)
     setIsEdit(true)
   }
-
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
       <div className="d-flex justify-content-between">

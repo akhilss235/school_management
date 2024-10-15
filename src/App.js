@@ -4,7 +4,6 @@ import Login from "./components/Login";
 import Dashboard from "../src/components/Dashboard";
 import Students from "./components/Students";
 import OpeningBalance from "../src/components/OpeningBalance";
-
 import JournalEntry from "./components/JournalEntry";
 import VoucherNumberForm from "./components/VoucherNumberForm";
 import AccountView from "./components/AccountView";
@@ -12,7 +11,6 @@ import Reports from "./components/Reports";
 import AccountMaster from "./components/AccountMaster";
 import UserAccess from "./components/UserAccess";
 import StudentDetails from "./Pages/StudentDetails";
-
 import CashBookEntry from "./Models/CashBookEntry";
 import CashBookEntryUpdate from "./Models/CashBookEntryUpdate";
 import OpeningBalanceDetaies from "./Models/OpeningBalanceDetaies";
@@ -22,24 +20,11 @@ import UserAccessnewDetailes from "./Pages/UserAccessnewDetailes";
 import StudentRegister from "./Pages/StudentRegister";
 import StudentRegisterupdate from "./Pages/StudentRegisterupdate";
 import StudentRegisterclone from "./Pages/StudentRegisterclone";
-
-
 import withSideBarLayout from "./components/Sidebar";
-import { useEffect } from "react";
-import Request from "./Request";
+import { ToastContainer } from "react-bootstrap";
 
 function App() {
-  // useEffect(()=>{
-  //   const callApi = async()=>{
-  //     try {
-  //       const response = await Request.get("getAccountMaster")
-  //       console.log("response",response)
-  //     } catch (error) {
-  //       console.log("error", error)
-  //     }
-  //   }
-  //   callApi()
-  // },[])
+
   return (
     <div className="App">
       <>
@@ -120,9 +105,9 @@ function App() {
               path="/OpeningBalanceDetaies"
               element={withSideBarLayout(<OpeningBalanceDetaies />, true)}
             />
-                        <Route
-              path="/StudentRegisterclone"
-              element={withSideBarLayout(<StudentRegisterclone />, true)}
+            <Route
+            path="/StudentRegisterclone"
+            element={withSideBarLayout(<StudentRegisterclone />, true)}
             />
           </Routes>
         </Router>

@@ -9,7 +9,6 @@ import { MainBalance } from "../components/MainBalance";
 function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
   
   const { formData, errors, handleAccountHeadSelect,   handleChange, handleSubmitPost, handleGetAccountViewById, handleUpdate } = useAccountView()
-  console.log("edit", edit)
   const handleSubmit = async(e) => {
     e.preventDefault();
     let status = 0
@@ -24,7 +23,7 @@ function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
   };
 
   useEffect(()=>{
-    if(edit){
+    if(edit && selectedId){
       handleGetAccountViewById(selectedId)
     }
   },[selectedId])

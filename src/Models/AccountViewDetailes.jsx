@@ -8,7 +8,9 @@ function AccountViewDetailes({ open, onClose,selectedId }) {
   const { formData, handleGetAccountViewById } = useAccountView()
 
   useEffect(()=>{
-    handleGetAccountViewById(selectedId)
+    if(selectedId){
+      handleGetAccountViewById(selectedId)
+    }
   },[selectedId])
 
 
