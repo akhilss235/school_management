@@ -80,7 +80,21 @@ const handleDETAILESClick = (accountId) => {
 
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
+    <div className="d-flex justify-content-between">
+      <div className="d-flex">
       <h4><b className="title">Opening Balance Entry</b></h4>
+
+      </div>
+      <div className="d-flex">
+
+          <Button className="addbuttons" onClick={() => setModalCashBookEntry(true)}>
+            <span><FiPlus /> Enter Opening Balance</span>
+          </Button>
+        </div>
+    </div>
+
+
+
       <div className="row mb-2 mt-5 d-flex justify-content-between align-items-center">
         <div className="col-auto mt-2">
           <div className="card d-flex align-items-center justify-content-center filterbody" style={{ height: "30px" }}>
@@ -112,11 +126,7 @@ const handleDETAILESClick = (accountId) => {
 
        </div>
         </div>
-        <div className="col-auto">
-          <Button className="addbuttons" onClick={() => setModalCashBookEntry(true)}>
-            <span><FiPlus /> Enter Opening Balance</span>
-          </Button>
-        </div>
+
       </div>
 
       <div className="table-responsive">
