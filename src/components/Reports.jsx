@@ -69,20 +69,29 @@ function Reports() {
   ]);
 
 
-    const fetchFullReportsData = async () => {
-        if (!reportTotal || reportTotal <= 0) {
-            console.log("Invalid reportTotal, unable to fetch full report data");
-            return []; // Return empty array if reportTotal is invalid
-        }
+  const fetchFullReportsData = async () => {
+    if (!reportTotal || reportTotal <= 0) {
+        return [];
+    }
 
-        try {
-            const response = await request.get(`getAllReports?limit=${reportTotal}`); // Fetch full data using reportTotal
-            return response.data.data; // Return full report data
-        } catch (error) {
-            console.log("Error fetching full report data", error.message);
-            return []; // Return empty array if there's an error
-        }
-    };
+    try {
+        const response = await request.get(`getAllReports?limit=${reportTotal}`);
+        
+        const flattenedData = response.data.data.map(report => ({
+            date: report.date,
+            narration: report.narration,
+            cash_r: report?.r?.cash,
+            bank_r: report?.r?.bank,
+            diocesan_r: report?.r?.diocesan,
+            cash_p: report?.p?.cash,
+            bank_p: report?.p?.bank,
+            diocesan_p: report?.p?.diocesan
+        }));
+        return flattenedData;
+    } catch (error) {
+        return [];
+    }
+};
 
 
 
@@ -101,13 +110,15 @@ function Reports() {
                 columns={[
                   { header: "Date", dataKey: "date" },
                   { header: "Narration", dataKey: "narration" },
-                  { header: "Tra. Mode", dataKey: "transactionMode" },
-                  { header: "Receipt/Payment", dataKey: "rp" },
-                  { header: "Amount", dataKey: "amount" }
+                  { header: "R.Cash", dataKey: "cash_r" },
+                  { header: "R.Bank", dataKey: "bank_r" },
+                  { header: "R. Diocesan", dataKey: "diocesan_r" },
+                  { header: "P.Cash", dataKey: "cash_p" },
+                  { header: "P.Bank", dataKey: "bank_p" },
+                  { header: "P. Diocesan", dataKey: "diocesan_p" }
                 ]} 
                 filename="Reports"
                 heading="Reports"
-
             />
           </div>
         </div>

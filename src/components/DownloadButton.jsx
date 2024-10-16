@@ -3,16 +3,15 @@ import { Button } from "react-bootstrap";
 import { FiDownload } from "react-icons/fi";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { useCommon } from '../hooks/useCommon'; // Import your custom hook
+import { useCommon } from '../hooks/useCommon';
 
 const DownloadButton = ({ fetchData, columns, filename,heading }) => {
-    const { getAmountWithCommas, getDate } = useCommon(); // Destructure the formatting functions
+    const { getAmountWithCommas, getDate } = useCommon();
     const handleDownload = async () => {
-        // Fetch full voucher data
+
         const fullData = await fetchData();
 
         if (!fullData || fullData.length === 0) {
-            console.log("No data to download");
             return; 
         }
 
@@ -42,7 +41,7 @@ const DownloadButton = ({ fetchData, columns, filename,heading }) => {
                 if (column.dataKey.toLowerCase().includes('date') && value) {
                     value = getDate(value);
                 }
-                if (typeof value === 'number' && column.dataKey.toLowerCase().includes('amount')) {
+                if (typeof value === 'number') {
                     value = getAmountWithCommas(value);
                 }
 
@@ -51,9 +50,6 @@ const DownloadButton = ({ fetchData, columns, filename,heading }) => {
             tableRows.push(dataSet);
         });
 
-        
-        // doc.autoTable(tableColumn, tableRows);
-        // Use the original autoTable method to create the table
         doc.autoTable(tableColumn, tableRows, {
             startY: 24, // Set startY to avoid overlapping with the heading
             theme: 'striped', // Optional: Set a table theme
