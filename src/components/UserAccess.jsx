@@ -9,6 +9,7 @@ import request from "../Request";
 import Pagination from "../components/Pagination"; 
 import { useNavigate } from "react-router-dom";
 import { NoData } from "./NoData";
+import Spinner from "react-bootstrap/Spinner"; // Import the Spinner component
 
 function UserAccess() {
   const [users, setUsers] = useState([]);
@@ -17,7 +18,6 @@ function UserAccess() {
   const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 10; // Define items per page
 
-  // Retrieve current page from sessionStorage or set to 1 if not present
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = sessionStorage.getItem("currentPage");
     return savedPage ? Number(savedPage) : 1;
@@ -45,7 +45,6 @@ function UserAccess() {
 
   useEffect(() => {
     fetchData();
-    // Store currentPage in sessionStorage whenever it changes
     sessionStorage.setItem("currentPage", currentPage);
   }, [currentPage, searchTerm]);
 
@@ -57,36 +56,34 @@ function UserAccess() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  function handleUserAccessnew() {
-    navigate("/UserAccessnew");
-  }
+  
   const navigate = useNavigate();
+
+  const handleUserAccessnew = () => {
+    navigate("/UserAccessnew");
+  };
 
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
-    <div className="row mb-5">
-                <div className="col-sm-8">
-                    <h4><b className="title">User List</b></h4>
-                </div>
-                <div className="col d-flex">
-                    <Form.Control
-                        placeholder="Search...."
-                        type="text"
-                        style={{ height: "35px" }}
-                        value={searchTerm}
-                        onChange={handleSearch}
-                    />
-
-                </div>
-              
-                <div className="col  ">
-                        <Button className="addbuttons" style={{ height: "35px", width: "auto" }} onClick={handleUserAccessnew}>
-                                <FiPlus />New User
-                          
-                        </Button>                
-                    </div>
-             
-            </div>
+      <div className="row mb-5">
+        <div className="col-sm-8">
+          <h4><b className="title">User List</b></h4>
+        </div>
+        <div className="col d-flex">
+          <Form.Control
+            placeholder="Search...."
+            type="text"
+            style={{ height: "35px" }}
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
+        <div className="col">
+          <Button className="addbuttons" style={{ height: "35px", width: "auto" }} onClick={handleUserAccessnew}>
+            <FiPlus /> New User
+          </Button>                
+        </div>
+      </div>
       <div className="table-responsive">
         <Table responsive="xl">
           <thead style={{ color: "#505050" }}>
@@ -101,7 +98,9 @@ function UserAccess() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="5" style={{ textAlign: "center" }}>Loading...</td>
+                <td colSpan="5" style={{ textAlign: "center" }}>
+                  <Spinner animation="border" role="status" variant="primary"  />
+                </td>
               </tr>
             ) : error ? (
               <tr>
@@ -127,17 +126,16 @@ function UserAccess() {
                 </tr>
               ))
             )}
-          </tbody>  
+          </tbody>
         </Table>
       </div>
-      {
-        users?.length !== 0 && 
+      {users.length !== 0 && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
         />
-      }
+      )}
     </div>
   );
 }

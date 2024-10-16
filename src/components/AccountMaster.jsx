@@ -15,6 +15,7 @@ import AccountHead from "../Pages/AccountHead";
 import { GetDate } from "../Pages/Date";
 import { NoData } from "./NoData";
 import { toast } from "react-toastify";
+import Spinner from "react-bootstrap/Spinner"; // Import Spinner
 
 function AccountMaster() {
     const [modalCashBookEntry, setModalCashBookEntry] = useState(false);
@@ -34,8 +35,10 @@ function AccountMaster() {
 
     const [totalPages, setTotalPages] = useState(0);
     const [selectedAccountId, setSelectedAccountId] = useState(null);
+    const [loading, setLoading] = useState(false); // Loading state
 
     const fetchData = async () => {
+        setLoading(true); // Start loading
         try {
             const response = await request.get(`/getAccountMaster?search=${searchTerm}&from=${fromDate}&to=${toDate}&accountHead=${selectedAccountHead}&page=${currentPage}&limit=${itemsPerPage}`);
             if (Array.isArray(response.data.data)) {
@@ -48,10 +51,13 @@ function AccountMaster() {
         } catch (error) {
             console.error("Error fetching data:", error);
             setAccountData([]);
+        } finally {
+            setLoading(false); // End loading
         }
     };
 
     const refreshData = async () => {
+        setLoading(true); // Start loading
         try {
             const response = await request.get(`/getAccountMaster?search=${searchTerm}&fromDate=${fromDate}&toDate=${toDate}&accountHead=${selectedAccountHead}&page=${currentPage}&limit=${itemsPerPage}`);
             if (Array.isArray(response.data.data)) {
@@ -64,6 +70,8 @@ function AccountMaster() {
         } catch (error) {
             console.error("Error fetching data:", error);
             setAccountData([]);
+        } finally {
+            setLoading(false); // End loading
         }
     };
 
@@ -109,24 +117,22 @@ function AccountMaster() {
         }
     };
 
-    const isAnySelected = Object.values(selectedAccounts).some(value => value);
+    const isAnySelected = selectedAccounts.length > 0;
 
     const handleEditClick = (accountId) => {
         setSelectedAccountId(accountId);
         setModalCashBookEntryUpdate(true);
     };
 
-    const handleDeleteAccountMaster = async()=>{
+    const handleDeleteAccountMaster = async () => {
         try {
-            await request.post(`deleteAccountMaster`, {"selectedIds":selectedAccounts})
-            toast.success("deleted successfully")
+            await request.post(`deleteAccountMaster`, { "selectedIds": selectedAccounts });
+            toast.success("Deleted successfully");
             await fetchData();
         } catch (error) {
-            console.log("error at deleting account master", error)
+            console.log("Error at deleting account master", error);
         }
-    }
-    
-   
+    };
 
     return (
         <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
@@ -200,33 +206,42 @@ function AccountMaster() {
                         </tr>
                     </thead>
                     <tbody>
-                        {accountData.map(account => (
-                            <tr key={account._id}>
-                                <td>
-                                    <div className="checkbox-wrapper-13">
-                                        <input
-                                            id={`checkbox-${account._id}`}
-                                            type="checkbox"
-                                            checked={selectedAccounts?.includes(account._id)}
-                                            onChange={() => handleCheckboxChange(account._id)}
-                                        />
-                                    </div>
-                                </td>
-                                <td>{new Date(account.createdAt).toLocaleDateString()}</td>
-                                <td>{account.accountHead}</td>
-                                <td>{account.subAccountHead || 'N/A'}</td>
-                                <td>
-                                    <div className="d-flex">
-                                        <LuPenLine
-                                            style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                                            onClick={() => handleEditClick(account._id)}
-                                        />
-                                    </div>
+                        {loading ? (
+                            <tr>
+                                <td colSpan="5" style={{ textAlign: "center" }}>
+                                    <Spinner animation="border" role="status" variant="primary" />
                                 </td>
                             </tr>
-                        ))}
+                        ) : (
+                            accountData.map(account => (
+                                <tr key={account._id}>
+                                    <td>
+                                        <div className="checkbox-wrapper-13">
+                                            <input
+                                                id={`checkbox-${account._id}`}
+                                                type="checkbox"
+                                                checked={selectedAccounts.includes(account._id)}
+                                                onChange={() => handleCheckboxChange(account._id)}
+                                            />
+                                        </div>
+                                    </td>
+                                    <td>{new Date(account.createdAt).toLocaleDateString()}</td>
+                                    <td>{account.accountHead}</td>
+                                    <td>{account.subAccountHead || 'N/A'}</td>
+                                    <td>
+                                        <div className="d-flex">
+                                            <LuPenLine
+                                                style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                                                onClick={() => handleEditClick(account._id)}
+                                            />
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </Table>
+
                 <NoData model={accountData} />
             </div>
             {
