@@ -11,6 +11,7 @@ const StudentRegisterclone = ({
   selectedFile,
   handleFileClick,
   handleFileRemove,
+  error,
 }) => {
   return (
     <div>
@@ -34,7 +35,13 @@ const StudentRegisterclone = ({
                 name="motherTamilName"
                 value={formData.motherTamilName}
                 onChange={handleChange}
+                isInvalid={!!error.motherTamilName}
+                placeholder="Enter Mother Name in Tamil"
+
               />
+              <Form.Control.Feedback type="invalid">
+                {error.motherTamilName}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -57,7 +64,13 @@ const StudentRegisterclone = ({
                 name="aadharNumber"
                 value={formData.aadharNumber}
                 onChange={handleChange}
+                isInvalid={!!error.aadharNumber}
+                placeholder="Enter Aadhar Number"
+
               />
+              <Form.Control.Feedback type="invalid">
+                {error.aadharNumber}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -80,7 +93,13 @@ const StudentRegisterclone = ({
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={handleChange}
+                isInvalid={!!error.phoneNumber}
+                placeholder="Enter Phone Number"
+
               />
+              <Form.Control.Feedback type="invalid">
+                {error.phoneNumber}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -103,8 +122,11 @@ const StudentRegisterclone = ({
                 name="dob"
                 value={formData.dob}
                 onChange={handleChange}
-                required
+                isInvalid={!!error.dob}
               />
+              <Form.Control.Feedback type="invalid">
+                {error.dob}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -129,13 +151,15 @@ const StudentRegisterclone = ({
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
+                isInvalid={!!error.gender}
               >
                 <option value="">Select gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-
-                <option>1</option>
               </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                {error.gender}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -158,7 +182,11 @@ const StudentRegisterclone = ({
                 name="doj"
                 value={formData.doj}
                 onChange={handleChange}
+                isInvalid={!!error.doj}
               />
+              <Form.Control.Feedback type="invalid">
+                {error.doj}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -175,9 +203,15 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="text"
                 name="address"
+                placeholder="Enter Address"
                 value={formData.address}
                 onChange={handleChange}
+                isInvalid={!!error.address}
               />
+
+              <Form.Control.Feedback type="invalid">
+                {error.address}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -201,9 +235,15 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="text"
                 name="pincode"
+                isInvalid={!!error.pincode}
                 value={formData.pincode}
                 onChange={handleChange}
+                placeholder="Enter Pincode"
+
               />
+              <Form.Control.Feedback type="invalid">
+                {error.pincode}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -225,6 +265,8 @@ const StudentRegisterclone = ({
                 name="bloodGroup"
                 value={formData.bloodGroup}
                 onChange={handleChange}
+                isInvalid={!!error.bloodGroup}
+
               >
                 <option value="">Select Blood Group</option>
                 <option value="A+">A+</option>
@@ -235,8 +277,10 @@ const StudentRegisterclone = ({
                 <option value="AB-">AB-</option>
                 <option value="O+">O+</option>
                 <option value="O-">O-</option>
-
               </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                {error.bloodGroup}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -259,7 +303,13 @@ const StudentRegisterclone = ({
                 name="religion"
                 value={formData.religion}
                 onChange={handleChange}
-              />
+                isInvalid={!!error.religion}
+                placeholder="Enter Religion"
+
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.religion}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -282,7 +332,13 @@ const StudentRegisterclone = ({
                 name="moi"
                 value={formData.moi}
                 onChange={handleChange}
-              />
+                isInvalid={!!error.moi}
+                placeholder="Enter Medium of Instruction"
+
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.moi}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -306,9 +362,14 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="text"
                 name="admissionNumber"
+                placeholder="Enter Admission Number"
                 value={formData.admissionNumber}
                 onChange={handleChange}
-              />
+                isInvalid={!!error.admissionNumber}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.admissionNumber}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -331,7 +392,13 @@ const StudentRegisterclone = ({
                 name="community"
                 value={formData.community}
                 onChange={handleChange}
-              />
+                isInvalid={!!error.community}
+                placeholder="Enter Community"
+
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.community}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -354,7 +421,13 @@ const StudentRegisterclone = ({
                 name="disabilityName"
                 value={formData.disabilityName}
                 onChange={handleChange}
-              />
+                placeholder="Enter Disability Group Name"
+
+                isInvalid={!!error.disabilityName}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.disabilityName}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -377,7 +450,13 @@ const StudentRegisterclone = ({
                 name="groupCode"
                 value={formData.groupCode}
                 onChange={handleChange}
-              />
+                placeholder="Enter Group Code"
+
+                isInvalid={!!error.groupCode}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.groupCode}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -402,7 +481,13 @@ const StudentRegisterclone = ({
                 name="motherTongue"
                 value={formData.motherTongue}
                 onChange={handleChange}
-              />
+                isInvalid={!!error.motherTongue}
+                placeholder="Enter Mother Tongue"
+
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.motherTongue}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -425,7 +510,13 @@ const StudentRegisterclone = ({
                 name="bankAccount"
                 value={formData.bankAccount}
                 onChange={handleChange}
-              />
+                isInvalid={!!error.bankAccount}
+                placeholder="Enter Bank Account"
+
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.bankAccount}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -448,7 +539,13 @@ const StudentRegisterclone = ({
                 name="ifscCode"
                 value={formData.ifscCode}
                 onChange={handleChange}
-              />
+                isInvalid={!!error.ifscCode}
+                placeholder="Enter ifsc code"
+
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.ifscCode}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -471,7 +568,13 @@ const StudentRegisterclone = ({
                 name="micr"
                 value={formData.micr}
                 onChange={handleChange}
-              />
+                isInvalid={!!error.micr}
+                placeholder="Enter MICR"
+
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.micr}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -493,11 +596,17 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="text"
-                placeholder=""
+            
                 name="tcNumber"
                 value={formData.tcNumber}
                 onChange={handleChange}
-              />
+                placeholder="Enter TC Number"
+
+                isInvalid={!!error.tcNumber}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {error.tcNumber}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -519,15 +628,17 @@ const StudentRegisterclone = ({
                 name="tcStatus"
                 value={formData.tcStatus}
                 onChange={handleChange}
+                isInvalid={!!error.tcStatus}
+
               >
                 <option value="">Select Status</option>
                 <option value="Issue"> Issue</option>
                 <option value="Discontinue"> Discontinue</option>
                 <option value="Terminal Class"> Terminal Class</option>
-
-                <option>1</option>
-                <option>2</option>
               </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                    {error.tcStatus}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -547,10 +658,16 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="date"
+                
                 name="tcIssueDate"
                 value={formData.tcIssueDate}
                 onChange={handleChange}
+                isInvalid={!!error.tcIssueDate}
+
               />
+                                <Form.Control.Feedback type="invalid">
+                    {error.tcIssueDate}
+                  </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
@@ -559,14 +676,14 @@ const StudentRegisterclone = ({
           xl={3}
           className="d-flex flex-column justify-content-between"
         >
-          <Row>
+          {/* <Row>
             <Col>
               <Form.Label column sm={12}>
                 Photo of Student
               </Form.Label>
             </Col>
-          </Row>
-          <Row className="align-items-center">
+          </Row> */}
+          {/* <Row className="align-items-center">
             <Col>
               <Form.Control
                 id="fileInput"
@@ -628,7 +745,7 @@ const StudentRegisterclone = ({
                 </Row>
               )}
             </Col>
-          </Row>
+          </Row> */}
           <Row>
             <Col className="d-flex justify-content-start align-items-center"></Col>
           </Row>
@@ -638,4 +755,4 @@ const StudentRegisterclone = ({
   );
 };
 
-export default StudentRegisterclone;
+export default StudentRegisterclone;  

@@ -49,7 +49,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
     }
 
     try {
-      const response = await request.put(`updateJournal/${accountId}`, formData);
+      const response = await request.put(`updateJournalEntry/${accountId}`, formData);
       console.log("Form submitted successfully:", response.data);
       onClose();
     } catch (err) {

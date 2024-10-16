@@ -6,6 +6,7 @@ import trash from "../img/trash.svg";
 import StudentUpdateclone from "../Pages/StudentUpdateclone";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify'; // Import toast
 
 import request from "../Request"; // Adjust the path as necessary
 function StudentRegisterupdate() {
@@ -50,7 +51,9 @@ function StudentRegisterupdate() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const handleDiscard = () => {
+    navigate("/Students");
+  };
   useEffect(() => {
     const fetchStudentData = async () => {
       if (_id) {
@@ -59,7 +62,12 @@ function StudentRegisterupdate() {
           const response = await request.get(`getStudentById/${_id}`);
           if (response.data && response.data.data) {
             const studentData = response.data.data;
+            console.log (studentData)
             setFormData(studentData);
+            studentData.dob = studentData.dob.split('T')[0]; // Extract date part
+            studentData.doj = studentData.doj.split('T')[0]; // Extract date part
+            studentData.tcIssueDate = studentData.tcIssueDate.split('T')[0]; // Extract date part
+
           } else {
             setError("No student data found.");
           }
@@ -98,15 +106,55 @@ function StudentRegisterupdate() {
   };
 
   const validateForm = () => {
-    const errors = [];
-    if (!formData.name) errors.push("Name is required.");
-    if (!formData.emisId) errors.push("EMIS ID is required.");
-    // Add more validations as needed
-    if (errors.length) {
-      setError(errors.join(" "));
+    const errors = {};
+
+    if (!formData.emisId) errors.emisId = "EMIS ID is required.";
+    if (!formData.name) errors.name = "Name is required.";
+    if (!formData.nameInTamil)
+      errors.nameInTamil = "Name in Tamil is required.";
+    if (!formData.class) errors.class = "Class selection is required.";
+    if (!formData.section) errors.section = "Section selection is required.";
+    if (!formData.fatherName) errors.fatherName = "Father's name is required.";
+    if (!formData.fatherTamilName)
+      errors.fatherTamilName = "Father's Tamil name is required.";
+    if (!formData.motherTamilName)
+      errors.motherTamilName = "Mother's Tamil name is required.";
+    if (!formData.motherName) errors.motherName = "Mother's name is required.";
+    if (!formData.aadharNumber)
+      errors.aadharNumber = "AadharNumber Tamil  is required.";
+    if (!formData.phoneNumber) errors.phoneNumber = "Phone number is required.";
+    if (!formData.gender) errors.gender = "Gender Tamil is required.";
+    if (!formData.dob) errors.dob = "Date of birth is required.";
+    if (!formData.doj) errors.doj = "Date Of Joining  is required.";
+    if (!formData.address) errors.address = "Address is required.";
+    if (!formData.pincode) errors.pincode = "Pincode is required.";
+    if (!formData.bloodGroup) errors.bloodGroup = "Blood group is required.";
+    if (!formData.religion) errors.religion = "Religion is required.";
+    if (!formData.moi) errors.moi = "Medium of instruction is required.";
+    if (!formData.community) errors.community = "Community is required.";
+    if (!formData.groupCode) errors.groupCode = "GroupCode  is required.";
+    if (!formData.disabilityName)
+      errors.disabilityName = "Disability group is required.";
+    if (!formData.motherTongue)
+      errors.motherTongue = "Mother tongue is required.";
+    if (!formData.bankAccount)
+      errors.bankAccount = "Bank account  is required.";
+    if (!formData.ifscCode) errors.ifscCode = "IFSC code is required.";
+    if (!formData.micr) errors.micr = "MICR is required.";
+    if (!formData.tcNumber) errors.tcNumber = "TC Number is required.";
+    if (!formData.tcStatus) errors.tcStatus = "TC Status is required.";
+
+    if (!formData.tcIssueDate)
+      errors.tcIssueDate = "TC issue date is required.";
+    if (!formData.admissionNumber)
+      errors.admissionNumber = "Admission number is required.";
+
+    if (Object.keys(errors).length) {
+      setError(errors);
       return false;
     }
-    setError("");
+
+    setError({});
     return true;
   };
 
@@ -115,17 +163,14 @@ function StudentRegisterupdate() {
 
     if (!validateForm()) return;
 
-    const formDataToSubmit = new FormData();
-    for (const key in formData) {
-      formDataToSubmit.append(key, formData[key]);
-    }
+    // const formDataToSubmit = new FormData();
+    // for (const key in formData) {
+    //   formDataToSubmit.append(key, formData[key]);
+    // }
 
     setLoading(true);
     try {
-      const response = await request.put(
-        `updateStudent/${_id}`,
-        formDataToSubmit
-      );
+      const response = await request.put(`updateStudent/${_id}`, formData);
       console.log("Success:", response.data);
       setSuccess(true);
       setFormData({
@@ -163,9 +208,11 @@ function StudentRegisterupdate() {
       });
       setSelectedFile(null);
       navigate("/Students");
+      toast.success("Students Update successfully!"); 
 
     } catch (error) {
       console.error("Error:", error);
+      toast.error(error.response?.data?.message); 
       setError("Failed to submit the form. Please try again.");
     } finally {
       setLoading(false);
@@ -184,7 +231,7 @@ function StudentRegisterupdate() {
   return (
     <div className="container-fluid bg-pale-blue py-3">
       <Form className="studentregisterform roboto-font" onSubmit={handleSubmit}>
-        <div className=" p-3 bg-white rounded-4">
+        <div className="p-3 bg-white rounded-4">
           <Row className="justify-content-between align-items-center mt-2 mb-3">
             <Col xs={"auto"}>
               <span className="fw-600 roboto-font" style={{ fontSize: "20px" }}>
@@ -212,7 +259,12 @@ function StudentRegisterupdate() {
                     name="emisId"
                     value={formData.emisId}
                     onChange={handleChange}
+                    isInvalid={!!error.emisId}
+                    placeholder="Enter EMIS ID"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {error.emisId}
+                  </Form.Control.Feedback>
                 </Col>
               </Row>
             </Col>
@@ -235,7 +287,12 @@ function StudentRegisterupdate() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    isInvalid={!!error.name}
+                    placeholder="Enter Name"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {error.name}
+                  </Form.Control.Feedback>
                 </Col>
               </Row>
             </Col>
@@ -258,7 +315,12 @@ function StudentRegisterupdate() {
                     name="nameInTamil"
                     value={formData.nameInTamil}
                     onChange={handleChange}
+                    isInvalid={!!error.nameInTamil}
+                    placeholder="Enter Name in Tamil"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {error.nameInTamil}
+                  </Form.Control.Feedback>
                 </Col>
               </Row>
             </Col>
@@ -280,6 +342,7 @@ function StudentRegisterupdate() {
                     name="class"
                     value={formData.class}
                     onChange={handleChange}
+                    isInvalid={!!error.class}
                   >
                     <option value="">Select Class</option>
                     <option value="I">I</option>
@@ -294,8 +357,10 @@ function StudentRegisterupdate() {
                     <option value="X">X</option>
                     <option value="XI">XI</option>
                     <option value="XII">XII</option>
-                    {/* Add more classes as needed */}
                   </Form.Select>
+                  <Form.Control.Feedback type="invalid">
+                    {error.class}
+                  </Form.Control.Feedback>
                 </Col>
               </Row>
             </Col>
@@ -319,16 +384,20 @@ function StudentRegisterupdate() {
                     name="section"
                     value={formData.section}
                     onChange={handleChange}
+                    isInvalid={!!error.section}
                   >
                     <option value="">Select section</option>
-                    <option value="A"> A</option>
-                    <option value="B"> B</option>
-                    <option value="C"> C</option>
-                    <option value="D"> D</option>
-                    <option value="E"> E</option>
-                    <option value="F"> F</option>
-                    <option value="G"> G</option> <option>1</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="G">G</option>
                   </Form.Select>
+                  <Form.Control.Feedback type="invalid">
+                    {error.section}
+                  </Form.Control.Feedback>
                 </Col>
               </Row>
             </Col>
@@ -351,7 +420,12 @@ function StudentRegisterupdate() {
                     name="fatherName"
                     value={formData.fatherName}
                     onChange={handleChange}
+                    isInvalid={!!error.fatherName}
+                    placeholder="Enter Father's Name"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {error.fatherName}
+                  </Form.Control.Feedback>
                 </Col>
               </Row>
             </Col>
@@ -374,7 +448,12 @@ function StudentRegisterupdate() {
                     name="fatherTamilName"
                     value={formData.fatherTamilName}
                     onChange={handleChange}
+                    isInvalid={!!error.fatherTamilName}
+                    placeholder="Enter Father's Name in Tamil"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {error.fatherTamilName}
+                  </Form.Control.Feedback>
                 </Col>
               </Row>
             </Col>
@@ -397,7 +476,12 @@ function StudentRegisterupdate() {
                     name="motherName"
                     value={formData.motherName}
                     onChange={handleChange}
+                    isInvalid={!!error.motherName}
+                    placeholder="Enter Mother's Name"
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {error.motherName}
+                  </Form.Control.Feedback>
                 </Col>
               </Row>
             </Col>
@@ -409,6 +493,8 @@ function StudentRegisterupdate() {
             selectedFile={selectedFile}
             handleFileClick={handleFileClick}
             handleFileRemove={handleFileRemove}
+            error={error} // Pass error object
+
           />{" "}
         </div>
 
@@ -422,6 +508,7 @@ function StudentRegisterupdate() {
                 border: "none",
                 width: "160px",
               }}
+              onClick={handleDiscard}
             >
               Discard
             </Button>
@@ -442,14 +529,7 @@ function StudentRegisterupdate() {
           </Col>
         </Row>
       </Form>
-      {error && <div className="alert alert-danger">{error}</div>}
-      {success && (
-        <div className="alert alert-success">
-          Student registered successfully!
-        </div>
-      )}
     </div>
   );
 }
-
 export default StudentRegisterupdate;

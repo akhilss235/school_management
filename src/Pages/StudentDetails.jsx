@@ -5,18 +5,20 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { LuPencilLine } from "react-icons/lu";
 import { useParams } from "react-router-dom";
 import request from "../Request";
+import { useNavigate } from "react-router-dom";
 
 const StudentDetails = () => {
-  const { id } = useParams();
+  const { _id } = useParams();
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const fetchUserDetails = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await request.get(`getStudentById/${id}`);
+      const response = await request.get(`getStudentById/${_id}`);
       if (response.data && response.data.data) {
         setUserDetails(response.data.data); // Update this line to access the correct data
       } else {
@@ -32,7 +34,7 @@ const StudentDetails = () => {
 
   useEffect(() => {
     fetchUserDetails();
-  }, [id]);
+  }, [_id]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -78,6 +80,9 @@ const StudentDetails = () => {
       value: new Date(userDetails.tcIssueDate).toLocaleDateString(),
     },
   ];
+  const handleStudentClick = (userDetails) => {
+    navigate(`/StudentRegisterupdate/${userDetails._id}`);
+  };
 
   return (
     <div className="container-fluid bg-pale-blue roboto-font">
@@ -122,6 +127,8 @@ const StudentDetails = () => {
                       <span
                         className="fw-600 poppins-font fw-normal"
                         style={{ lineHeight: "1" }}
+                        onClick={() => handleStudentClick(userDetails)}
+
                       >
                         Edit
                       </span>
@@ -143,7 +150,7 @@ const StudentDetails = () => {
                   </Row>
                 ))}
               </Col>
-              <Col sm={12} lg={4}>
+              {/* <Col sm={12} lg={4}>
                 <Row className="justify-content-center justify-content-lg-end">
                   <Col xs={"auto"}>
                     <div className="studentdetailsimagediv">
@@ -155,7 +162,7 @@ const StudentDetails = () => {
                     </div>
                   </Col>
                 </Row>
-              </Col>
+              </Col> */}
             </Row>
           </div>
         </Col>

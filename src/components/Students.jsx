@@ -10,8 +10,11 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { LuPenLine } from "react-icons/lu";
 import request from "../Request"; // Adjust the path as necessary
 import Pagination from "../components/Pagination";
+import { useNavigate } from "react-router-dom";
 
 function Students() {
+  const navigate = useNavigate();
+
   const [students, setStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
@@ -21,6 +24,9 @@ function Students() {
   const [selectedSection, setSelectedSection] = useState("");
   const [selectedGender, setSelectedGender] = useState(""); // State for gender
   const itemsPerPage = 10;
+  const handleStudentClick = (student) => {
+    navigate(`/StudentDetails/${student._id}`);
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -242,22 +248,33 @@ function Students() {
             <tbody>
               {students.map((student) => (
                 <tr key={student._id}>
-                  <td>
-                    <a
-                      href={`/StudentDetails/${student.emisId}`}
-                      style={{ textDecoration: "none", color: "#505050" }}
-                    >
-                      {student.emisId}
-                    </a>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.emisId}
                   </td>
-                  <td>{student.name}</td>
-                  <td>{student.class}</td>
-                  <td>{student.section}</td>
-                  <td>{student.fatherName}</td>
-                  <td>{student.gender}</td>
-                  <td>{new Date(student.dob).toLocaleDateString()}</td>
-                  <td>{student.phoneNumber}</td>
-                  <td>{student.aadharNumber}</td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.name}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.class}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.section}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.fatherName}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.gender}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {new Date(student.dob).toLocaleDateString()}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.phoneNumber}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.aadharNumber}
+                  </td>
                   <td>
                     <a
                       href={`/StudentRegisterupdate/${student._id}`}

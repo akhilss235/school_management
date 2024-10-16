@@ -50,7 +50,7 @@ function App() {
                 element={withSideBarLayout(<Import />, true)}
               />
               <Route
-                path="/StudentDetails/:id"
+                path="/StudentDetails/:_id"
                 element={withSideBarLayout(<StudentDetails />, true)}
               />
               <Route
