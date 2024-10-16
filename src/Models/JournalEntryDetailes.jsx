@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Row, Col } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import request from "../Request"; // Ensure this is the correct import path for your request utility
+import { toast } from 'react-toastify'; // Import toast
 
 function JournalEntryDetailes({ open, onClose, accountId, entryId }) {
   const [formData, setFormData] = useState({

@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal, Table, Form, Row, Col, Button } from "react-bootstrap";
+import { Modal, Form, Row, Col, Button } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import AccountHead from "../Pages/AccountHead";
 import { useAccountView } from "../hooks/useAccountView";
 import { MainBalance } from "../components/MainBalance";
+import { toast } from 'react-toastify'; // Import toast
 
 function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
   
@@ -18,18 +19,24 @@ function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
     }else{
       status = await handleSubmitPost()
     }
-    if(status === 201 || status === 200){
+    if(status === 201 ){
       onClose()
+      toast.success("Account View added successfully"); 
+    }
+    if(status === 200){
+      onClose()
+      toast.success("Account View updated successfully"); 
+
     }
   };
-  console.log("isEdit", edit)
+  // console.log("isEdit", edit)
 
 
   useEffect(()=>{
     if(edit && selectedId){
       handleGetAccountViewById(selectedId)
     }else if(!edit){
-      console.log("calling all autobots")
+      // console.log("calling all autobots")
       setFormData(initialValue)
     }
   },[edit])
