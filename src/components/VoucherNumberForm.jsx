@@ -109,11 +109,11 @@ function VoucherNumberForm() {
             </IconContext.Provider>
           </div>
 
-          <div>
+
+        </div>
+        <div className="col-auto ">
             <AccountHead onSelect={setSelectedAccountHead} />
           </div>
-        </div>
-
         <div className="col-auto mt-2">
           <Search search={search} setSearch={setSearch} />
         </div>
