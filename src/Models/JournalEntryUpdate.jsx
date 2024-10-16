@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import request from "../Request"; // Ensure this path is correct
+import { toast } from 'react-toastify'; // Import toast
 
 function JournalEntryUpdate({ open, onClose, accountId }) {
   const [formData, setFormData] = useState({
@@ -95,10 +96,13 @@ function JournalEntryUpdate({ open, onClose, accountId }) {
       const response = await request.put(`updateJournal/${accountId}`, payload);
       if (response.data && response.data.message) {
         setShowSuccessMessage(true);
-        onClose(); // Close modal after successful submission
+        onClose(); 
+        toast.success("JournalEntry update successfully"); 
+
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error(error.response?.data?.message); 
       setErrors({ submit: "Error submitting form. Please try again later." });
     } finally {
       setLoading(false);

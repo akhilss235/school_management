@@ -4,6 +4,7 @@ import { Modal, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import useAccountHeads from "../hooks/useAccountHeads";
 import request from "../Request";
+import { toast } from 'react-toastify'; // Import toast
 
 function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
   const [formData, setFormData] = useState({
@@ -51,9 +52,12 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
     try {
       const response = await request.put(`updateJournalEntry/${accountId}`, formData);
       console.log("Form submitted successfully:", response.data);
+      toast.success("JournalEntry update successfully"); 
+
       onClose();
     } catch (err) {
       setErrors({ submit: "Error submitting form. Please try again." });
+      toast.error(err.response?.data?.message); 
       console.error("Server responded with:", err.response?.data);
     } finally {
       setLoading(false);
@@ -78,6 +82,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
           });
         } catch (error) {
           console.log("Error fetching journal entry:", error);
+
           alert(error?.response?.data?.message || "Error fetching data");
         }
       }

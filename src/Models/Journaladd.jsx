@@ -7,19 +7,20 @@ import useAccountHeads from "../hooks/useAccountHeads";
 import JournalEntryCashEntryDetailes from "../Pages/JournalEntryCashEntryDetailes";
 import request from "../Request";
 import JournalEntryCashEntryDetailessecond from "../Pages/JournalEntryCashEntryDetailessecond";
+import { toast } from "react-toastify"; // Import toast
 
 function Journaladd({ open, onClose, initialData }) {
   const getTodayDate = () => new Date().toISOString().split("T")[0];
   const initialValue = {
-      rp: "",
-      transactionMode: "",
-      accountHead: "",
-      subAccountHead: "",
-      amount: "", // Keep as string for initial state
-      diocesan: 0,
-      narration: "",
-      date: getTodayDate(),
-    }
+    rp: "",
+    transactionMode: "",
+    accountHead: "",
+    subAccountHead: "",
+    amount: "", // Keep as string for initial state
+    diocesan: 0,
+    narration: "",
+    date: getTodayDate(),
+  };
   const [formData, setFormData] = useState(initialValue);
 
   const { accountHeads, subAccountHeads } = useAccountHeads();
@@ -69,15 +70,19 @@ function Journaladd({ open, onClose, initialData }) {
 
     console.log("Submitting form data:", formData);
 
-    request.post("addJournalEntry", formData)
+    request
+      .post("addJournalEntry", formData)
       .then((response) => {
         console.log("Form submitted successfully:", response.data);
         onClose(); // Close modal after successful submission
-        setFormData(initialValue)
+        toast.success("JournalEntry add successfully");
+
+        setFormData(initialValue);
       })
       .catch((err) => {
         console.error("Error submitting form:", err);
         setErrors({ submit: "Error submitting form. Please try again." });
+        toast.error(err.response?.data?.message);
         if (err.response) {
           console.error("Server responded with:", err.response.data);
         }
@@ -194,7 +199,6 @@ function Journaladd({ open, onClose, initialData }) {
                     <option value="Cash">Cash</option>
                     <option value="Bank">Bank</option>
                     <option value="diocesan">diocesan</option>
-
                   </Form.Select>
                   {errors.transactionMode && (
                     <div className="text-danger">{errors.transactionMode}</div>
@@ -269,7 +273,9 @@ function Journaladd({ open, onClose, initialData }) {
               <JournalEntryCashEntryDetailes />
             </Col>
             <Col className="mx-5" style={{ textAlign: "start" }}>
-              <JournalEntryCashEntryDetailessecond accountHead={formData?.accountHead}/>
+              <JournalEntryCashEntryDetailessecond
+                accountHead={formData?.accountHead}
+              />
             </Col>
           </Row>
         </Modal.Body>
@@ -278,5 +284,4 @@ function Journaladd({ open, onClose, initialData }) {
   );
 }
 
-
-export default Journaladd
+export default Journaladd;
