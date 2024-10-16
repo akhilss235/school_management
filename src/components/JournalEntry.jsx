@@ -68,7 +68,7 @@ function JournalEntry() {
       transactionMode: transactionMode,
     };
     handleGetAllJournalData(obj);
-  }, [currentPage, fromDate, toDate, selectedAccountHead, selectedSubAccountHead, search, rp, transactionMode]);
+  }, [currentPage, fromDate, toDate, selectedAccountHead, selectedSubAccountHead, search, rp, transactionMode, modalJournalEntryCashEntry,modalss]);
 
   const handleUpdateEntry = async (entry) => {
     const response = await request.updateJournalEntry(entry._id, entry);
@@ -80,7 +80,7 @@ function JournalEntry() {
   };
 
   const handleEditButtonClick = (data) => {
-    setSelectedJournalEntryId(data._id); // Set ID for editing
+    setSelectedJournalEntryId(data._id); 
     setSelectedAccountId(data._id);
     setModalCashBookEntryUpdate(true);
     setIsEdit(true);

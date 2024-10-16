@@ -10,17 +10,17 @@ import JournalEntryCashEntryDetailessecond from "../Pages/JournalEntryCashEntryD
 
 function Journaladd({ open, onClose, initialData }) {
   const getTodayDate = () => new Date().toISOString().split("T")[0];
-
-  const [formData, setFormData] = useState({
-    rp: "",
-    transactionMode: "",
-    accountHead: "",
-    subAccountHead: "",
-    amount: "", // Keep as string for initial state
-    diocesan: 0,
-    narration: "",
-    date: getTodayDate(),
-  });
+  const initialValue = {
+      rp: "",
+      transactionMode: "",
+      accountHead: "",
+      subAccountHead: "",
+      amount: "", // Keep as string for initial state
+      diocesan: 0,
+      narration: "",
+      date: getTodayDate(),
+    }
+  const [formData, setFormData] = useState(initialValue);
 
   const { accountHeads, subAccountHeads } = useAccountHeads();
   const [loading, setLoading] = useState(false);
@@ -73,6 +73,7 @@ function Journaladd({ open, onClose, initialData }) {
       .then((response) => {
         console.log("Form submitted successfully:", response.data);
         onClose(); // Close modal after successful submission
+        setFormData(initialValue)
       })
       .catch((err) => {
         console.error("Error submitting form:", err);
