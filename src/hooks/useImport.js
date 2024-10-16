@@ -4,7 +4,7 @@ export const useImport = () => {
     const data = [
         {
             "d": 1,
-            "description": "Your CSV data should be in the format below. The first line of your CSV file should be the column headers as in the table example. Also, make sure that your file is UTF-8 to avoid unnecessary encoding problems."
+            "description": "Your CSV deaders as in the table examid unnecessary encoding problems."
         },
         {
             "id": 2,
@@ -12,7 +12,7 @@ export const useImport = () => {
         },
         {
             "id": 3,
-            "description": "For Age column 'Age (year)', 'Age (month)', and 'Age (day)', make sure they are numbers only."
+            "description": "For Age numbers only."
         },
         {
             "id": 4,
