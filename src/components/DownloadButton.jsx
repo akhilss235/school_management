@@ -3,36 +3,43 @@ import { Button } from "react-bootstrap";
 import { FiDownload } from "react-icons/fi";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { useCommon } from '../hooks/useCommon'; // Import your custom hook
 
 const DownloadButton = ({ fetchData, columns, filename }) => {
+    const { getAmountWithCommas, getDate } = useCommon(); // Destructure the formatting functions
     const handleDownload = async () => {
         // Fetch full voucher data
         const fullData = await fetchData();
 
         if (!fullData || fullData.length === 0) {
             console.log("No data to download");
-            return; // Exit if no data is available
+            return; 
         }
 
         const doc = new jsPDF();
-        const tableColumn = columns; // Column headers
+        const tableColumn = columns;
         const tableRows = [];
 
-        // Formatting table data into rows
         fullData.forEach((dataRow) => {
-            const dataSet = [
-                dataRow.accountHead,
-                dataRow.remarks,
-                dataRow.cash,
-                dataRow.bank,
-                dataRow.voucherNo,
-            ];
+            const dataSet = columns.map(column => {
+                let value = dataRow[column.dataKey];
+                
+
+                if (column.dataKey.toLowerCase().includes('date') && value) {
+                    value = getDate(value);
+                }
+                if (typeof value === 'number' && column.dataKey.toLowerCase().includes('amount')) {
+                    value = getAmountWithCommas(value);
+                }
+
+                return value !== null && value !== undefined ? value : '';
+            });
             tableRows.push(dataSet);
         });
 
-        // Adding autoTable to the PDF
+        
         doc.autoTable(tableColumn, tableRows);
-        doc.save(`${filename}.pdf`); // Save the PDF with the given filename
+        doc.save(`${filename}.pdf`);
     };
 
     return (

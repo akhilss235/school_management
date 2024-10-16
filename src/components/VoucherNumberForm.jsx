@@ -15,7 +15,7 @@ import AccountHead from "../Pages/AccountHead";
 import { Search } from "../Pages/Search";
 import { NoData } from "./NoData";
 import Pagination from "./Pagination";
-import DownloadButton from './DownloadButton';  // Import the reusable button component
+import DownloadButton from './DownloadButton';
 import request from "../Request"; 
 
 function VoucherNumberForm() {
@@ -55,7 +55,6 @@ function VoucherNumberForm() {
   }, [selectedAccountHead, search, currentPage, modalJournalEntryCashEntry ]);
 
 
-    // Function to fetch full voucher data for PDF download
     const fetchFullVoucherData = async () => {
       if (!voucherTotal || voucherTotal <= 0) {
           console.log("Invalid voucherTotal, unable to fetch full voucher data");
@@ -127,9 +126,15 @@ function VoucherNumberForm() {
         <div className="col-auto mt-2">
           <div className="d-flex align-items-center">
             <DownloadButton
-                fetchData={fetchFullVoucherData} // Pass fetch function
-                columns={["Account Head", "Remarks", "Cash", "Bank", "Voucher No"]} // Define your columns
-                filename="Vouchers" // Define your desired filename
+                fetchData={fetchFullVoucherData}
+                columns={[
+                  { header: "Account Head", dataKey: "accountHead" },
+                  { header: "Remarks", dataKey: "remarks" },
+                  { header: "Cash", dataKey: "cash" },
+                  { header: "Bank", dataKey: "bank" },
+                  { header: "Voucher No", dataKey: "voucherNo" }
+                ]} 
+                filename="Vouchers"
             />
           </div>
         </div>

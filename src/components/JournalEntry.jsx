@@ -23,6 +23,8 @@ import { CustomTableColumn } from "../Pages/TransactionMode";
 import { NoData } from "./NoData";
 import { IoPrintOutline } from "react-icons/io5"; 
 import Journaladd from "../Models/Journaladd";
+import DownloadButton from './DownloadButton';
+
 
 function JournalEntry() {
   const { journalData, journalTotal, handleGetAllJournalData } = useJournal();
@@ -70,6 +72,25 @@ function JournalEntry() {
     handleGetAllJournalData(obj);
   }, [currentPage, fromDate, toDate, selectedAccountHead, selectedSubAccountHead, search, rp, transactionMode, modalJournalEntryCashEntry,modalss]);
 
+
+
+const fetchFullJournalData = async () => {
+    if (!journalTotal || journalTotal <= 0) {
+        console.log("Invalid journalTotal, unable to fetch full journal data");
+        return []; // Return empty array if journalTotal is invalid
+    }
+
+    try {
+        const response = await request.get(`getJournalEntry?limit=${journalTotal}`); // Fetch full data using journalTotal
+        
+        return response.data.data; // Return full journal data for PDF
+    } catch (error) {
+        console.log("Error fetching full journal data", error.message);
+        return []; // Return empty array if there's an error
+    }
+};
+
+
   const handleUpdateEntry = async (entry) => {
     const response = await request.updateJournalEntry(entry._id, entry);
     if (response.success) {
@@ -107,16 +128,19 @@ function JournalEntry() {
           <GetDate title={"To"} selectedDate={toDate} setSelectedDate={setToDate} />
         </div>
         <div className="d-flex align-items-center">
-          <Button variant="link" className="text-center me-3" style={{ textDecoration: "none" }}>
-            <FiDownload style={{ fontSize: "1.5rem", color: "#3474EB" }} />
-            <br />
-            <label style={{ textAlign: 'center', color: "#000000" }}>Download</label>
-          </Button>
-          <Button variant="link" className="text-center" style={{ textDecoration: "none" }}>
-            <IoPrintOutline style={{ fontSize: "1.5rem", color: "#3474EB" }} />
-            <br />
-            <label style={{ color: "#000000" }}>Print</label>
-          </Button>
+          <DownloadButton
+              fetchData={fetchFullJournalData}
+              columns={[
+                { header: "Date", dataKey: "date" },
+                { header: "Receipt/Payment", dataKey: "rp" },
+                { header: "Tra. Mode", dataKey: "transactionMode" },
+                { header: "Account Head", dataKey: "accountHead" },
+                { header: "Sub Account Head", dataKey: "subAccountHead" },
+                { header: "Narration", dataKey: "narration" },
+                { header: "Amount", dataKey: "amount" }
+              ]} 
+              filename="JournalEntry"
+          />
         </div>
       </div>
 
