@@ -46,7 +46,7 @@ function App() {
                 element={withSideBarLayout(<Students />, true)}
               />
               <Route
-                path="/Students/Imports"
+                path="/Students/Import"
                 element={withSideBarLayout(<Import />, true)}
               />
               <Route

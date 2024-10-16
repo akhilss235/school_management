@@ -212,7 +212,10 @@ function Students() {
 
         {/* Download Icon */}
         <div className="col-auto d-flex align-items-center">
-          <FiDownload style={{ fontSize: "1.5rem", color: "#3474EB" }} />
+        <a href='/Students/Import'>
+        <FiDownload style={{ fontSize: "1.5rem", color: "#3474EB" }} />
+
+        </a>
         </div>
 
         {/* New Student Button */}
