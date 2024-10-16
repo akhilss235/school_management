@@ -4,10 +4,12 @@ import { Modal } from "react-bootstrap";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import request from "../Request"; // Adjust the path as necessary
+import useAccountHeads from "../hooks/useAccountHeads";
 
 function AccountMasterEntry({ open, onClose }) {
   const [accountHead, setAccountHead] = useState("");
   const [subAccountHead, setSubAccountHead] = useState("");
+  const { subAccountHeads } = useAccountHeads()
   const [errors, setErrors] = useState({ accountHead: "", subAccountHead: "" });
 
   const handleSubmit = async (e) => {
@@ -93,8 +95,7 @@ function AccountMasterEntry({ open, onClose }) {
                       onChange={(e) => setSubAccountHead(e.target.value)}
                       placeholder=""
                     />
-                                      {errors.subAccountHead && <div className="text-danger">{errors.subAccountHead}</div>}
-
+                    {errors.subAccountHead && <div className="text-danger">{errors.subAccountHead}</div>}
                   </Col>
 
                 </Row>

@@ -5,6 +5,7 @@ import { Modal, Form, Row, Col, Button } from "react-bootstrap";
 import { InputGroup} from 'react-bootstrap';
 import { AiFillEyeInvisible,AiFillEye  } from "react-icons/ai";
 import request from "../Request";
+import { toast } from "react-toastify";
 
 function VoucherAdmin({ open, onClose, setModalJournalEntryCashEntry }) {
     const [adminPassword, setAdminPassword] = useState("");
@@ -21,11 +22,11 @@ function VoucherAdmin({ open, onClose, setModalJournalEntryCashEntry }) {
                 setModalJournalEntryCashEntry(true);
                 onClose(); 
             } else {
-                alert("Failed to verify admin password.");
+                toast.error("Failed to verify admin password.");
             }
         } catch (error) {
             console.error("Error verifying admin password:", error);
-            alert("An error occurred while verifying the password.");
+            toast.error("An error occurred while verifying the password.");
         } finally {
             setLoading(false);
         }

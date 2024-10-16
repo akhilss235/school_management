@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import request from "../Request";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function UserAccessnew() {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ function UserAccessnew() {
   
       const { name, phoneNumber, userName, password } = formData;
       if (!name || !phoneNumber || !userName || !password) {
-          alert("Please fill in all required fields.");
+          toast.warn("Please fill in all required fields.");
           return;
       }
   
@@ -55,15 +56,15 @@ function UserAccessnew() {
           // Check for a successful response status
           if (response.status === 201) {
               console.log("User access set successfully");
-              alert(response.data.message || "User created successfully"); // Show the message from the server
+              toast.success(response.data.message || "User created successfully"); // Show the message from the server
               navigate("/UserAccess");
           } else {
               console.error("Unexpected response:", response.data);
-              alert("Failed to set user access. Please try again.");
+              toast.error("Failed to set user access. Please try again.");
           }
       } catch (error) {
           console.error("Error occurred during the request:", error);
-          alert("An error occurred. Please check your connection and try again.");
+          toast.error("An error occurred. Please check your connection and try again.");
       }
   };
   

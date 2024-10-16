@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Form, Row, Col, Button, InputGroup } from "react-bootstrap";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import request from "../Request"; 
+import { toast } from "react-toastify";
 // import JournalEntryUpdate from "../Models/JournalEntryUpdate"; 
 
 const AdminPower = ({ open, onClose, accountId, setModalJournalEntryCashEntry }) => {
@@ -13,7 +14,7 @@ const AdminPower = ({ open, onClose, accountId, setModalJournalEntryCashEntry })
     const togglePasswordVisibility = () => setShowPassword(prev => !prev);
 
     const handleVerify = async () => {
-        if (!adminPassword) return alert("Please enter your password.");
+        if (!adminPassword) return toast("Please enter your password.");
 
         setLoading(true);
         try {
@@ -22,11 +23,11 @@ const AdminPower = ({ open, onClose, accountId, setModalJournalEntryCashEntry })
                 setModalJournalEntryCashEntry(true);
                 onClose(); 
             } else {
-                alert("Failed to verify admin password.");
+                toast("Failed to verify admin password.");
             }
         } catch (error) {
             console.error("Error verifying admin password:", error);
-            alert("An error occurred while verifying the password.");
+            toast("An error occurred while verifying the password.");
         } finally {
             setLoading(false);
         }
