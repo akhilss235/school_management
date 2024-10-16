@@ -33,6 +33,7 @@ function AccountHead({ onSelect, isTitle=true, data }) {
                     style={{ borderLeft: isTitle ? "none" : "" }}
                     value={selectedHead}
                     onChange={handleSelectChange}
+                    
                 >
                     <option value="">All</option>
                     {accountHeads.map((accountHead, index) => (

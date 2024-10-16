@@ -4,6 +4,7 @@ import { Modal, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import request from "../Request"; // Adjust the path as necessary
 import useAccountHeads from '../hooks/useAccountHeads'; // Adjust the import path
+import { toast } from 'react-toastify'; // Import toast
 
 function CashBookEntryUpdate({ open, onClose, accountId }) {
   const [formData, setFormData] = useState({
@@ -97,10 +98,14 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
   
       if (response.data && response.data.message) {
         console.log(response.data.message); // Optionally handle success feedback
+        toast.success("OpeningBalance Update successfully"); 
+
         onClose(); // Close modal after successful submission
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error(error.response?.data?.message); 
+
       setErrors({ submit: "Error submitting form. Please try again later." });
     } finally {
       setLoading(false);

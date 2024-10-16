@@ -91,6 +91,10 @@ const handleDETAILESClick = (accountId) => {
               </div>
             </IconContext.Provider>
           </div>
+
+
+
+          
         </div>
         <div className="col-auto mt-2">
           <AccountHead onSelect={setSelectedAccountHead} />
@@ -98,11 +102,15 @@ const handleDETAILESClick = (accountId) => {
         <div className="col-auto mt-2">
           <SubAccountHead onSelect={setSelectedSubAccountHead} />
         </div>
-        <div className="col-auto mt-2">
-          <GetDate title={"From"} selectedDate={fromDate} setSelectedDate={setFromDate} />
+        <div className="col-auto mt-2 d-flex ">
+        <div className="mx-2">
+        <GetDate title={"From"} selectedDate={fromDate} setSelectedDate={setFromDate} />
+
         </div>
-        <div className="col-auto mt-2">
-          <GetDate title={"To"} selectedDate={toDate} setSelectedDate={setToDate} />
+       <div>
+       <GetDate title={"To"} selectedDate={toDate} setSelectedDate={setToDate} />
+
+       </div>
         </div>
         <div className="col-auto">
           <Button className="addbuttons" onClick={() => setModalCashBookEntry(true)}>

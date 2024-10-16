@@ -4,6 +4,7 @@ import { Modal, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import useAccountHeads from '../hooks/useAccountHeads'; // Adjust the import path
 import request from "../Request";
+import { toast } from 'react-toastify'; // Import toast
 
 function CashBookEntry({ open, onClose, initialData }) {
   const getTodayDate = () => {
@@ -83,10 +84,13 @@ function CashBookEntry({ open, onClose, initialData }) {
     request.post("addOpeningBalance", payload)
       .then((response) => {
         console.log("Form submitted successfully:", response.data);
+        toast.success("OpeningBalance added successfully"); 
+
         onClose();
       })
       .catch((err) => {
         console.error("Error submitting form:", err);
+        toast.error(err.response?.data?.message); 
         setErrors({ submit: "Error submitting form. Please try again." });
       })
       .finally(() => {
