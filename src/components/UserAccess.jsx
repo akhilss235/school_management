@@ -98,9 +98,9 @@ function UserAccess() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="5" style={{ textAlign: "center" }}>
+                {/* <td colSpan="5" style={{ textAlign: "center" }}>
                   <Spinner animation="border" role="status" variant="primary"  />
-                </td>
+                </td> */}
               </tr>
             ) : error ? (
               <tr>

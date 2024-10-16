@@ -125,18 +125,22 @@ function Reports() {
       </div>
 
       <div className="row mb-2 mt-5 ">
-        <div className="col-sm-6 mt-2">
+        <div className="col-sm-6 mt-2" >
+        <Form.Label></Form.Label>
+
           <CustomTableColumn title={"Receipt/Payment"} selectedItem={rp} setSelectedItem={setRp}/>
         </div>
 
         {/* Section Dropdown */}
-        <div className="col mt-2">
+        <div className="col ">
           <Form.Label>Select Account Head</Form.Label>
           <AccountHead onSelect={setSelectedAccountHead} isTitle={false} />
         </div>
       </div>
+
+
       <div className="row mb-2 mt-2 ">
-        <div className="col-sm-6 mt-2">
+        <div className="col-sm-6 ">
           <Form.Label>Select Sub Account Head</Form.Label>
           <SubAccountHead
             onSelect={setSelectedSubAccountHead}
@@ -145,8 +149,10 @@ function Reports() {
         </div>
 
         {/* Section Dropdown */}
-        <div className="col d-flex mt-2">
-          <div>
+        <div className="col mt-2">
+        <Form.Label></Form.Label>
+<div className="d-flex">
+<div>
             <GetDate
               title={"From"}
               selectedDate={fromDate}
@@ -160,35 +166,23 @@ function Reports() {
               setSelectedDate={setToDate}
             />
           </div>
-          <div className="mt-2">
-            <InputGroup
-              className="mt-4 mx-2"
-              style={{ borderRadius: "150px", overflow: "hidden" }}
-            >
-              <InputGroup.Text
-                id="basic-addon1"
-                style={{
-                  backgroundColor: "#3474EB",
-                  color: "#FFFFFF",
-                }}
-              >
-                <FaSearch style={{ color: "#FFFFFF" }} />
-              </InputGroup.Text>
+          <div >
+
+
               <Form.Control
                 type="text"
                 placeholder="search...."
                 value={search}
                 onChange={(e)=>setSearch(e.target.value)}
                 style={{
-                  fontSize: "small",
-                  borderLeft: "none",
-                  backgroundColor: "#3474EB",
+              
                   color: "#FFFFFF",
                 }}
-                className="placeholder-white" // Add a class for custom styling
               />
-            </InputGroup>
+          
           </div>
+</div>
+         
         </div>
       </div>
 
