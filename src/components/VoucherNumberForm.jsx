@@ -57,22 +57,16 @@ function VoucherNumberForm() {
 
     const fetchFullVoucherData = async () => {
       if (!voucherTotal || voucherTotal <= 0) {
-          console.log("Invalid voucherTotal, unable to fetch full voucher data");
-          return []; // Return empty array if voucherTotal is invalid
+          return [];
       }
 
       try {
-          const response = await request.get(`getAllVoucher?limit=${voucherTotal}`); // Fetch full data using voucherTotal
-          return response.data.data; // Return full voucher data for PDF
+          const response = await request.get(`getAllVoucher?limit=${voucherTotal}`);
+          return response?.data?.data;
       } catch (error) {
-          console.log("Error fetching full voucher data", error.message);
-          return []; // Return empty array if there's an error
+          return [];
       }
   };
-
-
-  
-
 
 
   const handleOpenAdminModal = (id)=>{
@@ -136,7 +130,6 @@ function VoucherNumberForm() {
                 ]} 
                 filename="Vouchers"
                 heading="Vouchers"
-
             />
           </div>
         </div>

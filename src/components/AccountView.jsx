@@ -82,20 +82,17 @@ function AccountView() {
 
   const fetchFullAccountViewData = async () => {
     if (!accountViewTotal || accountViewTotal <= 0) {
-        console.log("Invalid accountViewTotal, unable to fetch full account view data");
-        return []; // Return empty array if accountViewTotal is invalid
+        return [];
     }
 
     try {
-        const response = await request.get(`getAllAccountView?limit=${accountViewTotal}`); // Fetch full account view data using accountViewTotal
+        const response = await request.get(`getAllAccountView?limit=${accountViewTotal}`);
         
-        return response.data.data; // Return full account view data for further use
+        return response?.data?.data;
     } catch (error) {
-        console.log("Error fetching full account view data", error.message);
-        return []; // Return empty array if there's an error
+        return [];
     }
 };
-
 
 
   const handleOpenModal = (id)=>{

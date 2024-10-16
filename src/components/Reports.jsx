@@ -77,7 +77,7 @@ function Reports() {
     try {
         const response = await request.get(`getAllReports?limit=${reportTotal}`);
         
-        const flattenedData = response.data.data.map(report => ({
+        const flattenedData = response?.data?.data.map(report => ({
             date: report.date,
             narration: report.narration,
             cash_r: report?.r?.cash,

@@ -88,19 +88,17 @@ function JournalEntry() {
 
   const fetchFullJournalData = async () => {
     if (!journalTotal || journalTotal <= 0) {
-      console.log("Invalid journalTotal, unable to fetch full journal data");
-      return []; // Return empty array if journalTotal is invalid
+      return [];
     }
 
     try {
       const response = await request.get(
         `getJournalEntry?limit=${journalTotal}`
-      ); // Fetch full data using journalTotal
+      );
 
-      return response.data.data; // Return full journal data for PDF
+      return response?.data?.data;
     } catch (error) {
-      console.log("Error fetching full journal data", error.message);
-      return []; // Return empty array if there's an error
+      return [];
     }
   };
 
@@ -166,6 +164,7 @@ function JournalEntry() {
               { header: "Amount", dataKey: "amount" },
             ]}
             filename="JournalEntry"
+            heading="JournalEntry"
           />
         </div>
       </div>
