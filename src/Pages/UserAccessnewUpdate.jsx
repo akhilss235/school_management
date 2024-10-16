@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom"; 
 import { Form, Row, Col, Button } from "react-bootstrap";
 import request from "../Request";
+import { toast } from "react-toastify";
 
 function UserAccessnewUpdate() {
     const { userId } = useParams();
@@ -89,13 +90,19 @@ function UserAccessnewUpdate() {
             if (response.status === 200) {
                 console.log("User access set successfully");
                 navigate(`/UserAccess?page=${currentPage}`, { state: { updatedUserId: userId, itemsPerPage } });
+                toast.success("UserAccess updated successfully"); 
+
             } else {
                 setError("Failed to update user access. Please try again.");
                 console.error("Error setting user access:", response.data);
+                toast.error(error.response?.data?.message); 
+
             }
         } catch (error) {
             setError("Error updating user. Please try again.");
             console.error("Error updating user:", error);
+            toast.error(error.response?.data?.message); 
+
         }
     };
 

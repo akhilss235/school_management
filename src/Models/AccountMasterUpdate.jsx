@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Form, Row, Col, Button } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import request from "../Request"; // Adjust the path as necessary
+import { toast } from 'react-toastify'; // Import toast
 
 function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
     const [loading, setLoading] = useState(false);
@@ -78,11 +79,15 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
             if (response.status === 200) {
                 refreshData(); // Refresh the table data
                 onClose(); // Close the modal after successful save
+                toast.success("Account master updated successfully"); 
+
             } else {
                 setError("Error saving data. Please try again.");
             }
         } catch (err) {
             setError("Error saving data. Please try again later.");
+            toast.error(err.response?.data?.message); 
+
             console.error("Error saving account data:", err);
         } finally {
             setLoading(false);

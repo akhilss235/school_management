@@ -5,6 +5,7 @@ import { Form, Row, Col, Button } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import request from "../Request"; // Adjust the path as necessary
 import useAccountHeads from "../hooks/useAccountHeads";
+import { toast } from 'react-toastify'; // Import toast
 
 function AccountMasterEntry({ open, onClose }) {
   const [accountHead, setAccountHead] = useState("");
@@ -39,8 +40,12 @@ function AccountMasterEntry({ open, onClose }) {
       setAccountHead("")
       setSubAccountHead("")
       onClose();
+      toast.success("Account master added successfully"); 
+
     } catch (error) {
       console.error("Error:", error);
+      toast.error(error.response?.data?.message); 
+
     }
   };
 
