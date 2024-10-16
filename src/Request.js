@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // Set the base URL for your API
-const Baseurl = "https://schoolmanagementsystem-p1od.onrender.com/api/";
+// const Baseurl = "https://schoolmanagementsystem-p1od.onrender.com/api/";
+const Baseurl = "http://localhost:3500/api/"
 
 const request = axios.create({
   baseURL: Baseurl,

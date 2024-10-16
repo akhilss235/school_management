@@ -74,6 +74,8 @@ const handleDETAILESClick = (accountId) => {
     toDate,
     selectedAccountHead,
     selectedSubAccountHead,
+    modalCashBookEntry,
+    modalCashBookEntryUpdate
   ]);
 
   return (

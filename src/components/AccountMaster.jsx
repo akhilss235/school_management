@@ -5,7 +5,6 @@ import { FiPlus } from "react-icons/fi";
 import Form from "react-bootstrap/Form";
 import { GoFilter } from "react-icons/go";
 import { IconContext } from "react-icons";
-import InputGroup from "react-bootstrap/InputGroup";
 import { LuPenLine } from "react-icons/lu";
 import AccountMasterEntry from "../Models/AccountMasterEntry";
 import AccountMasterUpdate from "../Models/AccountMasterUpdate";
@@ -21,7 +20,7 @@ function AccountMaster() {
     const [modalCashBookEntry, setModalCashBookEntry] = useState(false);
     const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] = useState(false);
     const [accountData, setAccountData] = useState([]);
-    const [selectedAccounts, setSelectedAccounts] = useState({});
+    const [selectedAccounts, setSelectedAccounts] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [fromDate, setFromDate] = useState("");
     const [toDate, setToDate] = useState("");
@@ -52,10 +51,6 @@ function AccountMaster() {
         }
     };
 
-    useEffect(()=>{
-        fetchData()
-    },[fromDate, toDate])
-
     const refreshData = async () => {
         try {
             const response = await request.get(`/getAccountMaster?search=${searchTerm}&fromDate=${fromDate}&toDate=${toDate}&accountHead=${selectedAccountHead}&page=${currentPage}&limit=${itemsPerPage}`);
@@ -74,7 +69,7 @@ function AccountMaster() {
 
     useEffect(() => {
         fetchData();
-    }, [searchTerm, currentPage, fromDate, toDate, selectedAccountHead]);
+    }, [searchTerm, currentPage, fromDate, toDate, selectedAccountHead, modalCashBookEntry, modalCashBookEntryUpdate]);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -96,19 +91,22 @@ function AccountMaster() {
     };
 
     const handleCheckboxChange = (accountId) => {
-        setSelectedAccounts((prev) => ({
-            ...prev,
-            [accountId]: !prev[accountId],
-        }));
+        setSelectedAccounts((prev) => {
+            if (prev.includes(accountId)) {
+                return prev.filter(id => id !== accountId);
+            } else {
+                return [...prev, accountId];
+            }
+        });
     };
 
     const handleSelectAll = () => {
-        const allSelected = accountData.every(account => selectedAccounts[account._id]);
-        const newSelected = {};
-        accountData.forEach(account => {
-            newSelected[account._id] = !allSelected;
-        });
-        setSelectedAccounts(newSelected);
+        if (selectedAccounts.length === accountData.length) {
+            setSelectedAccounts([]);
+        } else {
+            const allAccountIds = accountData.map(account => account._id);
+            setSelectedAccounts(allAccountIds);
+        }
     };
 
     const isAnySelected = Object.values(selectedAccounts).some(value => value);
@@ -120,12 +118,15 @@ function AccountMaster() {
 
     const handleDeleteAccountMaster = async()=>{
         try {
-            await request.delete(`deleteAccountMaster`, {selectedIds:selectedAccountId})
+            await request.post(`deleteAccountMaster`, {"selectedIds":selectedAccounts})
             toast.success("deleted successfully")
+            await fetchData();
         } catch (error) {
             console.log("error at deleting account master", error)
         }
     }
+    
+   
 
     return (
         <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
@@ -187,7 +188,7 @@ function AccountMaster() {
                                     <input
                                         id="select-all"
                                         type="checkbox"
-                                        checked={accountData.length > 0 && accountData.every(account => selectedAccounts[account._id])}
+                                        checked={accountData.length > 0 && accountData.length === selectedAccounts.length}
                                         onChange={handleSelectAll}
                                     />
                                 </div>
@@ -206,7 +207,7 @@ function AccountMaster() {
                                         <input
                                             id={`checkbox-${account._id}`}
                                             type="checkbox"
-                                            checked={!!selectedAccounts[account._id]}
+                                            checked={selectedAccounts?.includes(account._id)}
                                             onChange={() => handleCheckboxChange(account._id)}
                                         />
                                     </div>

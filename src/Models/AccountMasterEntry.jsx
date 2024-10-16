@@ -13,10 +13,8 @@ function AccountMasterEntry({ open, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Reset errors
     setErrors({ accountHead: "", subAccountHead: "" });
 
-    // Input validation
     let isValid = true;
     if (!accountHead) {
       setErrors((prev) => ({ ...prev, accountHead: "Account Head is required." }));
@@ -27,7 +25,7 @@ function AccountMasterEntry({ open, onClose }) {
       isValid = false;
     }
 
-    if (!isValid) return; // Stop submission if there are errors
+    if (!isValid) return; 
 
     const data = {
       accountHead,
@@ -35,13 +33,12 @@ function AccountMasterEntry({ open, onClose }) {
     };
 
     try {
-      const response = await request.post("addAccountMaster/", data); // Replace with your actual endpoint
-      console.log("Success:", response.data);
-      // Optionally close the modal or reset the form
+      await request.post("addAccountMaster/", data); 
+      setAccountHead("")
+      setSubAccountHead("")
       onClose();
     } catch (error) {
       console.error("Error:", error);
-      // Handle error appropriately
     }
   };
 
