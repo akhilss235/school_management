@@ -234,9 +234,11 @@ function AccountView() {
                   <td>{getDate(data.date)}</td>
                   <td>{accoutHead(data.narration) || "-"}</td>
                   <td>{data.transactionMode}</td>
-                  <td className={data.rp === "Payment" ? "payment" : "receipt"}>
-                    {data.rp === "Payment" ? "Payment" : "Receipt"}
+                  <td className={data.rp === "payment" ? "payment" : "receipt"}>
+                    {data.rp === "payment" ? "payment" : "receipt"}
                   </td>
+{/* 
+                  <td>{data.rp}</td> */}
                   <td>Rs. {getAmountWithCommas(data.amount || 0)}</td>
                   <td>
                     <div className="d-flex">
