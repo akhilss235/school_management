@@ -25,7 +25,7 @@ const useAccountHeads = () => {
         fetchAccountHeads(); 
     }, []);
 
-    return { accountHeads, subAccountHeads }; 
+    return { accountHeads, subAccountHeads, setSubAccountHeads }; 
 };
 
 export default useAccountHeads;

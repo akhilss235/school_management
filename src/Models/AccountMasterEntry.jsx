@@ -9,7 +9,7 @@ import useAccountHeads from "../hooks/useAccountHeads";
 function AccountMasterEntry({ open, onClose }) {
   const [accountHead, setAccountHead] = useState("");
   const [subAccountHead, setSubAccountHead] = useState("");
-  const { subAccountHeads } = useAccountHeads()
+  const { subAccountHeads , setSubAccountHeads } = useAccountHeads()
   const [errors, setErrors] = useState({ accountHead: "", subAccountHead: "" });
 
   const handleSubmit = async (e) => {
@@ -44,6 +44,9 @@ function AccountMasterEntry({ open, onClose }) {
     }
   };
 
+  const removeSubAccountHead = (indexToRemove) => {
+    setSubAccountHeads((prev)=>prev.filter((_,index)=> index !==indexToRemove ))
+  };
   return (
     <Modal show={open} onHide={onClose} size="lg" centered>
       <Modal.Body>
@@ -101,7 +104,39 @@ function AccountMasterEntry({ open, onClose }) {
                 </Row>
               </Col>
             </Row>
-
+            <Row>
+              <Col className='py-2'>
+                  {subAccountHeads.map((subAccount, index) => (
+                    <div className='mt-3 me-3' key={index} style={{ display: "inline-block"}}>
+                      <button
+                        type="button"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          padding: "5px",
+                          backgroundColor: "#ECF3FF",
+                          color:'#3474EB',
+                          border: "none",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {subAccount}
+                        <IoIosCloseCircleOutline
+                        size={18}
+                          style={{
+                            marginLeft: "5px",
+                            color: "red",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => removeSubAccountHead(index)}
+                        />
+                      </button>
+                    </div>
+                  ))}
+              
+              </Col>
+            </Row>
             <Row className="justify-content-end align-items-center my-4 gy-2">
               <Col xs={"auto"}>
                 <Button className="fw-600 modalformdiscardbtn" onClick={onClose}>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import request from "../Request";
+import { toast } from "react-toastify";
 
 export const useAccountView = () => {
   const initialValue = {
@@ -58,7 +59,7 @@ export const useAccountView = () => {
         return response.status;
       } catch (error) {
         console.log("error at posting acount view", error);
-        alert(error.response.data.message)
+        toast.error(error?.response?.data.message)
       }
     }
   };
@@ -112,6 +113,7 @@ export const useAccountView = () => {
         }
     } catch (error) {
         console.log("error at fetching single data", error.message)
+        toast.error(error?.message)
     }
   }
 
@@ -126,6 +128,7 @@ export const useAccountView = () => {
         return response.status;
       } catch (error) {
         console.log("error at posting acount view", error);
+        toast.error(error?.message)
       }
     }   
   }

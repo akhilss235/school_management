@@ -62,6 +62,10 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
           toast.success("Voucher added successfully!"); 
           onClose();
         }
+        else if(response.status === 200){
+          toast.success("Voucher updated successfully!"); 
+          onClose();
+        }
       })
       .catch((err) => {
         console.error("Error submitting form:", err);
