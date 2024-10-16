@@ -11,6 +11,7 @@ import { LuPenLine } from "react-icons/lu";
 import request from "../Request"; // Adjust the path as necessary
 import Pagination from "../components/Pagination";
 import { useNavigate } from "react-router-dom";
+import Spinner from 'react-bootstrap/Spinner';
 
 function Students() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ function Students() {
   const [selectedSection, setSelectedSection] = useState("");
   const [selectedGender, setSelectedGender] = useState(""); // State for gender
   const itemsPerPage = 10;
+
   const handleStudentClick = (student) => {
     navigate(`/StudentDetails/${student._id}`);
   };
@@ -80,7 +82,8 @@ function Students() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div style={{textAlign:'center',justifyContent:'center',justifyItems:'center',marginTop:'20%'}}>      <Spinner animation="border" variant="primary" />
+</div>;
   }
 
   return (
