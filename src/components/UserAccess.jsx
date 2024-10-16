@@ -8,6 +8,7 @@ import { LiaEyeSolid } from "react-icons/lia";
 import request from "../Request"; 
 import Pagination from "../components/Pagination"; 
 import { useNavigate } from "react-router-dom";
+import { NoData } from "./NoData";
 
 function UserAccess() {
   const [users, setUsers] = useState([]);
@@ -129,12 +130,14 @@ function UserAccess() {
           </tbody>  
         </Table>
       </div>
-
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      {
+        users?.length !== 0 && 
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      }
     </div>
   );
 }

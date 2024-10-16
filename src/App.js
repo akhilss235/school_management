@@ -24,6 +24,7 @@ import withSideBarLayout from "./components/Sidebar";
 import { useLogin } from "./hooks/useLogin";
 import { ToastContainer } from 'react-toastify'; // Import toast
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast
+import { Import } from "./Pages/Import";
 
 function App() {
   const { user } = useLogin()
@@ -43,6 +44,10 @@ function App() {
               <Route
                 path="/Students"
                 element={withSideBarLayout(<Students />, true)}
+              />
+              <Route
+                path="/Students/Imports"
+                element={withSideBarLayout(<Import />, true)}
               />
               <Route
                 path="/StudentDetails/:id"
