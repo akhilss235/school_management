@@ -2,35 +2,59 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Import.css";
 import { useImport } from "../hooks/useImport";
-import { Button, Form, Row, Col } from "react-bootstrap"; // Ensure you have react-bootstrap installed
+import { Button, Form, Row, Col } from "react-bootstrap"; 
 import { RiDeleteBinLine } from "react-icons/ri";
+import request from "../Request"; 
+import { toast } from 'react-toastify'; 
 
 export const Import = () => {
   const { data, tableData } = useImport();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [formData, setFormData] = useState({});
   const navigate = useNavigate();
 
   const handleFileClick = () => {
     document.getElementById("fileInput").click();
   };
 
-  const handleDiscard = () => {
-    navigate("/Students");
-  };
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
-      setFormData((prevData) => ({ ...prevData, studentImg: file }));
     }
   };
 
   const handleFileRemove = () => {
     setSelectedFile(null);
-    setFormData((prevData) => ({ ...prevData, studentImg: null }));
     document.getElementById("fileInput").value = "";
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!selectedFile) {
+      toast.error("Please upload a file before submitting.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile); // Append the file to the FormData
+
+    try {
+      const response = await request.post(`upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Ensure the correct content type
+        },
+      });
+      console.log("Form submitted successfully:", response.data);
+      navigate("/Students");
+
+      toast.success("data uploaded successfully");
+
+
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Upload failed."); 
+      console.error("Server responded with:", err.response?.data);
+    }
   };
 
   return (
@@ -130,7 +154,7 @@ export const Import = () => {
           </div>
         </div>
         <div>
-          <button className="import-btn">Import</button>
+          <button className="import-btn" onClick={handleSubmit}>Import</button>
         </div>
       </div>
     </div>
