@@ -9,7 +9,6 @@ export const Search = ({search, setSearch}) => {
   return (
     <Form.Control
         id="Search"
-        size="sm"
         type="text"
         placeholder="Search"
         name="Search"

@@ -149,7 +149,7 @@ function AccountView() {
             <div className="col-auto mt-2">
               <div
                 className="card d-flex align-items-center justify-content-center filterbody"
-                style={{ height: "30px" }}
+                style={{ height: "35px" }}
               >
                 <IconContext.Provider
                   value={{ className: "react-icons", size: "1.5em" }}
@@ -234,7 +234,9 @@ function AccountView() {
                   <td>{getDate(data.date)}</td>
                   <td>{accoutHead(data.narration) || "-"}</td>
                   <td>{data.transactionMode}</td>
-                  <td>{data.rp}</td>
+                  <td className={data.rp === "Payment" ? "payment" : "receipt"}>
+                    {data.rp === "Payment" ? "Payment" : "Receipt"}
+                  </td>
                   <td>Rs. {getAmountWithCommas(data.amount || 0)}</td>
                   <td>
                     <div className="d-flex">

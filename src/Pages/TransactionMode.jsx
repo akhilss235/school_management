@@ -11,7 +11,7 @@ export const CustomTableColumn = ({title, selectedItem, setSelectedItem}) => {
 
     const items = title === "Receipt/Payment" ? ["Receipt", "Payment"] : ["Cash", "Bank", "Diocesan"]
   return (
-    <InputGroup    size="sm">
+    <InputGroup    >
         <InputGroup.Text
             id="basic-addon1"
             style={{ backgroundColor: "#FFFFFF" }}
