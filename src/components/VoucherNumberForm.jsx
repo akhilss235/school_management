@@ -15,6 +15,8 @@ import AccountHead from "../Pages/AccountHead";
 import { Search } from "../Pages/Search";
 import { NoData } from "./NoData";
 import Pagination from "./Pagination";
+import DownloadButton from './DownloadButton';  // Import the reusable button component
+import request from "../Request"; 
 
 function VoucherNumberForm() {
   const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] =
@@ -29,7 +31,6 @@ function VoucherNumberForm() {
   const [selectedAccountHead, setSelectedAccountHead] = useState("");
   const { getAmountWithCommas } = useCommon();
   const { voucherData, voucherTotal, handleGetAllVoucher } = useVoucher();
-
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = sessionStorage.getItem("currentPage");
     return savedPage ? Number(savedPage) : 1;
@@ -52,6 +53,28 @@ function VoucherNumberForm() {
     };
     handleGetAllVoucher(obj);
   }, [selectedAccountHead, search, currentPage, modalJournalEntryCashEntry ]);
+
+
+    // Function to fetch full voucher data for PDF download
+    const fetchFullVoucherData = async () => {
+      if (!voucherTotal || voucherTotal <= 0) {
+          console.log("Invalid voucherTotal, unable to fetch full voucher data");
+          return []; // Return empty array if voucherTotal is invalid
+      }
+
+      try {
+          const response = await request.get(`getAllVoucher?limit=${voucherTotal}`); // Fetch full data using voucherTotal
+          return response.data.data; // Return full voucher data for PDF
+      } catch (error) {
+          console.log("Error fetching full voucher data", error.message);
+          return []; // Return empty array if there's an error
+      }
+  };
+
+
+  
+
+
 
   const handleOpenAdminModal = (id)=>{
     setModalCashBookEntryUpdate(true)
@@ -103,28 +126,11 @@ function VoucherNumberForm() {
         </div>
         <div className="col-auto mt-2">
           <div className="d-flex align-items-center">
-            <Button
-              variant="link"
-              className="text-center me-3"
-              style={{ textDecoration: "none" }}
-            >
-              <FiDownload style={{ fontSize: "1.5rem", color: "#3474EB" }} />
-              <br />
-              <label style={{ textAlign: "center", color: "#000000" }}>
-                Download
-              </label>
-            </Button>
-            <Button
-              variant="link"
-              className="text-center"
-              style={{ textDecoration: "none" }}
-            >
-              <IoPrintOutline
-                style={{ fontSize: "1.5rem", color: "#3474EB" }}
-              />
-              <br />
-              <label style={{ color: "#000000" }}>Print</label>
-            </Button>
+            <DownloadButton
+                fetchData={fetchFullVoucherData} // Pass fetch function
+                columns={["Account Head", "Remarks", "Cash", "Bank", "Voucher No"]} // Define your columns
+                filename="Vouchers" // Define your desired filename
+            />
           </div>
         </div>
 
