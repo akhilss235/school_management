@@ -24,6 +24,7 @@ import { NoData } from "./NoData";
 import { IoPrintOutline } from "react-icons/io5";
 import Journaladd from "../Models/Journaladd";
 import DownloadButton from "./DownloadButton";
+import { toast } from "react-toastify";
 
 function JournalEntry() {
   const { journalData, journalTotal, handleGetAllJournalData } = useJournal();
@@ -105,10 +106,11 @@ function JournalEntry() {
 
   const handleUpdateEntry = async (entry) => {
     const response = await request.updateJournalEntry(entry._id, entry);
-    if (response.success) {
+    if (response.status === 200) {
+      toast.success("Journal Entry updated successfully");
       handleGetAllJournalData({ page: currentPage, limit: itemsPerPage });
     } else {
-      alert("Failed to update the entry!");
+      toast.error("Failed to update the entry!");
     }
   };
 

@@ -83,7 +83,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
         } catch (error) {
           console.log("Error fetching journal entry:", error);
 
-          alert(error?.response?.data?.message || "Error fetching data");
+          toast.error(error?.response?.data?.message || "Error fetching data");
         }
       }
     };

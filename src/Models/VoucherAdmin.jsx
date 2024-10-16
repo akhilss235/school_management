@@ -13,7 +13,7 @@ function VoucherAdmin({ open, onClose, setModalJournalEntryCashEntry }) {
     const [modalJournalEntryUpdate, setModalJournalEntryUpdate] = useState(false);
 
     const handleVerify = async () => {
-        if (!adminPassword) return alert("Please enter your password.");
+        if (!adminPassword) return toast.error("Please enter your password.");
 
         setLoading(true);
         try {

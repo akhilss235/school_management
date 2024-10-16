@@ -97,7 +97,7 @@ function JournalEntryUpdate({ open, onClose, accountId }) {
       if (response.data && response.data.message) {
         setShowSuccessMessage(true);
         onClose(); 
-        toast.success("JournalEntry update successfully"); 
+        toast.success("JournalEntry updated successfully"); 
 
       }
     } catch (error) {

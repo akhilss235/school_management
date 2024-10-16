@@ -34,7 +34,7 @@ function JournalEntryDetailes({ open, onClose, accountId, entryId }) {
           });
         } catch (error) {
           console.log("Error fetching journal entry:", error);
-          alert(error?.response?.data.message);
+          toast.error(error?.response?.data.message);
         }
       };
       handleGetSingleJournal();
