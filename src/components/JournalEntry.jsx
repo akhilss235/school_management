@@ -11,7 +11,7 @@ import { LiaEyeSolid } from "react-icons/lia";
 import JournalEntryCashEntry from "../Models/JournalEntryCashEntry";
 import AdminPower from "../Models/AdminPower";
 import JournalEntryDetailes from "../Models/JournalEntryDetailes";
-import request from "../Request"; 
+import request from "../Request";
 import { useJournal } from "../hooks/useJournal";
 import { GetDate } from "../Pages/Date";
 import AccountHead from "../Pages/AccountHead";
@@ -21,17 +21,19 @@ import { useCommon } from "../hooks/useCommon";
 import Pagination from "./Pagination";
 import { CustomTableColumn } from "../Pages/TransactionMode";
 import { NoData } from "./NoData";
-import { IoPrintOutline } from "react-icons/io5"; 
+import { IoPrintOutline } from "react-icons/io5";
 import Journaladd from "../Models/Journaladd";
-import DownloadButton from './DownloadButton';
-
+import DownloadButton from "./DownloadButton";
 
 function JournalEntry() {
   const { journalData, journalTotal, handleGetAllJournalData } = useJournal();
   const { getDate, getAmountWithCommas } = useCommon();
-  const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] = useState(false);
-  const [modalOpeningBalanceDetaies, setModalOpeningBalanceDetaies] = useState(false);
-  const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] = useState(false);
+  const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] =
+    useState(false);
+  const [modalOpeningBalanceDetaies, setModalOpeningBalanceDetaies] =
+    useState(false);
+  const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] =
+    useState(false);
   const itemsPerPage = 10;
   const [rp, setRp] = useState("");
   const [search, setSearch] = useState("");
@@ -70,26 +72,36 @@ function JournalEntry() {
       transactionMode: transactionMode,
     };
     handleGetAllJournalData(obj);
-  }, [currentPage, fromDate, toDate, selectedAccountHead, selectedSubAccountHead, search, rp, transactionMode, modalJournalEntryCashEntry,modalss]);
+  }, [
+    currentPage,
+    fromDate,
+    toDate,
+    selectedAccountHead,
+    selectedSubAccountHead,
+    search,
+    rp,
+    transactionMode,
+    modalJournalEntryCashEntry,
+    modalss,
+  ]);
 
-
-
-const fetchFullJournalData = async () => {
+  const fetchFullJournalData = async () => {
     if (!journalTotal || journalTotal <= 0) {
-        console.log("Invalid journalTotal, unable to fetch full journal data");
-        return []; // Return empty array if journalTotal is invalid
+      console.log("Invalid journalTotal, unable to fetch full journal data");
+      return []; // Return empty array if journalTotal is invalid
     }
 
     try {
-        const response = await request.get(`getJournalEntry?limit=${journalTotal}`); // Fetch full data using journalTotal
-        
-        return response.data.data; // Return full journal data for PDF
-    } catch (error) {
-        console.log("Error fetching full journal data", error.message);
-        return []; // Return empty array if there's an error
-    }
-};
+      const response = await request.get(
+        `getJournalEntry?limit=${journalTotal}`
+      ); // Fetch full data using journalTotal
 
+      return response.data.data; // Return full journal data for PDF
+    } catch (error) {
+      console.log("Error fetching full journal data", error.message);
+      return []; // Return empty array if there's an error
+    }
+  };
 
   const handleUpdateEntry = async (entry) => {
     const response = await request.updateJournalEntry(entry._id, entry);
@@ -101,7 +113,7 @@ const fetchFullJournalData = async () => {
   };
 
   const handleEditButtonClick = (data) => {
-    setSelectedJournalEntryId(data._id); 
+    setSelectedJournalEntryId(data._id);
     setSelectedAccountId(data._id);
     setModalCashBookEntryUpdate(true);
     setIsEdit(true);
@@ -124,30 +136,47 @@ const fetchFullJournalData = async () => {
 
       <div className="d-flex justify-content-between mt-5">
         <div className="d-flex">
-          <GetDate title={"From"} selectedDate={fromDate} setSelectedDate={setFromDate} />
-          <GetDate title={"To"} selectedDate={toDate} setSelectedDate={setToDate} />
+          <div className="mx-2">   
+            <GetDate
+              title={"From"}
+              selectedDate={fromDate}
+              setSelectedDate={setFromDate}
+            />
+          </div>
+          <div>
+            <GetDate
+              title={"To"}
+              selectedDate={toDate}
+              setSelectedDate={setToDate}
+            />
+          </div>
         </div>
         <div className="d-flex align-items-center">
           <DownloadButton
-              fetchData={fetchFullJournalData}
-              columns={[
-                { header: "Date", dataKey: "date" },
-                { header: "Receipt/Payment", dataKey: "rp" },
-                { header: "Tra. Mode", dataKey: "transactionMode" },
-                { header: "Account Head", dataKey: "accountHead" },
-                { header: "Sub Account Head", dataKey: "subAccountHead" },
-                { header: "Narration", dataKey: "narration" },
-                { header: "Amount", dataKey: "amount" }
-              ]} 
-              filename="JournalEntry"
+            fetchData={fetchFullJournalData}
+            columns={[
+              { header: "Date", dataKey: "date" },
+              { header: "Receipt/Payment", dataKey: "rp" },
+              { header: "Tra. Mode", dataKey: "transactionMode" },
+              { header: "Account Head", dataKey: "accountHead" },
+              { header: "Sub Account Head", dataKey: "subAccountHead" },
+              { header: "Narration", dataKey: "narration" },
+              { header: "Amount", dataKey: "amount" },
+            ]}
+            filename="JournalEntry"
           />
         </div>
       </div>
 
       <div className="row mb-2 d-flex justify-content-between align-items-center">
         <div className="col-auto mt-2">
-          <div className="card d-flex align-items-center justify-content-center filterbody" style={{ height: "30px" }}>
-            <IconContext.Provider value={{ className: "react-icons", size: "1.5em" }}>
+          <div
+            className="card d-flex align-items-center justify-content-center filterbody"
+            style={{ height: "30px" }}
+          >
+            <IconContext.Provider
+              value={{ className: "react-icons", size: "1.5em" }}
+            >
               <div className="d-flex align-items-center">
                 <GoFilter className="Filteric" />
                 <span className="Filteric p-2">Filter</span>
@@ -157,11 +186,19 @@ const fetchFullJournalData = async () => {
         </div>
 
         <div className="col-auto mt-2">
-          <CustomTableColumn title={"Receipt/Payment"} selectedItem={rp} setSelectedItem={setRp} />
+          <CustomTableColumn
+            title={"Receipt/Payment"}
+            selectedItem={rp}
+            setSelectedItem={setRp}
+          />
         </div>
 
         <div className="col-auto mt-2">
-          <CustomTableColumn title={"Tra.Mode"} selectedItem={transactionMode} setSelectedItem={setTrasactionMode} />
+          <CustomTableColumn
+            title={"Tra.Mode"}
+            selectedItem={transactionMode}
+            setSelectedItem={setTrasactionMode}
+          />
         </div>
 
         <div className="col-auto mt-2">
@@ -194,7 +231,12 @@ const fetchFullJournalData = async () => {
               journalData.map((data) => (
                 <tr key={data._id} style={{ fontSize: "15px" }}>
                   <td>{getDate(data.date)}</td>
-                  <td>{data.rp}</td>
+
+                  <td className={data.rp === "Payment" ? "payment" : "receipt"}>
+                    {data.rp === "Payment" ? "Payment" : "Receipt"}
+                  </td>
+
+                  {/* <td>{data.rp}</td> */}
                   <td>{data.transactionMode}</td>
                   <td>{accoutHead(data.accountHead) || "-"}</td>
                   <td>{accoutHead(data.subAccountHead) || "-"}</td>
@@ -250,12 +292,7 @@ const fetchFullJournalData = async () => {
         selectedEntry={selectedJournalEntryId}
         onUpdate={handleUpdateEntry}
       />
-      <Journaladd
-        open={modalss}
-        onClose={() => setModalss(false)}
-      />
-
-      
+      <Journaladd open={modalss} onClose={() => setModalss(false)} />
     </div>
   );
 }

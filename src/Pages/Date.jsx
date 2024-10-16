@@ -7,7 +7,7 @@ export const GetDate = ({title, selectedDate, setSelectedDate}) => {
     }
 
   return (
-    <InputGroup>
+    <InputGroup style={{height:'35px'}} >
         <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
             {title} :
         </InputGroup.Text>
@@ -15,7 +15,7 @@ export const GetDate = ({title, selectedDate, setSelectedDate}) => {
             id="Fromdate" 
             type="date" 
             name="Fromdate" 
-            style={{ fontSize: "small", borderLeft: "none" }} 
+            style={{ fontSize: "small", borderLeft: "none"}} 
             value={selectedDate}
             onChange={onChange}
         />
