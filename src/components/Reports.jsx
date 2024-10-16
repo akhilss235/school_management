@@ -14,6 +14,8 @@ import { GetDate } from "../Pages/Date";
 import { CustomTableColumn } from "../Pages/TransactionMode";
 import { NoData } from "./NoData";
 import Pagination from "./Pagination";
+import DownloadButton from './DownloadButton';
+import request from "../Request"; 
 
 function Reports() {
   const itemsPerPage = 10;
@@ -66,6 +68,24 @@ function Reports() {
     search,
   ]);
 
+
+    const fetchFullReportsData = async () => {
+        if (!reportTotal || reportTotal <= 0) {
+            console.log("Invalid reportTotal, unable to fetch full report data");
+            return []; // Return empty array if reportTotal is invalid
+        }
+
+        try {
+            const response = await request.get(`getAllReports?limit=${reportTotal}`); // Fetch full data using reportTotal
+            return response.data.data; // Return full report data
+        } catch (error) {
+            console.log("Error fetching full report data", error.message);
+            return []; // Return empty array if there's an error
+        }
+    };
+
+
+
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
       <div className="d-flex justify-content-between">
@@ -76,28 +96,19 @@ function Reports() {
         </div>
         <div>
           <div className="d-flex align-items-center">
-            <Button
-              variant="link"
-              className="text-center me-3"
-              style={{ textDecoration: "none" }}
-            >
-              <FiDownload style={{ fontSize: "1.5rem", color: "#3474EB" }} />
-              <br />
-              <label style={{ textAlign: "center", color: "#000000" }}>
-                Download
-              </label>
-            </Button>
-            <Button
-              variant="link"
-              className="text-center"
-              style={{ textDecoration: "none" }}
-            >
-              <IoPrintOutline
-                style={{ fontSize: "1.5rem", color: "#3474EB" }}
-              />
-              <br />
-              <label style={{ color: "#000000" }}>Print</label>
-            </Button>
+            <DownloadButton
+                fetchData={fetchFullReportsData}
+                columns={[
+                  { header: "Date", dataKey: "date" },
+                  { header: "Narration", dataKey: "narration" },
+                  { header: "Tra. Mode", dataKey: "transactionMode" },
+                  { header: "Receipt/Payment", dataKey: "rp" },
+                  { header: "Amount", dataKey: "amount" }
+                ]} 
+                filename="Reports"
+                heading="Reports"
+
+            />
           </div>
         </div>
       </div>

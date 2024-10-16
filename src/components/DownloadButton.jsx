@@ -5,7 +5,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { useCommon } from '../hooks/useCommon'; // Import your custom hook
 
-const DownloadButton = ({ fetchData, columns, filename }) => {
+const DownloadButton = ({ fetchData, columns, filename,heading }) => {
     const { getAmountWithCommas, getDate } = useCommon(); // Destructure the formatting functions
     const handleDownload = async () => {
         // Fetch full voucher data
@@ -17,6 +17,20 @@ const DownloadButton = ({ fetchData, columns, filename }) => {
         }
 
         const doc = new jsPDF();
+
+        // Calculate the center position for the dynamic heading
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const titleX = pageWidth / 2 - (doc.getTextWidth(heading) / 2); // Calculate centered position
+        
+        // Set the header color for consistency
+        const headerColor = [0, 102, 204]; // RGB color for the heading (matching the table header)
+
+        // Add the dynamic heading to the document
+        doc.setFontSize(18); // Set font size for heading
+        doc.setTextColor(...headerColor); // Set color for heading (using spread operator)
+        doc.setFont("helvetica", "bold"); // Set font to bold
+        doc.text(heading, titleX, 15); // Position heading with reduced margin
+
         const tableColumn = columns;
         const tableRows = [];
 
@@ -38,7 +52,15 @@ const DownloadButton = ({ fetchData, columns, filename }) => {
         });
 
         
-        doc.autoTable(tableColumn, tableRows);
+        // doc.autoTable(tableColumn, tableRows);
+        // Use the original autoTable method to create the table
+        doc.autoTable(tableColumn, tableRows, {
+            startY: 24, // Set startY to avoid overlapping with the heading
+            theme: 'striped', // Optional: Set a table theme
+            headStyles: { fillColor: headerColor, textColor: [255, 255, 255] }, // Set header color
+            styles: { cellPadding: 3, fontSize: 10 }, // Adjust cell padding and font size
+        });
+
         doc.save(`${filename}.pdf`);
     };
 

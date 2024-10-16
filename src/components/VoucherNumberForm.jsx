@@ -135,6 +135,8 @@ function VoucherNumberForm() {
                   { header: "Voucher No", dataKey: "voucherNo" }
                 ]} 
                 filename="Vouchers"
+                heading="Vouchers"
+
             />
           </div>
         </div>

@@ -22,6 +22,8 @@ import { useCommon } from "../hooks/useCommon";
 import { useAccountView } from "../hooks/useAccountView";
 import { NoData } from "./NoData";
 import Pagination from "./Pagination";
+import request from "../Request"; 
+import DownloadButton from './DownloadButton';
 
 function AccountView() {
   const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] = useState(false);
@@ -77,6 +79,25 @@ function AccountView() {
     modalJournalEntryCashEntry
   ]);
 
+
+  const fetchFullAccountViewData = async () => {
+    if (!accountViewTotal || accountViewTotal <= 0) {
+        console.log("Invalid accountViewTotal, unable to fetch full account view data");
+        return []; // Return empty array if accountViewTotal is invalid
+    }
+
+    try {
+        const response = await request.get(`getAllAccountView?limit=${accountViewTotal}`); // Fetch full account view data using accountViewTotal
+        
+        return response.data.data; // Return full account view data for further use
+    } catch (error) {
+        console.log("Error fetching full account view data", error.message);
+        return []; // Return empty array if there's an error
+    }
+};
+
+
+
   const handleOpenModal = (id)=>{
     setModalOpeningBalanceDetaies(true)
     setSelectedId(id)
@@ -101,28 +122,18 @@ function AccountView() {
         </div>
         <div>
           <div className="d-flex align-items-center">
-            <Button
-              variant="link"
-              className="text-center me-3"
-              style={{ textDecoration: "none" }}
-            >
-              <FiDownload style={{ fontSize: "1.5rem", color: "#3474EB" }} />
-              <br />
-              <label style={{ textAlign: "center", color: "#000000" }}>
-                Download
-              </label>
-            </Button>
-            <Button
-              variant="link"
-              className="text-center"
-              style={{ textDecoration: "none" }}
-            >
-              <IoPrintOutline
-                style={{ fontSize: "1.5rem", color: "#3474EB" }}
-              />
-              <br />
-              <label style={{ color: "#000000" }}>Print</label>
-            </Button>
+          <DownloadButton
+              fetchData={fetchFullAccountViewData}
+              columns={[
+                { header: "Date", dataKey: "date" },
+                { header: "Narration", dataKey: "narration" },
+                { header: "Tra. Mode", dataKey: "transactionMode" },
+                { header: "Receipt/Payment", dataKey: "rp" },
+                { header: "Amount", dataKey: "amount" }
+              ]} 
+              filename="AccountView"
+              heading="Account View"
+          />
           </div>
         </div>
       </div>
@@ -180,18 +191,21 @@ function AccountView() {
             </div>
 
             <div className="d-flex col-auto ">
+              <div className="mx-2">
               <GetDate
                 title={"From"}
                 selectedDate={fromDate}
                 setSelectedDate={setFromDate}
               />
-            </div>
-            <div className="d-flex col-auto ">
-              <GetDate
-                title={"To"}
-                selectedDate={toDate}
-                setSelectedDate={setToDate}
-              />
+              </div>
+              <div>
+                <GetDate
+                  title={"To"}
+                  selectedDate={toDate}
+                  setSelectedDate={setToDate}
+                />
+              </div>
+
             </div>
             <div className="col-auto mt-2">
               <Search search={search} setSearch={setSearch} />
