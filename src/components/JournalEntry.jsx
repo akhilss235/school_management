@@ -156,7 +156,7 @@ function JournalEntry() {
             fetchData={fetchFullJournalData}
             columns={[
               { header: "Date", dataKey: "date" },
-              { header: "Receipt/Payment", dataKey: "rp" },
+              { header: "Receipt / Payment", dataKey: "rp" },
               { header: "Tra. Mode", dataKey: "transactionMode" },
               { header: "Account Head", dataKey: "accountHead" },
               { header: "Sub Account Head", dataKey: "subAccountHead" },
