@@ -56,9 +56,9 @@ function DashboardTable() {
                   <td>{getDate(data.date)}</td>
                   <td>{accoutHead(data.accountHead)}</td>
                   <td>{accoutHead(data.subAccountHead) || "-"}</td>
-                  <td>Rs. {getAmountWithCommas(data.amount.cash || 0)}</td>
-                  <td>Rs. {getAmountWithCommas(data.amount.bank || 0)}</td>
-                  <td>Rs. {getAmountWithCommas(data.amount.diocesan || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.cash || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.bank || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.diocesan || 0)}</td>
                 </tr>
               ))
             }
