@@ -83,7 +83,7 @@ const handleDETAILESClick = (accountId) => {
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
     <div className="d-flex justify-content-between">
       <div className="d-flex">
-      <h4><b className="title">Opening Balance Entry</b></h4>
+      <h4><b className="title">Opening Balance List</b></h4>
 
       </div>
       <div className="d-flex">
@@ -137,9 +137,9 @@ const handleDETAILESClick = (accountId) => {
               <th>Date</th>
               <th>Account Head</th>
               <th>Sub Account Head</th>
-              <th>Cash Amt.</th>
-              <th>Bank Amt.</th>
-              <th>Diocesan Amt.</th>
+              <th>Cash Amount</th>
+              <th>Bank Amount</th>
+              <th>Diocesan Amount</th>
               <th>Action</th>
             </tr>
           </thead>
