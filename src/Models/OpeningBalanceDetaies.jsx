@@ -96,23 +96,23 @@ function OpeningBalanceDetaies({ open, onClose, accountId }) {
                 <Table responsive="xl">
                   <tbody style={{border:'none'}}>
                     <tr className="d-flex">
-                      <td className="title">
+                      <td className="title "  style={{border:'none'}}>
                         <b>
                           {" "}
                           <span className="title">C/B CASH</span>{" "}
                         </b>
                       </td>
 
-                      <td className="title">
+                      <td className="title"  style={{border:'none'}}>
                         <b>
                           {" "}
                           <span className="title">:</span>{" "}
                         </b>
                       </td>
-                      <td className="title">
+                      <td className="title"  style={{border:'none'}}>
                         <b>
                           {" "}
-                          <span className="title2">
+                          <span className="title2"  style={{border:'none'}}>
                             {" "}
                             {formData.cash.toLocaleString()}
                           </span>{" "}
@@ -121,24 +121,24 @@ function OpeningBalanceDetaies({ open, onClose, accountId }) {
                     </tr>
 
 
-                    <tr className="d-flex">
-                      <td className="title">
+                    <tr className="d-flex"  style={{border:'none'}}> 
+                      <td className="title"  style={{border:'none'}}>
                         <b>
                           {" "}
-                          <span className="title">C/B BANK</span>{" "}
+                          <span className="title"  style={{border:'none'}}>C/B BANK</span>{" "}
                         </b>
                       </td>
 
-                      <td className="title">
+                      <td className="title"  style={{border:'none'}}>
                         <b>
                           {" "}
-                          <span className="title">:</span>{" "}
+                          <span className="title"  style={{border:'none'}}>:</span>{" "}
                         </b>
                       </td>
-                      <td className="title">
+                      <td className="title"  style={{border:'none'}}>
                         <b>
                           {" "}
-                          <span className="title2">
+                          <span className="title2"  style={{border:'none'}}>
                             {" "}
                             {formData.bank.toLocaleString()}
                           </span>{" "}
@@ -151,24 +151,24 @@ function OpeningBalanceDetaies({ open, onClose, accountId }) {
 
 
 
-                    <tr className="d-flex">
-                      <td className="title">
+                    <tr className="d-flex"  style={{border:'none'}}>
+                      <td className="title"  style={{border:'none'}}>
                         <b>
                           {" "}
                           <span className="title">C/B DIO</span>{" "}
                         </b>
                       </td>
 
-                      <td className="title">
+                      <td className="title mx-4"  style={{border:'none'}}>
                         <b>
                           {" "}
                           <span className="title">:</span>{" "}
                         </b>
                       </td>
-                      <td className="title">
+                      <td className="title "  style={{border:'none'}}  style={{border:'none'}}>
                         <b>
                           {" "}
-                          <span className="title2">
+                          <span className="title2 "  style={{border:'none'}}>
                             {" "}
                             {formData.diocesan.toLocaleString()}                          </span>{" "}
                         </b>
