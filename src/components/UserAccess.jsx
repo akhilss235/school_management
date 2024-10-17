@@ -114,9 +114,9 @@ function UserAccess() {
                   <td>{user.phoneNumber}</td>
                   <td>{user.userName}</td>
                   <td>
-                    <div className="d-flex">
+                    <div className="d-flex" style={{textAlign:'start',justifyContent:'start'}}>
                       <a href={`/UserAccessnewDetailes/${user._id}`} style={{ textDecoration: "none" }}>
-                        <LiaEyeSolid style={{ fontSize: "1.5rem", color: "#3474EB" }} className="mx-3" />
+                        <LiaEyeSolid style={{ fontSize: "1.5rem", color: "#505050 " }} className="mx-1" />
                       </a>
                       <a href={`/UserAccessnewUpdate/${user._id}`} style={{ textDecoration: "none" }}>
                         <LuPenLine style={{ fontSize: "1.5rem", color: "#3474EB" }} />

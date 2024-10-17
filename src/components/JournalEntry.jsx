@@ -244,10 +244,10 @@ function JournalEntry() {
                   <td>{accoutHead(data.narration) || "-"}</td>
                   <td>Rs. {getAmountWithCommas(data.amount || 0)}</td>
                   <td>
-                    <div className="d-flex">
+                    <div className="d-flex" style={{textAlign:'start',justifyContent:'start'}}>
                       <LiaEyeSolid
-                        style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                        className="mx-3"
+                        style={{ fontSize: "1.5rem" }}
+                        className="mx-1"
                         onClick={() => {
                           setSelectedJournalEntryId(data._id); // Set selected ID
                           setModalOpeningBalanceDetaies(true);

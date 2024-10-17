@@ -153,8 +153,8 @@ const handleDETAILESClick = (accountId) => {
                   <td>Rs. {getAmountWithCommas(data.amount.bank || 0)}</td>
                   <td>Rs. {getAmountWithCommas(data.amount.diocesan || 0)}</td>
                   <td>
-                    <div className="d-flex">
-                      <LiaEyeSolid className="mx-3" style={{ fontSize: "1.5rem", color: "#3474EB" }} onClick={() => handleDETAILESClick(data._id)} />
+                    <div className="d-flex " style={{textAlign:'start',justifyContent:'start'}}>
+                      <LiaEyeSolid className="mx-1" style={{ fontSize: "1.5rem" }} onClick={() => handleDETAILESClick(data._id)} />
                       <LuPenLine style={{ fontSize: "1.5rem", color: "#3474EB" }} onClick={() => handleEditClick(data._id)} />
                     </div>
                   </td>

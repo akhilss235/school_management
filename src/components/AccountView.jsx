@@ -221,7 +221,7 @@ function AccountView() {
               <th>Tra. Mode</th>
               <th>Receipt/Payment</th>
               <th>Amount</th>
-              <th>Action</th>
+              <th >Action</th>
             </tr>
           </thead>
           <tbody>
@@ -238,10 +238,10 @@ function AccountView() {
                   <td>{data.rp}</td> */}
                   <td>Rs. {getAmountWithCommas(data.amount || 0)}</td>
                   <td>
-                    <div className="d-flex">
+                    <div className="d-flex" style={{textAlign:'start',justifyContent:'start'}}>
                       <LiaEyeSolid
-                        style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                        className="mx-3"
+                        style={{ fontSize: "1.5rem" }}
+                        className="mx-1"
                         onClick={() => handleOpenModal(data._id)}
                       />
                       <LuPenLine
