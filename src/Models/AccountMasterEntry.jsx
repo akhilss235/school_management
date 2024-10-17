@@ -184,7 +184,7 @@ function AccountMasterEntry({ open, onClose }) {
                   disabled={loading}
                 >
                   {loading ? (
-                    <Spinner animation="border" variant="primary" />
+                    <Spinner animation="border" variant="white" />
                   ) : (
                     "Save"
                   )}

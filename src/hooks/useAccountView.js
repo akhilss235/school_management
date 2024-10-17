@@ -49,8 +49,10 @@ export const useAccountView = () => {
   };
 
   const handleSubmitPost = async () => {
-    validateErrors();
-    if (Object.keys(errors).length === 0) {
+    const error = validateErrors();
+
+    // console.log(error,'err')
+    if (Object.keys(error).length === 0) {
       try {
         const response = await request.post("addAccountView", formData);
         if (response.status === 201) {
@@ -96,6 +98,7 @@ export const useAccountView = () => {
       error.amount = "please enter the amount";
     }
     setErrors(error);
+    return error
   };
 
   const handleGetAccountViewById = async(id)=>{
@@ -118,8 +121,8 @@ export const useAccountView = () => {
   }
 
   const handleUpdate = async(id)=>{
-    validateErrors();
-    if (Object.keys(errors).length === 0) {
+    const error = validateErrors();
+    if (Object.keys(error).length === 0) {
       try {
         const response = await request.put(`updateAccountView/${id}`, formData);
         if (response.status === 200) {
