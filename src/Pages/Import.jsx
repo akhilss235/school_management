@@ -61,7 +61,9 @@ export const Import = () => {
     <div className="import-page">
       <div className="import-head">
         <h3>Students</h3>
-        <button className="download-btn">Download Sample Data</button>
+        <a href="/assets/students.xlsx" download="students.xlsx">
+          <button className="download-btn">Download Sample Data</button>
+        </a>
       </div>
       <div className="details">
         <ul>
