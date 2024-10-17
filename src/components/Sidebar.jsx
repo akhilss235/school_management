@@ -19,6 +19,7 @@ import AccountMaster from "../img/Masterinactive.png";
 import AccountMasteract from "../img/Masteractive.png";
 import UserAccess from "../img/UserAccess.png";
 import UserAccessact from "../img/UserAccessactive.png";
+import { AiOutlineTransaction } from "react-icons/ai";
 
 const Sidebar = ({ children }) => {
   const { user } = useLogin();
@@ -43,7 +44,9 @@ const Sidebar = ({ children }) => {
     user?.accessTo?.isTransaction && {
       path: "/OpeningBalance",
       name: "Transaction",
-      img: [Transaction, Transactionact],
+      icons: <AiOutlineTransaction />,
+
+      // img: [Transaction, Transactionact],
       subMenu: [
         { path: "/OpeningBalance", name: "Opening Balance" },
         { path: "/JournalEntry", name: "Journal Entry" },

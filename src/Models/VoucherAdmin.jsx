@@ -74,7 +74,7 @@ function VoucherAdmin({ open, onClose, setModalJournalEntryCashEntry }) {
                                 <Button onClick={onClose}>Cancel</Button>
                             </Col>
                             <Col xs={'auto'}>
-                                <Button onClick={handleVerify} disabled={loading}>
+                                <Button onClick={handleVerify} disabled={loading} type="submit">
                                     {loading ? "Verifying..." : "Verify"}
                                 </Button>
                             </Col>
