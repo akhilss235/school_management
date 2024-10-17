@@ -22,7 +22,7 @@ function DashboardTable() {
     
         <div className="mt-3 mb-3">
           <h4>
-            <b className="title ">Opening Balance Entry</b>
+            <b className="title ">Opening Balance List</b>
           </h4>
         </div>
         <div className="mt-3 mb-3">
@@ -44,9 +44,9 @@ function DashboardTable() {
               <th>Date</th>
               <th>Account Head</th>
               <th>Sub Account Head</th>
-              <th>Cash Amt</th>
-              <th>Bank Amt</th>
-              <th>Diocesan Amt.</th>
+              <th>Cash Amount</th>
+              <th>Bank Amount</th>
+              <th>Diocesan Amount</th>
             </tr>
           </thead>
           <tbody>

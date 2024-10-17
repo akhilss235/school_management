@@ -4,8 +4,11 @@ import { Modal, Row, Col } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import request from "../Request"; // Ensure this is the correct import path for your request utility
 import { toast } from 'react-toastify'; // Import toast
+import { useCommon } from "../hooks/useCommon";
 
 function JournalEntryDetailes({ open, onClose, accountId, entryId }) {
+  const {getAmountWithCommas, getDate} = useCommon()
+
   const [formData, setFormData] = useState({
     rp: "",
     transactionMode: "",
@@ -23,6 +26,7 @@ function JournalEntryDetailes({ open, onClose, accountId, entryId }) {
         try {
           const response = await request.get(`getJournalEntryById/${entryId}`);
           const fetchedData = response.data.data;
+
           setFormData({
             rp: fetchedData.rp || "",
             transactionMode: fetchedData.transactionMode || "",
@@ -31,7 +35,7 @@ function JournalEntryDetailes({ open, onClose, accountId, entryId }) {
             amount: fetchedData.amount || "",
             diocesan: fetchedData.diocesan || 0,
             narration: fetchedData.narration || "",
-            date: fetchedData.date ? fetchedData.date.split("T")[0] : "", // Format date correctly
+            date: fetchedData.date ? getDate(fetchedData.date) : '',
           });
         } catch (error) {
           console.log("Error fetching journal entry:", error);

@@ -3,8 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Row, Col } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import Request from "../Request"; // Adjust the path as necessary
+import { useCommon } from "../hooks/useCommon";
 
 function OpeningBalanceDetaies({ open, onClose, accountId }) {
+  const {getAmountWithCommas, getDate} = useCommon()
   const [formData, setFormData] = useState({
     accountHead: "",
     subAccountHead: "",
@@ -35,7 +37,7 @@ function OpeningBalanceDetaies({ open, onClose, accountId }) {
             cash: accountData.amount?.cash || 0,
             bank: accountData.amount?.bank || 0,
             diocesan: accountData.amount?.diocesan || 0,
-            date: accountData.date ? new Date(accountData.date).toISOString().split('T')[0] : '',
+            date: accountData.date ? getDate(accountData.date) : '',
           });
         } else {
           setError("No account data found.");

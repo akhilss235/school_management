@@ -54,7 +54,7 @@ function Dashboard() {
       <div>
         <div className="p-3">
           <h4>
-            <b className="title">Opening Balance Entry</b>
+            <b className="title">Opening Balance </b>
           </h4>
         </div>
 
