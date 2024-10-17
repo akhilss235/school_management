@@ -34,9 +34,9 @@ function OpeningBalanceDetaies({ open, onClose, accountId }) {
           setFormData({
             accountHead: accountData.accountHead || '',
             subAccountHead: accountData.subAccountHead || '',
-            cash: accountData.amount?.cash || 0,
-            bank: accountData.amount?.bank || 0,
-            diocesan: accountData.amount?.diocesan || 0,
+            cash: accountData?.cash || 0,
+            bank: accountData?.bank || 0,
+            diocesan: accountData?.diocesan || 0,
             date: accountData.date ? getDate(accountData.date) : '',
           });
         } else {
