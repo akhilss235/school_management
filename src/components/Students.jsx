@@ -119,7 +119,7 @@ function Students() {
               id="basic-addon1"
               style={{ backgroundColor: "#FFFFFF" }}
             >
-              Class:
+              Class :
             </InputGroup.Text>
             <Form.Select
               aria-describedby="basic-addon1"
@@ -153,7 +153,7 @@ function Students() {
               id="basic-addon1"
               style={{ backgroundColor: "#FFFFFF" }}
             >
-              Section:
+              Section :
             </InputGroup.Text>
             <Form.Select
               aria-describedby="basic-addon1"
@@ -182,7 +182,7 @@ function Students() {
               id="basic-addon1"
               style={{ backgroundColor: "#FFFFFF" }}
             >
-              Gender:
+              Gender :
             </InputGroup.Text>
             <Form.Select
               aria-describedby="basic-addon1"

@@ -25,7 +25,7 @@ function AccountHead({ onSelect, isTitle=true, data }) {
                 {
                     isTitle &&
                     <InputGroup.Text id="basic-addon1" style={{ backgroundColor: "#FFFFFF" }}>
-                        Account Head:
+                        Account Head :
                     </InputGroup.Text>
                 }          
                 <Form.Select

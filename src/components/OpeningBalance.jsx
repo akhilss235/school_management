@@ -137,8 +137,8 @@ const handleDETAILESClick = (accountId) => {
               <th>Date</th>
               <th>Account Head</th>
               <th>Sub Account Head</th>
-              <th>Cash Amt</th>
-              <th>Bank Amt</th>
+              <th>Cash Amt.</th>
+              <th>Bank Amt.</th>
               <th>Diocesan Amt.</th>
               <th>Action</th>
             </tr>

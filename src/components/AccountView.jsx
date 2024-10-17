@@ -162,14 +162,14 @@ function AccountView() {
             {/* Class Dropdown */}
             <div className="col-auto mt-2">
               <CustomTableColumn
-                title={"Receipt/Payment"}
+                title={"Receipt/Payment :"}
                 selectedItem={rp}
                 setSelectedItem={setRp}
               />
             </div>
             <div className="col-auto mt-2">
               <CustomTableColumn
-                title={"Tra.Mode"}
+                title={"Tra.Mode :"}
                 selectedItem={transactionMode}
                 setSelectedItem={setTrasactionMode}
               />

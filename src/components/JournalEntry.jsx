@@ -189,7 +189,7 @@ function JournalEntry() {
 
         <div className="col-auto mt-2">
           <CustomTableColumn
-            title={"Receipt/Payment"}
+            title={"Receipt/Payment :"}
             selectedItem={rp}
             setSelectedItem={setRp}
           />
@@ -197,7 +197,7 @@ function JournalEntry() {
 
         <div className="col-auto mt-2">
           <CustomTableColumn
-            title={"Tra.Mode"}
+            title={"Tra.Mode :"}
             selectedItem={transactionMode}
             setSelectedItem={setTrasactionMode}
           />
