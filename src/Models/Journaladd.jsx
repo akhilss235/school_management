@@ -29,8 +29,11 @@ function Journaladd({ open, onClose, initialData }) {
 
   const validate = () => {
     const newErrors = {};
-    if (formData.date !== getTodayDate()) {
-      newErrors.date = "The date must be today's date.";
+    const today = new Date().toISOString().split('T')[0]; // Formats date as 'YYYY-MM-DD'
+    if (!formData.date) {
+      newErrors.date = "Date is required.";
+    } else if (formData.date > today) {
+      newErrors.date = "The date cannot be in the future.";
     }
     if (!formData.accountHead) {
       newErrors.accountHead = "Account Head is required.";
@@ -121,8 +124,7 @@ function Journaladd({ open, onClose, initialData }) {
                     type="date"
                     name="date"
                     value={formData.date}
-                    disabled
-                    readOnly
+                    onChange={handleInputChange}
                   />
                   {errors.date && (
                     <div className="text-danger">{errors.date}</div>

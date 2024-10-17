@@ -24,7 +24,12 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.date) newErrors.date = "Date is required.";
+    const today = new Date().toISOString().split('T')[0]; // Formats date as 'YYYY-MM-DD'
+    if (!formData.date) {
+      newErrors.date = "Date is required.";
+    } else if (formData.date > today) {
+      newErrors.date = "The date cannot be in the future.";
+    }
     if (!formData.rp) newErrors.rp = "Receipt/Payment selection is required.";
     if (!formData.amount || formData.amount <= 0) newErrors.amount = "Amount must be a positive number.";
     if (!formData.narration) newErrors.narration = "Narration is required.";
