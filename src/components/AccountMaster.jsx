@@ -130,6 +130,7 @@ function AccountMaster() {
             await request.post(`deleteAccountMaster`, { "selectedIds": selectedAccounts });
             toast.success("Deleted successfully");
             await fetchData();
+            setSelectedAccounts([])
         } catch (error) {
             console.log("Error at deleting account master", error);
         }
