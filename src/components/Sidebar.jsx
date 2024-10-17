@@ -4,21 +4,21 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "../Styles/Sidebar.css";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { GoDotFill } from "react-icons/go";
-import Topbar from "../components/Topbar"; 
+import Topbar from "../components/Topbar";
 import { MdOutlineDashboard } from "react-icons/md";
 import { useLogin } from "../hooks/useLogin";
-import Students from '../img/Accountinactie.png';
-import Studentsact from '../img/Studentsactive.png';
-import Transaction from '../img/Transactioninactive.png';
-import Transactionact from '../img/Transactionactive.png';
-import AccountView from '../img/Accountinactie.png';
-import AccountViewact from '../img/Accountactive.png';
-import Reports from '../img/Reportsinactive.png';
-import Reportsact from '../img/Reports.png';
-import AccountMaster from '../img/Masterinactive.png';
-import AccountMasteract from '../img/Masteractive.png';
-import UserAccess from '../img/UserAccess.png';
-import UserAccessact from '../img/UserAccessactive.png';
+import Students from "../img/Student.png";
+import Studentsact from "../img/Studentsinactive.png";
+import Transaction from "../img/Transactioninactive.png";
+import Transactionact from "../img/Transactionactive.png";
+import AccountView from "../img/Accountinactie.png";
+import AccountViewact from "../img/Accountactive.png";
+import Reports from "../img/Reportsinactive.png";
+import Reportsact from "../img/Reports.png";
+import AccountMaster from "../img/Masterinactive.png";
+import AccountMasteract from "../img/Masteractive.png";
+import UserAccess from "../img/UserAccess.png";
+import UserAccessact from "../img/UserAccessactive.png";
 
 const Sidebar = ({ children }) => {
   const { user } = useLogin();
@@ -38,7 +38,7 @@ const Sidebar = ({ children }) => {
     user?.accessTo?.isStudent && {
       path: "/Students",
       name: "Students",
-      img: [Students, Studentsact],
+      img: [Studentsact, Students],
     },
     user?.accessTo?.isTransaction && {
       path: "/OpeningBalance",
@@ -65,12 +65,16 @@ const Sidebar = ({ children }) => {
       name: "Account Master",
       img: [AccountMaster, AccountMasteract],
     },
-    { path: "/UserAccess", name: "User Access", img: [UserAccess, UserAccessact] },
-  ].filter(Boolean); 
+    {
+      path: "/UserAccess",
+      name: "User Access",
+      img: [UserAccess, UserAccessact],
+    },
+  ].filter(Boolean);
 
   useEffect(() => {
     const currentPath = location.pathname;
-    const index = menuItem.findIndex(item => item.path === currentPath);
+    const index = menuItem.findIndex((item) => item.path === currentPath);
     setActiveItemIndex(index !== -1 ? index : 0);
   }, [location.pathname]);
 
@@ -80,36 +84,40 @@ const Sidebar = ({ children }) => {
   };
 
   const getNavLinkClass = (path) => {
-    const isActive = location.pathname === path || 
-      (path === '/OpeningBalance' && (
-        location.pathname.startsWith('/OpeningBalance') || 
-        location.pathname.startsWith('/JournalEntry') || 
-        location.pathname.startsWith('/VoucherNumberForm')
-      )) ||
-      (path === '/Students' && (
-        location.pathname.startsWith('/StudentRegister') || 
-        location.pathname.startsWith('/StudentRegisterupdate') || 
-        location.pathname.startsWith('/StudentDetails')
-      )) ||
-      (path === '/UserAccess' && (
-        location.pathname.startsWith('/UserAccessnew') || 
-        location.pathname.startsWith('/UserAccessnewDetailes') || 
-        location.pathname.startsWith('/UserAccessnewUpdate')
-      ));
-      
+    const isActive =
+      location.pathname === path ||
+      (path === "/OpeningBalance" &&
+        (location.pathname.startsWith("/OpeningBalance") ||
+          location.pathname.startsWith("/JournalEntry") ||
+          location.pathname.startsWith("/VoucherNumberForm"))) ||
+      (path === "/Students" &&
+        (location.pathname.startsWith("/StudentRegister") ||
+          location.pathname.startsWith("/StudentRegisterupdate") ||
+          location.pathname.startsWith("/StudentDetails"))) ||
+      (path === "/UserAccess" &&
+        (location.pathname.startsWith("/UserAccessnew") ||
+          location.pathname.startsWith("/UserAccessnewDetailes") ||
+          location.pathname.startsWith("/UserAccessnewUpdate")));
+
     return isActive ? "active" : "";
   };
 
   const handleLogOut = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     navigate("/");
   };
 
   return (
     <>
       <Topbar toggle={toggle} isOpen={isOpen} />
-      <div className="section d-flex" style={{ fontFamily: "Roboto, sans-serif" }}>
-        <div style={{ width: isOpen ? "300px" : "70px" }} className="sidebar mt-3">
+      <div
+        className="section d-flex"
+        style={{ fontFamily: "Roboto, sans-serif" }}
+      >
+        <div
+          style={{ width: isOpen ? "300px" : "70px" }}
+          className="sidebar mt-3"
+        >
           {menuItem.map((item, index) => (
             <div key={index}>
               <NavLink
@@ -123,24 +131,48 @@ const Sidebar = ({ children }) => {
                 onMouseLeave={() => setHoveredItemIndex(null)}
               >
                 <div className="icon mt-1 mb-1">
-                  {activeItemIndex === index || hoveredItemIndex === index 
-                    ? (item.img ? <img src={item.img[1]} alt={item.name} className="imgs" /> : item.icons)
-                    : (item.img ? <img src={item.img[0]} alt={item.name} className="imgs" /> : item.icons)
-                  }
+                  {activeItemIndex === index || hoveredItemIndex === index ? (
+                    item.img ? (
+                      <img src={item.img[1]} alt={item.name} className="imgs" />
+                    ) : (
+                      item.icons
+                    )
+                  ) : item.img ? (
+                    <img src={item.img[0]} alt={item.name} className="imgs" />
+                  ) : (
+                    item.icons
+                  )}
                 </div>
-                <div style={{ display: isOpen ? "block" : "none" }} className="link_text mt-1 mb-1">
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text mt-1 mb-1"
+                >
                   {item.name}
                 </div>
                 {item.subMenu && (
                   <div className="dropdown-icon" style={{ marginLeft: "auto" }}>
-                    {dropdownOpen === index ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                    {dropdownOpen === index ? (
+                      <IoIosArrowUp />
+                    ) : (
+                      <IoIosArrowDown />
+                    )}
                   </div>
                 )}
               </NavLink>
               {item.subMenu && dropdownOpen === index && (
-                <div className="subMenu" style={{ display: isOpen ? "block" : "none", marginLeft: "20px" }}>
+                <div
+                  className="subMenu"
+                  style={{
+                    display: isOpen ? "block" : "none",
+                    marginLeft: "20px",
+                  }}
+                >
                   {item.subMenu.map((subItem, subIndex) => (
-                    <NavLink to={subItem.path} key={subIndex} className="linkss2 sub-link">
+                    <NavLink
+                      to={subItem.path}
+                      key={subIndex}
+                      className="linkss2 sub-link"
+                    >
                       <div className="link_text mt-1 mb-1">
                         <GoDotFill className="imgs" /> {subItem.name}
                       </div>
@@ -150,9 +182,20 @@ const Sidebar = ({ children }) => {
               )}
             </div>
           ))}
-          <div className="link d-flex" style={{ marginTop: "10%" }} onClick={handleLogOut}>
-            <div className="icon"><FaSignOutAlt /></div>
-            <div style={{ display: isOpen ? "block" : "none" }} className="link_text">Logout</div>
+          <div
+            className="link d-flex"
+            style={{ marginTop: "10%" }}
+            onClick={handleLogOut}
+          >
+            <div className="icon">
+              <FaSignOutAlt />
+            </div>
+            <div
+              style={{ display: isOpen ? "block" : "none" }}
+              className="link_text"
+            >
+              Logout
+            </div>
           </div>
         </div>
         <main className="content">{children}</main>
