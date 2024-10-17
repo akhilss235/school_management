@@ -111,7 +111,7 @@ function VoucherNumberForm() {
 
 
         </div>
-        <div className="col-auto ">
+        <div className="col-auto mt-2">
             <AccountHead onSelect={setSelectedAccountHead} />
           </div>
         <div className="col-auto mt-2">
