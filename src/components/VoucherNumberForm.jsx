@@ -86,7 +86,7 @@ function VoucherNumberForm() {
       <div className="d-flex justify-content-between">
         <div>
           <h4>
-            <b className="title">Voucher Number Form</b>
+            <b className="title">Voucher Number List</b>
           </h4>
         </div>
         <div></div>

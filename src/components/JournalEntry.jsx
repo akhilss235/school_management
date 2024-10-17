@@ -127,7 +127,7 @@ function JournalEntry() {
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
       <div className="d-flex justify-content-between">
         <h4>
-          <b className="title">Journal Entry</b>
+          <b className="title">Journal Entry List</b>
         </h4>
         <Button className="addbuttons" onClick={handlePostModel}>
           <FiPlus /> Enter Opening Balance

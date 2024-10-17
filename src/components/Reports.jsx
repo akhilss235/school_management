@@ -128,7 +128,7 @@ function Reports() {
         <div className="col-sm-6 mt-2" >
         <Form.Label></Form.Label>
 
-          <CustomTableColumn title={"Receipt/Payment"} selectedItem={rp} setSelectedItem={setRp}/>
+          <CustomTableColumn title={"Receipt/Payment :"} selectedItem={rp} setSelectedItem={setRp}/>
         </div>
 
         {/* Section Dropdown */}
