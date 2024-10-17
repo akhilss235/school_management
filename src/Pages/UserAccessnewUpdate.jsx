@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom"; 
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row, Col, Button,InputGroup } from "react-bootstrap";
 import request from "../Request";
 import { toast } from "react-toastify";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 function UserAccessnewUpdate() {
     const { userId } = useParams();
@@ -26,6 +27,9 @@ function UserAccessnewUpdate() {
             isAccountMaster: false,
         },
     });
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => setShowPassword(prev => !prev);
 
     const navigate = useNavigate();
 
@@ -153,13 +157,19 @@ function UserAccessnewUpdate() {
                     </Col>
                     <Col>
                         <Form.Label><b>Set Password</b></Form.Label>
-                        <Form.Control 
-                            type="password" 
-                            placeholder="Enter the password" 
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange} 
-                        />
+                        <InputGroup>
+                            <Form.Control
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="Enter the password"
+                                name="password"
+                                className="border-end-0"
+                                value={formData.password}
+                                onChange={handleChange} 
+                            />
+                            <InputGroup.Text className="showpasswordbtn" onClick={togglePasswordVisibility}>
+                                {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+                            </InputGroup.Text>
+                        </InputGroup>
                     </Col>
                 </Row>
             </div>

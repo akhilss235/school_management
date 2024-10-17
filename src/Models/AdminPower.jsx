@@ -54,12 +54,13 @@ const AdminPower = ({ open, onClose, accountId, setModalJournalEntryCashEntry })
                                 <Form.Label>Enter Admin Password</Form.Label>
                                 <InputGroup>
                                     <Form.Control
+                                        className="border-end-0"
                                         type={showPassword ? 'text' : 'password'}
                                         placeholder="Enter password"
                                         value={adminPassword}
                                         onChange={(e) => setAdminPassword(e.target.value)}
                                     />
-                                    <InputGroup.Text onClick={togglePasswordVisibility}>
+                                    <InputGroup.Text className="showpasswordbtn" onClick={togglePasswordVisibility}>
                                         {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
                                     </InputGroup.Text>
                                 </InputGroup>

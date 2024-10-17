@@ -309,6 +309,13 @@ body {
   border: 1px solid #CCCCCC;
 }
 
+.showpasswordbtn {
+  background-color: #fff !important; /* Set to match the input field */
+  border-left: none !important;
+  cursor: pointer;
+}
+
+
 .fw-400 {
   font-weight:400 !important;
 }

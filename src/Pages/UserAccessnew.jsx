@@ -6,10 +6,11 @@ import Button from "react-bootstrap/Button";
 import request from "../Request";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { InputGroup } from "react-bootstrap";
 
 function UserAccessnew() {
     const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
         name: '',
         phoneNumber: '',
@@ -23,7 +24,10 @@ function UserAccessnew() {
             isAccountMaster: false,
         },
     });
+    const [showPassword, setShowPassword] = useState(false);
 
+    const togglePasswordVisibility = () => setShowPassword(prev => !prev);
+    
     const handleChange = (e) => {
         const { name, type, value, checked } = e.target;
 
@@ -107,13 +111,19 @@ function UserAccessnew() {
                     </Col>
                     <Col>
                         <Form.Label><b>Set Password</b></Form.Label>
-                        <Form.Control 
-                            type="password" 
-                            placeholder="Enter the password" 
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange} 
-                        />
+                        <InputGroup>
+                            <Form.Control
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="Enter the password"
+                                name="password"
+                                className="border-end-0"
+                                value={formData.password}
+                                onChange={handleChange} 
+                            />
+                            <InputGroup.Text className="showpasswordbtn" onClick={togglePasswordVisibility}>
+                                {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+                            </InputGroup.Text>
+                        </InputGroup>
                     </Col>
                 </Row>
             </div>
