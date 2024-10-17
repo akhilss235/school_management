@@ -168,7 +168,7 @@ function AccountMaster() {
                 </div>
 
                 <div className="col-auto mt-2">
-                    <GetDate title={"To"} selectedDate={toDate} setSelectedDate={setToDate} />
+                    <GetDate title={"To"} selectedDate={toDate} setSelectedDate={setToDate} fromDate={fromDate} />
                 </div>
 
                 <div className="col-auto mt-2">

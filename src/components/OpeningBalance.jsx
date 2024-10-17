@@ -122,7 +122,7 @@ const handleDETAILESClick = (accountId) => {
 
         </div>
        <div>
-       <GetDate title={"To"} selectedDate={toDate} setSelectedDate={setToDate} />
+       <GetDate title={"To"} selectedDate={toDate} setSelectedDate={setToDate} fromDate={fromDate}/>
 
        </div>
         </div>

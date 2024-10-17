@@ -148,6 +148,7 @@ function JournalEntry() {
               title={"To"}
               selectedDate={toDate}
               setSelectedDate={setToDate}
+              fromDate={fromDate}
             />
           </div>
         </div>
