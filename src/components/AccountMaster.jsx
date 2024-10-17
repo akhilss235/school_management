@@ -16,6 +16,7 @@ import { GetDate } from "../Pages/Date";
 import { NoData } from "./NoData";
 import { toast } from "react-toastify";
 import Spinner from "react-bootstrap/Spinner"; // Import Spinner
+import { useCommon } from "../hooks/useCommon";
 
 function AccountMaster() {
     const [modalCashBookEntry, setModalCashBookEntry] = useState(false);
@@ -27,7 +28,7 @@ function AccountMaster() {
     const [toDate, setToDate] = useState("");
     const [selectedAccountHead, setSelectedAccountHead] = useState("");
     const itemsPerPage = 10;
-
+    const {getDate} = useCommon()
     const [currentPage, setCurrentPage] = useState(() => {
         const savedPage = sessionStorage.getItem("currentPage");
         return savedPage ? Number(savedPage) : 1;
@@ -225,7 +226,7 @@ function AccountMaster() {
                                             />
                                         </div>
                                     </td>
-                                    <td>{new Date(account.createdAt).toLocaleDateString()}</td>
+                                    <td>{getDate(account?.createdAt)}</td>
                                     <td>{account.accountHead}</td>
                                     <td>{account.subAccountHead || 'N/A'}</td>
                                     <td>
