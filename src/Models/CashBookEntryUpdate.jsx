@@ -34,9 +34,9 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
             setFormData({
               accountHead: accountData.accountHead || '',
               subAccountHead: accountData.subAccountHead || '',
-              cash: accountData.amount?.cash || 0, // Initialize with 0 if undefined
-              bank: accountData.amount?.bank || 0, // Initialize with 0 if undefined
-              diocesan: accountData.amount?.diocesan || 0, // Initialize with 0 if undefined
+              cash: accountData?.cash || 0, // Initialize with 0 if undefined
+              bank: accountData?.bank || 0, // Initialize with 0 if undefined
+              diocesan: accountData?.diocesan || 0, // Initialize with 0 if undefined
               date: accountData.date ? new Date(accountData.date).toISOString().split('T')[0] : '', // Format the date
             });
           } else {
