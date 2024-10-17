@@ -4,16 +4,17 @@ import { Modal, Row, Col } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import Request from "../Request"; // Adjust the path as necessary
 import { useCommon } from "../hooks/useCommon";
+import Table from "react-bootstrap/Table";
 
 function OpeningBalanceDetaies({ open, onClose, accountId }) {
-  const {getAmountWithCommas, getDate} = useCommon()
+  const { getAmountWithCommas, getDate } = useCommon();
   const [formData, setFormData] = useState({
     accountHead: "",
     subAccountHead: "",
     cash: 0,
     bank: 0,
     diocesan: 0,
-    date: '',
+    date: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -27,7 +28,9 @@ function OpeningBalanceDetaies({ open, onClose, accountId }) {
 
       setLoading(true);
       try {
-        const response = await Request.get(`getOpeningBalanceById/${accountId}`);
+        const response = await Request.get(
+          `getOpeningBalanceById/${accountId}`
+        );
         const accountData = response.data.message;
 
         if (accountData) {
@@ -59,14 +62,22 @@ function OpeningBalanceDetaies({ open, onClose, accountId }) {
       <Modal.Body>
         <Row className="justify-content-between align-items-center mt-2 mb-3">
           <Col xs={"auto"}>
-            <h4><b style={{color:'#00A62F'}}>Date: {formData.date}</b></h4>
+            <h4>
+              <b style={{ color: "#00A62F" }}>Date: {formData.date}</b>
+            </h4>
           </Col>
           <Col xs={"auto"}>
-            <IoIosCloseCircleOutline size={32} className="modalformclosebtn" onClick={onClose} />
+            <IoIosCloseCircleOutline
+              size={32}
+              className="modalformclosebtn"
+              onClick={onClose}
+            />
           </Col>
         </Row>
         <div style={{ textAlign: "start" }}>
-          <h5><b className="title">CATHEDRAL NURSERY AND PRIMARY</b></h5>
+          <h5>
+            <b className="title">CATHEDRAL NURSERY AND PRIMARY</b>
+          </h5>
         </div>
 
         {loading ? (
@@ -75,35 +86,104 @@ function OpeningBalanceDetaies({ open, onClose, accountId }) {
           <div className="text-danger">{error}</div>
         ) : (
           <>
-            <div className="d-flex justify-content-start mt-4" style={{ textAlign: "center" }}>
-              <div>
-                <h5><b className="title">C/B CASH:</b></h5>
-              </div>
-              <div className="mx-4">
-                <h5><b>{formData.cash.toLocaleString()}</b></h5>
+            <div
+              className="d-flex justify-content-start mt-4"
+              style={{ textAlign: "center" }}
+            >
+              <div></div>
+
+              <div className="table-responsive">
+                <Table responsive="xl">
+                  <tbody style={{border:'none'}}>
+                    <tr className="d-flex">
+                      <td className="title">
+                        <b>
+                          {" "}
+                          <span className="title">C/B CASH</span>{" "}
+                        </b>
+                      </td>
+
+                      <td className="title">
+                        <b>
+                          {" "}
+                          <span className="title">:</span>{" "}
+                        </b>
+                      </td>
+                      <td className="title">
+                        <b>
+                          {" "}
+                          <span className="title2">
+                            {" "}
+                            {formData.cash.toLocaleString()}
+                          </span>{" "}
+                        </b>
+                      </td>
+                    </tr>
+
+
+                    <tr className="d-flex">
+                      <td className="title">
+                        <b>
+                          {" "}
+                          <span className="title">C/B BANK</span>{" "}
+                        </b>
+                      </td>
+
+                      <td className="title">
+                        <b>
+                          {" "}
+                          <span className="title">:</span>{" "}
+                        </b>
+                      </td>
+                      <td className="title">
+                        <b>
+                          {" "}
+                          <span className="title2">
+                            {" "}
+                            {formData.bank.toLocaleString()}
+                          </span>{" "}
+                        </b>
+                      </td>
+                    </tr>
+
+
+
+
+
+
+                    <tr className="d-flex">
+                      <td className="title">
+                        <b>
+                          {" "}
+                          <span className="title">C/B DIO</span>{" "}
+                        </b>
+                      </td>
+
+                      <td className="title">
+                        <b>
+                          {" "}
+                          <span className="title">:</span>{" "}
+                        </b>
+                      </td>
+                      <td className="title">
+                        <b>
+                          {" "}
+                          <span className="title2">
+                            {" "}
+                            {formData.diocesan.toLocaleString()}                          </span>{" "}
+                        </b>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </Table>
               </div>
             </div>
-            <div className="d-flex justify-content-start" style={{ textAlign: "center" }}>
-              <div>
-                <h5><b className="title">C/B BANK:</b></h5>
-              </div>
-              <div className="mx-4">
-                <h5><b>{formData.bank.toLocaleString()}</b></h5>
-              </div>
-            </div>
-            <div className="d-flex justify-content-start" style={{ textAlign: "center" }}>
-              <div>
-                <h5><b className="title">C/B DIO:</b></h5>
-              </div>
-              <div className="mx-4">
-                <h5><b>{formData.diocesan.toLocaleString()}</b></h5>
-              </div>
-            </div>
+
+           
           </>
         )}
-
       </Modal.Body>
-      
     </Modal>
   );
 }
