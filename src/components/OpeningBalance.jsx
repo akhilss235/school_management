@@ -16,6 +16,7 @@ import { SubAccountHead } from "../Pages/SubAccountHead";
 import { GetDate } from "../Pages/Date";
 import Pagination from "./Pagination";
 import { NoData } from "./NoData";
+import { isToday, parseISO } from 'date-fns'; // Import date-fns functions
 
 function OpeningBalance() {
   const { getAmountWithCommas, getDate } = useCommon();
@@ -149,13 +150,16 @@ const handleDETAILESClick = (accountId) => {
                   <td>{getDate(data.date)}</td>
                   <td>{data.accountHead}</td>
                   <td>{accountHead(data.subAccountHead) || "-"}</td>
-                  <td>Rs. {getAmountWithCommas(data.amount.cash || 0)}</td>
-                  <td>Rs. {getAmountWithCommas(data.amount.bank || 0)}</td>
-                  <td>Rs. {getAmountWithCommas(data.amount.diocesan || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.cash || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.bank || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.diocesan || 0)}</td>
                   <td>
                     <div className="d-flex " style={{textAlign:'start',justifyContent:'start'}}>
                       <LiaEyeSolid className="mx-1" style={{ fontSize: "1.5rem" }} onClick={() => handleDETAILESClick(data._id)} />
-                      <LuPenLine style={{ fontSize: "1.5rem", color: "#3474EB" }} onClick={() => handleEditClick(data._id)} />
+                      {isToday(parseISO(data.date)) && ( // Check if date is today
+                        <LuPenLine style={{ fontSize: "1.5rem", color: "#3474EB" }} onClick={() => handleEditClick(data._id)} />
+                      )}
+
                     </div>
                   </td>
                 </tr>
