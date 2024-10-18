@@ -117,35 +117,46 @@ function AccountView() {
             <b className="title">Account View</b>
           </h4>
         </div>
-        <div>
-          <div className="d-flex align-items-center">
-          <DownloadButton
-              fetchData={fetchFullAccountViewData}
-              columns={[
-                { header: "Date", dataKey: "date" },
-                { header: "Narration", dataKey: "narration" },
-                { header: "Tra. Mode", dataKey: "transactionMode" },
-                { header: "Receipt/Payment", dataKey: "rp" },
-                { header: "Amount", dataKey: "amount" }
-              ]} 
-              filename="AccountView"
-              heading="Account View"
-          />
+        <div className="d-flex flex-wrap">
+          <div className="col-auto d-flex align-items-center">
+            <DownloadButton
+                fetchData={fetchFullAccountViewData}
+                columns={[
+                  { header: "Date", dataKey: "date" },
+                  { header: "Narration", dataKey: "narration" },
+                  { header: "Tra. Mode", dataKey: "transactionMode" },
+                  { header: "Receipt/Payment", dataKey: "rp" },
+                  { header: "Amount", dataKey: "amount" }
+                ]} 
+                filename="AccountView"
+                heading="Account View"
+            />
+          </div>
+          <div className="col-auto mt-2">
+            <Button
+              className="addbuttons"
+              onClick={handleOpenPostModal}
+            >
+              <span style={{ fontSize: "auto" }}>
+                <FiPlus />
+                New Entry
+              </span>
+            </Button>
           </div>
         </div>
       </div>
 
       <div className="row">
-        <div className="col-sm-3">
+        <div className="col-sm-auto col-lg-3 mt-3">
           <Form.Label size="lg">Select Cash Book Head</Form.Label>
           <AccountHead onSelect={setSelectedAccountHead} isTitle={false} />
         </div>
-        <div className="col-sm-9">
-          <div className="row mb-2  d-flex justify-content-between align-items-center">
+        <div className="col-sm-auto col-lg-9">
+          <div className="row mb-2  d-flex justify-content-start align-items-center">
             {/* Filter Button */}
             <div className="col-auto mt-2">
               <div
-                className="card d-flex align-items-center justify-content-center filterbody"
+                className="card d-flex align-items-center justify-content-center filterbody p-2"
                 style={{ height: "35px" }}
               >
                 <IconContext.Provider
@@ -153,7 +164,7 @@ function AccountView() {
                 >
                   <div className="d-flex align-items-center">
                     <GoFilter className="Filteric" />
-                    <span className="Filteric p-2">Filter</span>
+                    <span className="Filteric p-1">Filter</span>
                   </div>
                 </IconContext.Provider>
               </div>
@@ -174,21 +185,8 @@ function AccountView() {
                 setSelectedItem={setTrasactionMode}
               />
             </div>
-
-            <div className="col-auto mt-2">
-              <Button
-                className="addbuttons"
-                onClick={handleOpenPostModal}
-              >
-                <span style={{ fontSize: "auto" }}>
-                  <FiPlus />
-                  New Entry
-                </span>
-              </Button>
-            </div>
-
-            <div className="d-flex col-auto ">
-              <div className="mx-2">
+            <div className="col-auto d-flex flex-wrap">
+              <div className="me-4">
               <GetDate
                 title={"From"}
                 selectedDate={fromDate}
@@ -203,13 +201,15 @@ function AccountView() {
                   fromDate={fromDate}
                 />
               </div>
-
             </div>
-            <div className="col-auto mt-2">
+            <div className="col-auto mt-2 ms-auto">
               <Search search={search} setSearch={setSearch} />
             </div>
           </div>
         </div>
+
+
+        
       </div>
 
       {/* Table */}

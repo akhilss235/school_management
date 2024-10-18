@@ -68,8 +68,8 @@ const DownloadButton = ({ fetchData, columns, filename,heading }) => {
             onClick={handleDownload}
         >
             <FiDownload style={{ fontSize: "1.5rem", color: "#3474EB" }} />
-            <br />
-            <label style={{ textAlign: "center", color: "#000000" }}>Download</label>
+            {/* <br /> */}
+            {/* <label style={{ textAlign: "center", color: "#000000" }}>Download</label> */}
         </Button>
     );
 };
