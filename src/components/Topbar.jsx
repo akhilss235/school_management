@@ -10,7 +10,7 @@ function Topbar() {
   
   return (
     <Navbar className="navbar-custom" style={{ fontFamily: 'Roboto, sans-serif', backgroundColor: '#FFFFFF' }}>
-      <Navbar.Brand href="/" className="mx-5">
+      <Navbar.Brand href="/Dashboard" className="mx-5">
         <img src={logo} alt="Logo" style={{ width: '50px' }} />
       </Navbar.Brand>
 

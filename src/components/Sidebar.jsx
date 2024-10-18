@@ -44,9 +44,9 @@ const Sidebar = ({ children }) => {
     user?.accessTo?.isTransaction && {
       path: "/OpeningBalance",
       name: "Transaction",
-      icons: <AiOutlineTransaction />,
-
-      // img: [Transaction, Transactionact],
+      // icons: <AiOutlineTransaction />,
+            img: [Transaction, Transactionact],
+ 
       subMenu: [
         { path: "/OpeningBalance", name: "Opening Balance" },
         { path: "/JournalEntry", name: "Journal Entry" },
@@ -75,11 +75,11 @@ const Sidebar = ({ children }) => {
     },
   ].filter(Boolean);
 
-  useEffect(() => {
-    const currentPath = location.pathname;
-    const index = menuItem.findIndex((item) => item.path === currentPath);
-    setActiveItemIndex(index !== -1 ? index : 0);
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   const currentPath = location.pathname;
+  //   const index = menuItem.findIndex((item) => item.path === currentPath);
+  //   setActiveItemIndex(index !== -1 ? index : 0);
+  // }, [location.pathname, menuItem]);
 
   const toggle = () => setIsOpen(!isOpen);
   const toggleDropdown = (index) => {
@@ -89,22 +89,47 @@ const Sidebar = ({ children }) => {
   const getNavLinkClass = (path) => {
     const isActive =
       location.pathname === path ||
-      (path === "/OpeningBalance" &&
-        (location.pathname.startsWith("/OpeningBalance") ||
-          location.pathname.startsWith("/JournalEntry") ||
-          location.pathname.startsWith("/VoucherNumberForm"))) ||
       (path === "/Students" &&
         (location.pathname.startsWith("/StudentRegister") ||
-          location.pathname.startsWith("/StudentRegisterupdate") ||
-          location.pathname.startsWith("/StudentDetails"))) ||
+         location.pathname.startsWith("/StudentRegisterupdate") ||
+         location.pathname.startsWith("/StudentDetails"))) ||
+      (path === "/OpeningBalance" &&
+        (location.pathname.startsWith("/OpeningBalance") ||
+         location.pathname.startsWith("/JournalEntry") ||
+         location.pathname.startsWith("/VoucherNumberForm"))) ||
       (path === "/UserAccess" &&
         (location.pathname.startsWith("/UserAccessnew") ||
-          location.pathname.startsWith("/UserAccessnewDetailes") ||
-          location.pathname.startsWith("/UserAccessnewUpdate")));
-
+         location.pathname.startsWith("/UserAccessnewDetailes") ||
+         location.pathname.startsWith("/UserAccessnewUpdate")));
+  
     return isActive ? "active" : "";
   };
-
+  
+  useEffect(() => {
+    const currentPath = location.pathname;
+    // const toggle = () => setIsOpen(isOpen);
+    const index = menuItem.findIndex((item) => 
+      item.path === currentPath ||
+      (item.path === "/Students" && (
+        currentPath.startsWith("/StudentRegister") ||
+        currentPath.startsWith("/StudentRegisterupdate") ||
+        currentPath.startsWith("/StudentDetails")
+      )) ||
+      (item.path === "/OpeningBalance" && (
+        currentPath.startsWith("/OpeningBalance") ||
+        currentPath.startsWith("/JournalEntry") ||
+        currentPath.startsWith("/VoucherNumberForm")
+      )) ||
+      (item.path === "/UserAccess" && (
+        currentPath.startsWith("/UserAccessnew") ||
+        currentPath.startsWith("/UserAccessnewDetailes") ||
+        currentPath.startsWith("/UserAccessnewUpdate")
+      ))
+    );
+  
+    setActiveItemIndex(index !== -1 ? index : 0);
+  }, [location.pathname, menuItem]);
+  
   const handleLogOut = () => {
     localStorage.removeItem("token");
     navigate("/");
@@ -113,19 +138,13 @@ const Sidebar = ({ children }) => {
   return (
     <>
       <Topbar toggle={toggle} isOpen={isOpen} />
-      <div
-        className="section d-flex"
-        style={{ fontFamily: "Roboto, sans-serif" }}
-      >
-        <div
-          style={{ width: isOpen ? "300px" : "70px" }}
-          className="sidebar mt-3"
-        >
+      <div className="section d-flex" style={{ fontFamily: "Roboto, sans-serif" }}>
+        <div style={{ width: isOpen ? "300px" : "70px" }} className="sidebar mt-3">
           {menuItem.map((item, index) => (
             <div key={index}>
               <NavLink
                 to={item.path}
-                className={`linkss ${getNavLinkClass(item.path, index)}`}
+                className={`linkss ${getNavLinkClass(item.path)}`}
                 onClick={() => {
                   if (item.subMenu) toggleDropdown(index);
                   setActiveItemIndex(index);
@@ -136,46 +155,29 @@ const Sidebar = ({ children }) => {
                 <div className="icon mt-1 mb-1">
                   {activeItemIndex === index || hoveredItemIndex === index ? (
                     item.img ? (
-                      <img src={item.img[1]} alt={item.name} className="imgs" />
+                      <img src={item.img[1]} alt={item.name} className="imgs" /> // Active image
                     ) : (
                       item.icons
                     )
                   ) : item.img ? (
-                    <img src={item.img[0]} alt={item.name} className="imgs" />
+                    <img src={item.img[0]} alt={item.name} className="imgs" /> // Inactive image
                   ) : (
                     item.icons
                   )}
                 </div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className="link_text mt-1 mb-1"
-                >
+                <div style={{ display: isOpen ? "block" : "none" }} className="link_text mt-1 mb-1">
                   {item.name}
                 </div>
                 {item.subMenu && (
                   <div className="dropdown-icon" style={{ marginLeft: "auto" }}>
-                    {dropdownOpen === index ? (
-                      <IoIosArrowUp />
-                    ) : (
-                      <IoIosArrowDown />
-                    )}
+                    {dropdownOpen === index ? <IoIosArrowUp /> : <IoIosArrowDown />}
                   </div>
                 )}
               </NavLink>
               {item.subMenu && dropdownOpen === index && (
-                <div
-                  className="subMenu"
-                  style={{
-                    display: isOpen ? "block" : "none",
-                    marginLeft: "20px",
-                  }}
-                >
+                <div className="subMenu" style={{ display: isOpen ? "block" : "none", marginLeft: "20px" }}>
                   {item.subMenu.map((subItem, subIndex) => (
-                    <NavLink
-                      to={subItem.path}
-                      key={subIndex}
-                      className="linkss2 sub-link"
-                    >
+                    <NavLink to={subItem.path} key={subIndex} className="linkss2 sub-link">
                       <div className="link_text mt-1 mb-1">
                         <GoDotFill className="imgs" /> {subItem.name}
                       </div>
@@ -185,18 +187,11 @@ const Sidebar = ({ children }) => {
               )}
             </div>
           ))}
-          <div
-            className="link d-flex"
-            style={{ marginTop: "10%" }}
-            onClick={handleLogOut}
-          >
+          <div className="link d-flex" style={{ marginTop: "10%" }} onClick={handleLogOut}>
             <div className="icon">
               <FaSignOutAlt />
             </div>
-            <div
-              style={{ display: isOpen ? "block" : "none" }}
-              className="link_text"
-            >
+            <div style={{ display: isOpen ? "block" : "none" }} className="link_text">
               Logout
             </div>
           </div>

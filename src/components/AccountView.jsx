@@ -146,12 +146,12 @@ function AccountView() {
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-sm-auto col-lg-3 mt-3">
-          <Form.Label size="lg">Select Cash Book Head</Form.Label>
+      <div className="row mt-4">
+        <div className="col-sm-auto col-lg-4 mt-3">
+          <Form.Label size="lg"><b>Select Cash Book Head</b></Form.Label>
           <AccountHead onSelect={setSelectedAccountHead} isTitle={false} />
         </div>
-        <div className="col-sm-auto col-lg-9">
+        <div className="col-sm-auto col-lg-8">
           <div className="row mb-2  d-flex justify-content-start align-items-center">
             {/* Filter Button */}
             <div className="col-auto mt-2">
