@@ -40,36 +40,36 @@ function UserAccessnew() {
     };
 
     const handleSubmit = async (e) => {
-      e.preventDefault();
+        e.preventDefault();
+        console.log("form", formData.accessTo)
+        const hasAccess = Object.values(formData.accessTo).some((val)=> val === true)
+        const { name, phoneNumber, userName, password } = formData;
+        if (!name || !phoneNumber || !userName || !password) {
+        toast.warn("Please fill in all required fields.");
+        return;
+        }else if(!hasAccess){
+            toast.warn("Please Select Atleast One Checkbox To Continue");
+        return
+        }
   
-      const { name, phoneNumber, userName, password } = formData;
-      if (!name || !phoneNumber || !userName || !password) {
-          toast.warn("Please fill in all required fields.");
-          return;
-      }
-  
-      console.log("Payload being sent:", JSON.stringify(formData));
-  
-      try {
-          const response = await request.post('addUser/', JSON.stringify(formData), {
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-          });
-  
-          // Check for a successful response status
-          if (response.status === 201) {
-              console.log("User access set successfully");
-              toast.success(response.data.message || "User created successfully"); // Show the message from the server
-              navigate("/UserAccess");
-          } else {
-              console.error("Unexpected response:", response.data);
-              toast.error("Failed to set user access. Please try again.");
-          }
-      } catch (error) {
-          console.error("Error occurred during the request:", error);
-          toast.error("An error occurred. Please check your connection and try again.");
-      }
+        try {
+            const response = await request.post('addUser/', JSON.stringify(formData), {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (response.status === 201) {
+                toast.success(response.data.message || "User created successfully"); 
+                navigate("/UserAccess");
+            } else {
+                console.error("Unexpected response:", response.data);
+                toast.error( response?.data?.message ||"Failed to set user access. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error occurred during the request:", error);
+            toast.error("An error occurred. Please check your connection and try again.");
+        }
   };
   
     return (
