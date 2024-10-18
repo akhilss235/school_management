@@ -9,7 +9,7 @@ export const CustomTableColumn = ({title, selectedItem, setSelectedItem}) => {
         setSelectedItem(selectedValue);
     }
 
-    const items = title === "Receipt/Payment" ? ["Receipt", "Payment"] : ["Cash", "Bank", "Diocesan"]
+    const items = title === "Receipt/Payment :" ? ["Receipt", "Payment"] : ["Cash", "Bank", "Diocesan"]
   return (
     <InputGroup    >
         <InputGroup.Text

@@ -130,7 +130,7 @@ function JournalEntry() {
           <b className="title">Journal Entry </b>
         </h4>
         <Button className="addbuttons" onClick={handlePostModel}>
-          <FiPlus /> Enter Opening Balance
+          <FiPlus /> Cash Book Entry
         </Button>
       </div>
 

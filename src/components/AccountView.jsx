@@ -132,7 +132,7 @@ function AccountView() {
                 heading="Account View"
             />
           </div>
-          <div className="col-auto mt-2">
+          <div className="col-auto mt-2 align-items-center">
             <Button
               className="addbuttons"
               onClick={handleOpenPostModal}

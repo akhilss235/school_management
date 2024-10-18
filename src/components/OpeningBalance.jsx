@@ -89,7 +89,7 @@ const handleDETAILESClick = (accountId) => {
       <div className="d-flex">
 
           <Button className="addbuttons" onClick={() => setModalCashBookEntry(true)}>
-            <span><FiPlus /> Enter Opening Balance</span>
+            <span><FiPlus /> Opening Balance</span>
           </Button>
         </div>
     </div>
