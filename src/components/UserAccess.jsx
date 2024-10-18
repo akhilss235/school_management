@@ -112,7 +112,7 @@ function UserAccess() {
                   <td>{index + (currentPage - 1) * itemsPerPage + 1}</td>
                   <td>{user.name}</td>
                   <td>{user.phoneNumber}</td>
-                  <td>{user.userName}</td>
+                  <td style={{textTransform:"none"}}>{user.userName}</td>
                   <td>
                     <div className="d-flex" style={{textAlign:'start',justifyContent:'start'}}>
                       <a href={`/UserAccessnewDetailes/${user._id}`} style={{ textDecoration: "none" }}>
