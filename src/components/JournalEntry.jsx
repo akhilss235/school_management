@@ -234,8 +234,8 @@ function JournalEntry() {
                 <tr key={data._id} style={{ fontSize: "15px" }}>
                   <td>{getDate(data.date)}</td>
 
-                  <td className={data.rp === "Payment" ? "payment" : "receipt"}>
-                    {data.rp === "Payment" ? "Payment" : "Receipt"}
+                  <td className={data.rp === "payment" ? "payment" : "receipt"}>
+                    {data.rp === "payment" ? "Payment" : "Receipt"}
                   </td>
 
                   {/* <td>{data.rp}</td> */}
