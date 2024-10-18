@@ -135,8 +135,8 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
                     onChange={handleInputChange}
                   >
                     <option value="">Select</option>
-                    <option value="Receipt">Receipt</option>
-                    <option value="Payment">Payment</option>
+                    <option value="receipt">Receipt</option>
+                    <option value="payment">Payment</option>
                   </Form.Select>
                   {errors.rp && <div className="text-danger">{errors.rp}</div>}
                 </Form.Group>
@@ -191,9 +191,9 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
                     onChange={handleInputChange}
                   >
                     <option value="">Select Transaction Mode</option>
-                    <option value="Cash">Cash</option>
-                    <option value="Bank">Bank</option>
-                    <option value="Diocesan">Diocesan</option>
+                    <option value="cash">Cash</option>
+                    <option value="bank">Bank</option>
+                    <option value="diocesan">Diocesan</option>
                   </Form.Select>
                   {errors.transactionMode && <div className="text-danger">{errors.transactionMode}</div>}
                 </Form.Group>

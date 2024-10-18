@@ -30,14 +30,14 @@ function AccountHead({ onSelect, isTitle=true, data }) {
                 }          
                 <Form.Select
                     aria-describedby="basic-addon1"
-                    style={{ borderLeft: isTitle ? "none" : "" }}
+                    style={{ borderLeft: isTitle ? "none" : "",textTransform:'capitalize' }}
                     value={selectedHead}
                     onChange={handleSelectChange}
                     
                 >
-                    <option value="">All</option>
+                    <option value="" style={{textTransform:'capitalize'}}>All</option>
                     {accountHeads.map((accountHead, index) => (
-                        <option key={index} value={accountHead}>
+                        <option key={index} value={accountHead} style={{textTransform:'capitalize'}}>
                             {accountHead}
                         </option>
                     ))}
