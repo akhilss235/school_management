@@ -18,15 +18,16 @@ export const GetDate = ({title, selectedDate, setSelectedDate, fromDate}) => {
         return "";
     }
   return (
-    <InputGroup style={{height:'35px'}} >
-        <InputGroup.Text style={{ backgroundColor: "#FFFFFF" }}>
+    <InputGroup style={{height:'35px',width:'200px'}} >
+        <InputGroup.Text style={{ backgroundColor: "#FFFFFF",width:'72px'}}>
             {title} :
         </InputGroup.Text>
         <Form.Control 
+            className='ps-0'
             id="Fromdate" 
             type="date" 
             name="Fromdate" 
-            style={{ fontSize: "small", borderLeft: "none"}} 
+            style={{ fontSize: "small", borderLeft: "none",width:'128px'}} 
             value={selectedDate}
             onChange={onChange}
             min={ updatedDate() || ""}
