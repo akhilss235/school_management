@@ -403,3 +403,15 @@ body {
   color: green !important;
 
 }
+
+
+
+
+.Students-input {
+  color: #aaa; 
+
+}
+
+.Students-input::placeholder {
+  color: #aaa !important; 
+}

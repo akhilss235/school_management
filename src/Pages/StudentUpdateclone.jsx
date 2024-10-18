@@ -14,11 +14,11 @@ const StudentUpdateclone = ({
 }) => {
   return (
     <div>
-      <Row>
+      <Row className="mt-3">
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -32,6 +32,8 @@ const StudentUpdateclone = ({
               <Form.Control
                 type="text"
                 name="motherTamilName"
+                className="Students-input"
+
                 value={formData.motherTamilName}
                 onChange={handleChange}
                 isInvalid={!!error.motherTamilName}
@@ -47,7 +49,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -61,6 +63,8 @@ const StudentUpdateclone = ({
               <Form.Control
                 type="text"
                 name="aadharNumber"
+                className="Students-input"
+
                 value={formData.aadharNumber}
                 onChange={handleChange}
                 isInvalid={!!error.aadharNumber}
@@ -76,7 +80,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -89,6 +93,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
+
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={handleChange}
@@ -105,7 +111,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -118,6 +124,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Control
                 type="date"
+                className="Students-input"
+
                 name="dob"
                 value={formData.dob}
                 onChange={handleChange}
@@ -131,11 +139,11 @@ const StudentUpdateclone = ({
         </Col>
       </Row>
 
-      <Row>
+      <Row className="mt-3">
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -165,7 +173,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -178,6 +186,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Control
                 type="date"
+                className="Students-input"
+
                 name="doj"
                 value={formData.doj}
                 onChange={handleChange}
@@ -189,7 +199,7 @@ const StudentUpdateclone = ({
             </Col>
           </Row>
         </Col>
-        <Col className="d-flex flex-column justify-content-between">
+        <Col >
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -202,6 +212,8 @@ const StudentUpdateclone = ({
               <Form.Control
                 type="text"
                 name="address"
+                className="Students-input"
+
                 placeholder="Enter Address"
                 value={formData.address}
                 onChange={handleChange}
@@ -216,11 +228,11 @@ const StudentUpdateclone = ({
         </Col>
       </Row>
 
-      <Row>
+      <Row className="mt-3">
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -234,6 +246,8 @@ const StudentUpdateclone = ({
               <Form.Control
                 type="text"
                 name="pincode"
+                className="Students-input"
+
                 isInvalid={!!error.pincode}
                 value={formData.pincode}
                 onChange={handleChange}
@@ -249,7 +263,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -286,7 +300,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -299,6 +313,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
+
                 name="religion"
                 value={formData.religion}
                 onChange={handleChange}
@@ -315,7 +331,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -328,6 +344,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
+
                 name="moi"
                 value={formData.moi}
                 onChange={handleChange}
@@ -343,11 +361,11 @@ const StudentUpdateclone = ({
         </Col>
       </Row>
 
-      <Row>
+      <Row className="mt-3">
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -361,6 +379,8 @@ const StudentUpdateclone = ({
               <Form.Control
                 type="text"
                 name="admissionNumber"
+                className="Students-input"
+
                 placeholder="Enter Admission Number"
                 value={formData.admissionNumber}
                 onChange={handleChange}
@@ -375,7 +395,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -388,6 +408,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
+
                 name="community"
                 value={formData.community}
                 onChange={handleChange}
@@ -404,7 +426,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -417,6 +439,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
+
                 name="disabilityName"
                 value={formData.disabilityName}
                 onChange={handleChange}
@@ -433,7 +457,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -446,6 +470,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
+
                 name="groupCode"
                 value={formData.groupCode}
                 onChange={handleChange}
@@ -460,11 +486,11 @@ const StudentUpdateclone = ({
           </Row>
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-3">
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -478,6 +504,8 @@ const StudentUpdateclone = ({
               <Form.Control
                 type="text"
                 name="motherTongue"
+                className="Students-input"
+
                 value={formData.motherTongue}
                 onChange={handleChange}
                 isInvalid={!!error.motherTongue}
@@ -493,7 +521,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -507,6 +535,8 @@ const StudentUpdateclone = ({
               <Form.Control
                 type="text"
                 name="bankAccount"
+                className="Students-input"
+
                 value={formData.bankAccount}
                 onChange={handleChange}
                 isInvalid={!!error.bankAccount}
@@ -522,7 +552,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -536,6 +566,8 @@ const StudentUpdateclone = ({
               <Form.Control
                 type="text"
                 name="ifscCode"
+                className="Students-input"
+
                 value={formData.ifscCode}
                 onChange={handleChange}
                 isInvalid={!!error.ifscCode}
@@ -551,7 +583,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -565,6 +597,8 @@ const StudentUpdateclone = ({
               <Form.Control
                 type="text"
                 name="micr"
+                className="Students-input"
+
                 value={formData.micr}
                 onChange={handleChange}
                 isInvalid={!!error.micr}
@@ -578,11 +612,11 @@ const StudentUpdateclone = ({
           </Row>
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-3">
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -595,7 +629,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Control
                 type="text"
-            
+                className="Students-input"
+
                 name="tcNumber"
                 value={formData.tcNumber}
                 onChange={handleChange}
@@ -612,7 +647,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -625,6 +660,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Select
                 name="tcStatus"
+                className="Students-input"
+
                 value={formData.tcStatus}
                 onChange={handleChange}
                 isInvalid={!!error.tcStatus}
@@ -644,7 +681,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           <Row>
             <Col>
@@ -657,7 +694,8 @@ const StudentUpdateclone = ({
             <Col>
               <Form.Control
                 type="date"
-                
+                className="Students-input"
+
                 name="tcIssueDate"
                 value={formData.tcIssueDate}
                 onChange={handleChange}
@@ -673,7 +711,7 @@ const StudentUpdateclone = ({
         <Col
           sm={6}
           xl={3}
-          className="d-flex flex-column justify-content-between"
+          
         >
           {/* <Row>
             <Col>

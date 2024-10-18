@@ -239,11 +239,10 @@ function StudentRegisterupdate() {
               </span>
             </Col>
           </Row>
-          <Row>
+          <Row className="mt-3">
             <Col
               sm={6}
               xl={3}
-              className="d-flex flex-column justify-content-between"
             >
               <Row>
                 <Col>
@@ -256,6 +255,8 @@ function StudentRegisterupdate() {
                 <Col>
                   <Form.Control
                     type="text"
+                    className="Students-input"
+
                     name="emisId"
                     value={formData.emisId}
                     onChange={handleChange}
@@ -271,7 +272,6 @@ function StudentRegisterupdate() {
             <Col
               sm={6}
               xl={3}
-              className="d-flex flex-column justify-content-between"
             >
               <Row>
                 <Col>
@@ -284,6 +284,8 @@ function StudentRegisterupdate() {
                 <Col>
                   <Form.Control
                     type="text"
+                    className="Students-input"
+
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -299,7 +301,6 @@ function StudentRegisterupdate() {
             <Col
               sm={6}
               xl={3}
-              className="d-flex flex-column justify-content-between"
             >
               <Row>
                 <Col>
@@ -312,6 +313,8 @@ function StudentRegisterupdate() {
                 <Col>
                   <Form.Control
                     type="text"
+                    className="Students-input"
+
                     name="nameInTamil"
                     value={formData.nameInTamil}
                     onChange={handleChange}
@@ -327,7 +330,6 @@ function StudentRegisterupdate() {
             <Col
               sm={6}
               xl={3}
-              className="d-flex flex-column justify-content-between"
             >
               <Row>
                 <Col>
@@ -365,11 +367,10 @@ function StudentRegisterupdate() {
               </Row>
             </Col>
           </Row>
-          <Row>
+          <Row className="mt-3">
             <Col
               sm={6}
               xl={3}
-              className="d-flex flex-column justify-content-between"
             >
               <Row>
                 <Col>
@@ -404,7 +405,6 @@ function StudentRegisterupdate() {
             <Col
               sm={6}
               xl={3}
-              className="d-flex flex-column justify-content-between"
             >
               <Row>
                 <Col>
@@ -417,6 +417,8 @@ function StudentRegisterupdate() {
                 <Col>
                   <Form.Control
                     type="text"
+                    className="Students-input"
+
                     name="fatherName"
                     value={formData.fatherName}
                     onChange={handleChange}
@@ -432,7 +434,6 @@ function StudentRegisterupdate() {
             <Col
               sm={6}
               xl={3}
-              className="d-flex flex-column justify-content-between"
             >
               <Row>
                 <Col>
@@ -448,6 +449,8 @@ function StudentRegisterupdate() {
                     name="fatherTamilName"
                     value={formData.fatherTamilName}
                     onChange={handleChange}
+                    className="Students-input"
+
                     isInvalid={!!error.fatherTamilName}
                     placeholder="Enter Father's Name in Tamil"
                   />
@@ -460,7 +463,6 @@ function StudentRegisterupdate() {
             <Col
               sm={6}
               xl={3}
-              className="d-flex flex-column justify-content-between"
             >
               <Row>
                 <Col>
@@ -474,6 +476,7 @@ function StudentRegisterupdate() {
                   <Form.Control
                     type="text"
                     name="motherName"
+                    className="Students-input"
                     value={formData.motherName}
                     onChange={handleChange}
                     isInvalid={!!error.motherName}

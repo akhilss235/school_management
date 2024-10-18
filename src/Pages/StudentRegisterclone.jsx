@@ -15,12 +15,8 @@ const StudentRegisterclone = ({
 }) => {
   return (
     <div>
-      <Row>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+      <Row className="mt-3">
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -31,13 +27,13 @@ const StudentRegisterclone = ({
           <Row>
             <Col>
               <Form.Control
+                className="Students-input"
                 type="text"
                 name="motherTamilName"
                 value={formData.motherTamilName}
                 onChange={handleChange}
                 isInvalid={!!error.motherTamilName}
                 placeholder="Enter Mother Name in Tamil"
-
               />
               <Form.Control.Feedback type="invalid">
                 {error.motherTamilName}
@@ -45,11 +41,7 @@ const StudentRegisterclone = ({
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -62,11 +54,11 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="text"
                 name="aadharNumber"
+                className="Students-input"
                 value={formData.aadharNumber}
                 onChange={handleChange}
                 isInvalid={!!error.aadharNumber}
                 placeholder="Enter Aadhar Number"
-
               />
               <Form.Control.Feedback type="invalid">
                 {error.aadharNumber}
@@ -74,11 +66,7 @@ const StudentRegisterclone = ({
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -91,11 +79,11 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="text"
                 name="phoneNumber"
+                className="Students-input"
                 value={formData.phoneNumber}
                 onChange={handleChange}
                 isInvalid={!!error.phoneNumber}
                 placeholder="Enter Phone Number"
-
               />
               <Form.Control.Feedback type="invalid">
                 {error.phoneNumber}
@@ -103,11 +91,7 @@ const StudentRegisterclone = ({
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -120,6 +104,7 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="date"
                 name="dob"
+                className="Students-input"
                 value={formData.dob}
                 onChange={handleChange}
                 isInvalid={!!error.dob}
@@ -132,12 +117,8 @@ const StudentRegisterclone = ({
         </Col>
       </Row>
 
-      <Row>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+      <Row className="mt-3">
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -163,11 +144,7 @@ const StudentRegisterclone = ({
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -180,6 +157,7 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="date"
                 name="doj"
+                className="Students-input"
                 value={formData.doj}
                 onChange={handleChange}
                 isInvalid={!!error.doj}
@@ -190,7 +168,7 @@ const StudentRegisterclone = ({
             </Col>
           </Row>
         </Col>
-        <Col className="d-flex flex-column justify-content-between">
+        <Col>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -203,6 +181,7 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="text"
                 name="address"
+                className="Students-input"
                 placeholder="Enter Address"
                 value={formData.address}
                 onChange={handleChange}
@@ -217,12 +196,8 @@ const StudentRegisterclone = ({
         </Col>
       </Row>
 
-      <Row>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+      <Row className="mt-3">
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -235,11 +210,11 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="text"
                 name="pincode"
+                className="Students-input"
                 isInvalid={!!error.pincode}
                 value={formData.pincode}
                 onChange={handleChange}
                 placeholder="Enter Pincode"
-
               />
               <Form.Control.Feedback type="invalid">
                 {error.pincode}
@@ -247,11 +222,7 @@ const StudentRegisterclone = ({
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -266,7 +237,6 @@ const StudentRegisterclone = ({
                 value={formData.bloodGroup}
                 onChange={handleChange}
                 isInvalid={!!error.bloodGroup}
-
               >
                 <option value="">Select Blood Group</option>
                 <option value="A+">A+</option>
@@ -284,11 +254,7 @@ const StudentRegisterclone = ({
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -301,23 +267,19 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="text"
                 name="religion"
+                className="Students-input"
                 value={formData.religion}
                 onChange={handleChange}
                 isInvalid={!!error.religion}
                 placeholder="Enter Religion"
-
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.religion}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.religion}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -330,26 +292,22 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="text"
                 name="moi"
+                className="Students-input"
                 value={formData.moi}
                 onChange={handleChange}
                 isInvalid={!!error.moi}
                 placeholder="Enter Medium of Instruction"
-
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.moi}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.moi}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
       </Row>
 
-      <Row>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+      <Row className="mt-3">
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -361,23 +319,20 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
                 name="admissionNumber"
                 placeholder="Enter Admission Number"
                 value={formData.admissionNumber}
                 onChange={handleChange}
                 isInvalid={!!error.admissionNumber}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.admissionNumber}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.admissionNumber}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -389,24 +344,20 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
                 name="community"
                 value={formData.community}
                 onChange={handleChange}
                 isInvalid={!!error.community}
                 placeholder="Enter Community"
-
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.community}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.community}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -418,24 +369,20 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
                 name="disabilityName"
                 value={formData.disabilityName}
                 onChange={handleChange}
                 placeholder="Enter Disability Group Name"
-
                 isInvalid={!!error.disabilityName}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.disabilityName}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.disabilityName}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -448,25 +395,21 @@ const StudentRegisterclone = ({
               <Form.Control
                 type="text"
                 name="groupCode"
+                className="Students-input"
                 value={formData.groupCode}
                 onChange={handleChange}
                 placeholder="Enter Group Code"
-
                 isInvalid={!!error.groupCode}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.groupCode}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.groupCode}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
       </Row>
-      <Row>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+      <Row className="mt-3">
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -478,24 +421,20 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
                 name="motherTongue"
                 value={formData.motherTongue}
                 onChange={handleChange}
                 isInvalid={!!error.motherTongue}
                 placeholder="Enter Mother Tongue"
-
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.motherTongue}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.motherTongue}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -507,24 +446,20 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
                 name="bankAccount"
                 value={formData.bankAccount}
                 onChange={handleChange}
                 isInvalid={!!error.bankAccount}
                 placeholder="Enter Bank Account"
-
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.bankAccount}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.bankAccount}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -536,24 +471,20 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
                 name="ifscCode"
                 value={formData.ifscCode}
                 onChange={handleChange}
                 isInvalid={!!error.ifscCode}
                 placeholder="Enter ifsc code"
-
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.ifscCode}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.ifscCode}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -565,26 +496,22 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="text"
+                className="Students-input"
                 name="micr"
                 value={formData.micr}
                 onChange={handleChange}
                 isInvalid={!!error.micr}
                 placeholder="Enter MICR"
-
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.micr}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.micr}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
       </Row>
-      <Row>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+      <Row className="mt-3">
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -596,25 +523,20 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="text"
-            
+                className="Students-input"
                 name="tcNumber"
                 value={formData.tcNumber}
                 onChange={handleChange}
                 placeholder="Enter TC Number"
-
                 isInvalid={!!error.tcNumber}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {error.tcNumber}
-                  </Form.Control.Feedback>
+              />
+              <Form.Control.Feedback type="invalid">
+                {error.tcNumber}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -626,10 +548,10 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Select
                 name="tcStatus"
+                className="Students-input"
                 value={formData.tcStatus}
                 onChange={handleChange}
                 isInvalid={!!error.tcStatus}
-
               >
                 <option value="">Select Status</option>
                 <option value="Issue"> Issue</option>
@@ -637,16 +559,12 @@ const StudentRegisterclone = ({
                 <option value="Terminal Class"> Terminal Class</option>
               </Form.Select>
               <Form.Control.Feedback type="invalid">
-                    {error.tcStatus}
-                  </Form.Control.Feedback>
+                {error.tcStatus}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -658,24 +576,19 @@ const StudentRegisterclone = ({
             <Col>
               <Form.Control
                 type="date"
-                
+                className="Students-input"
                 name="tcIssueDate"
                 value={formData.tcIssueDate}
                 onChange={handleChange}
                 isInvalid={!!error.tcIssueDate}
-
               />
-                                <Form.Control.Feedback type="invalid">
-                    {error.tcIssueDate}
-                  </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                {error.tcIssueDate}
+              </Form.Control.Feedback>
             </Col>
           </Row>
         </Col>
-        <Col
-          sm={6}
-          xl={3}
-          className="d-flex flex-column justify-content-between"
-        >
+        <Col sm={6} xl={3}>
           {/* <Row>
             <Col>
               <Form.Label column sm={12}>
@@ -755,4 +668,4 @@ const StudentRegisterclone = ({
   );
 };
 
-export default StudentRegisterclone;  
+export default StudentRegisterclone;

@@ -191,8 +191,8 @@ function StudentRegister() {
         </span>
       </Col>
     </Row>
-    <Row>
-      <Col sm={6} xl={3} className="d-flex flex-column justify-content-between">
+    <Row className="mt-3">
+      <Col sm={6} xl={3} >
         <Row>
           <Col>
             <Form.Label column sm={12}>EMIS id</Form.Label>
@@ -203,6 +203,7 @@ function StudentRegister() {
             <Form.Control
               type="text"
               name="emisId"
+              className="Students-input"
               value={formData.emisId}
               onChange={handleChange}
               isInvalid={!!error.emisId}
@@ -212,7 +213,7 @@ function StudentRegister() {
           </Col>
         </Row>
       </Col>
-      <Col sm={6} xl={3} className="d-flex flex-column justify-content-between">
+      <Col sm={6} xl={3} >
         <Row>
           <Col>
             <Form.Label column sm={12}>Name</Form.Label>
@@ -222,6 +223,8 @@ function StudentRegister() {
           <Col>
             <Form.Control
               type="text"
+              className="Students-input"
+
               name="name"
               value={formData.name}
               onChange={handleChange}
@@ -232,7 +235,7 @@ function StudentRegister() {
           </Col>
         </Row>
       </Col>
-      <Col sm={6} xl={3} className="d-flex flex-column justify-content-between">
+      <Col sm={6} xl={3}>
         <Row>
           <Col>
             <Form.Label column sm={12}>Name in Tamil</Form.Label>
@@ -243,6 +246,8 @@ function StudentRegister() {
             <Form.Control
               type="text"
               name="nameInTamil"
+              className="Students-input"
+
               value={formData.nameInTamil}
               onChange={handleChange}
               isInvalid={!!error.nameInTamil}
@@ -252,7 +257,7 @@ function StudentRegister() {
           </Col>
         </Row>
       </Col>
-      <Col sm={6} xl={3} className="d-flex flex-column justify-content-between">
+      <Col sm={6} xl={3} >
         <Row>
           <Col>
             <Form.Label column sm={12}>Class</Form.Label>
@@ -285,8 +290,8 @@ function StudentRegister() {
         </Row>
       </Col>
     </Row>
-    <Row>
-      <Col sm={6} xl={3} className="d-flex flex-column justify-content-between">
+    <Row className="mt-3">
+      <Col sm={6} xl={3}>
         <Row>
           <Col>
             <Form.Label column sm={12}>Section</Form.Label>
@@ -313,7 +318,7 @@ function StudentRegister() {
           </Col>
         </Row>
       </Col>
-      <Col sm={6} xl={3} className="d-flex flex-column justify-content-between">
+      <Col sm={6} xl={3}>
         <Row>
           <Col>
             <Form.Label column sm={12}>Father Name</Form.Label>
@@ -324,6 +329,8 @@ function StudentRegister() {
             <Form.Control
               type="text"
               name="fatherName"
+              className="Students-input"
+
               value={formData.fatherName}
               onChange={handleChange}
               isInvalid={!!error.fatherName}
@@ -333,7 +340,7 @@ function StudentRegister() {
           </Col>
         </Row>
       </Col>
-      <Col sm={6} xl={3} className="d-flex flex-column justify-content-between">
+      <Col sm={6} xl={3}>
         <Row>
           <Col>
             <Form.Label column sm={12}>Father Name in Tamil</Form.Label>
@@ -344,6 +351,8 @@ function StudentRegister() {
             <Form.Control
               type="text"
               name="fatherTamilName"
+              className="Students-input"
+
               value={formData.fatherTamilName}
               onChange={handleChange}
               isInvalid={!!error.fatherTamilName}
@@ -353,7 +362,7 @@ function StudentRegister() {
           </Col>
         </Row>
       </Col>
-      <Col sm={6} xl={3} className="d-flex flex-column justify-content-between">
+      <Col sm={6} xl={3}>
         <Row>
           <Col>
             <Form.Label column sm={12}>Mother Name</Form.Label>
@@ -363,6 +372,7 @@ function StudentRegister() {
           <Col>
             <Form.Control
               type="text"
+              className="Students-input"
               name="motherName"
               value={formData.motherName}
               onChange={handleChange}
