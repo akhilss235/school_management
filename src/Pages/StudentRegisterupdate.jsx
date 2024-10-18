@@ -527,7 +527,7 @@ function StudentRegisterupdate() {
               }}
               type="submit"
             >
-              Save
+              Update
             </Button>
           </Col>
         </Row>

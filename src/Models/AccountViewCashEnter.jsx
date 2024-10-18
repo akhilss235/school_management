@@ -193,7 +193,7 @@ function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
             </Col>
             <Col xs={"auto"}>
               <Button className="fw-600 modalformsavebtn" onClick={(e)=>handleSubmit(e)}>
-                Save
+              {edit?"Update":"Save"}
               </Button>
             </Col>
           </Row>

@@ -115,7 +115,7 @@ function VoucherUpdate({ open, onClose }) {
           </Col>
           <Col xs={'auto'}>
             <Button className='fw-600 modalformsavebtn'>
-              Save
+              Update
             </Button>
           </Col>
         </Row>

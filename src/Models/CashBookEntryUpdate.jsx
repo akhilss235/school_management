@@ -217,7 +217,7 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
               </Col>
               <Col xs={'auto'}>
                 <Button className='fw-600 modalformsavebtn' type="submit" disabled={loading}>
-                  {loading ? <Spinner animation="border" size="sm" /> : "Save"}
+                  {loading ? <Spinner animation="border" size="sm" /> : "Update"}
                 </Button>
               </Col>
             </Row>

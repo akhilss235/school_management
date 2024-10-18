@@ -173,7 +173,7 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
                   {loading ? (
                     <Spinner animation="border" variant="primary" />
                   ) : (
-                    "Save"
+                    "Update"
                   )}
                 </Button>
               </Col>
