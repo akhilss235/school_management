@@ -151,29 +151,29 @@ function OpeningBalanceDetaies({ open, onClose, accountId }) {
 
 
 
-                    <tr className="d-flex"  style={{border:'none'}}>
-                      <td className="title"  style={{border:'none'}}>
+                    <div className="d-flex"  style={{border:'none'}}>
+                      <div className="title"  style={{border:'none'}}>
                         <b>
                           {" "}
-                          <span className="title">C/B DIO</span>{" "}
+                          <span className="title me-4">C/B DIO</span>{" "}
                         </b>
-                      </td>
+                      </div>
 
-                      <td className="title mx-4"  style={{border:'none'}}>
+                      <div className="title "  style={{border:'none'}}>
                         <b>
                           {" "}
-                          <span className="title">:</span>{" "}
+                          <span className="title ">:</span>{" "}
                         </b>
-                      </td>
-                      <td className="title "  style={{border:'none'}}  style={{border:'none'}}>
+                      </div>
+                      <div className="title "  style={{border:'none'}} >
                         <b>
                           {" "}
-                          <span className="title2 "  style={{border:'none'}}>
+                          <span className="title2 "  style={{color:'#505050'}}>
                             {" "}
                             {formData.diocesan.toLocaleString()}                          </span>{" "}
                         </b>
-                      </td>
-                    </tr>
+                      </div>
+                    </div>
 
                   </tbody>
                 </Table>

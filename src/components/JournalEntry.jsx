@@ -136,7 +136,7 @@ function JournalEntry() {
 
       <div className="d-flex justify-content-between mt-5">
         <div className="d-flex">
-          <div className="mx-2">
+          <div className="me-2">
             <GetDate
               title={"From"}
               selectedDate={fromDate}
@@ -239,7 +239,7 @@ function JournalEntry() {
                   </td>
 
                   {/* <td>{data.rp}</td> */}
-                  <t>{data.transactionMode}</t>
+                  <td>{data.transactionMode}</td>
                   <td>{accoutHead(data.accountHead) || "-"}</td>
                   <td>{accoutHead(data.subAccountHead) || "-"}</td>
                   <td>{accoutHead(data.narration) || "-"}</td>
