@@ -146,15 +146,15 @@ function AccountView() {
         </div>
       </div>
 
-      <div className="row mt-4">
-        <div className="col-sm-auto col-lg-4 mt-3">
-          <Form.Label size="lg"><b>Select Cash Book Head</b></Form.Label>
+      <div className="row mb-2 mt-4 gy-2">
+        <div className="col-sm-auto col-lg-4">
+          <Form.Label size="lg" className="pt-2" style={{height:'37.6px'}}><b>Select Cash Book Head</b></Form.Label>
           <AccountHead onSelect={setSelectedAccountHead} isTitle={false} />
         </div>
         <div className="col-sm-auto col-lg-8">
-          <div className="row mb-2  d-flex justify-content-start align-items-center">
+          <div className="row  d-flex justify-content-start align-items-center gy-2">
             {/* Filter Button */}
-            <div className="col-auto mt-2">
+            <div className="col-auto">
               <div
                 className="card d-flex align-items-center justify-content-center filterbody p-2"
                 style={{ height: "35px" }}
@@ -171,14 +171,14 @@ function AccountView() {
             </div>
 
             {/* Class Dropdown */}
-            <div className="col-auto mt-2">
+            <div className="col-auto">
               <CustomTableColumn
                 title={"Receipt/Payment :"}
                 selectedItem={rp}
                 setSelectedItem={setRp}
               />
             </div>
-            <div className="col-auto mt-2">
+            <div className="col-auto">
               <CustomTableColumn
                 title={"Tra.Mode :"}
                 selectedItem={transactionMode}
@@ -186,7 +186,7 @@ function AccountView() {
               />
             </div>
             <div className="col-auto d-flex flex-wrap">
-              <div className="me-4">
+              <div className="me-4 mb-2">
               <GetDate
                 title={"From"}
                 selectedDate={fromDate}
@@ -202,7 +202,7 @@ function AccountView() {
                 />
               </div>
             </div>
-            <div className="col-auto mt-2 ms-auto">
+            <div className="col-auto ms-auto">
               <Search search={search} setSearch={setSearch} />
             </div>
           </div>
