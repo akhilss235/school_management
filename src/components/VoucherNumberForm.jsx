@@ -95,8 +95,8 @@ function VoucherNumberForm() {
       <div className="row mb-2  d-flex justify-content-between align-items-center">
         {/* Filter Button */}
         <div className="col-auto d-flex mt-2">
-          <div
-            className="card d-flex align-items-center justify-content-center filterbody"
+        <div
+            className="card d-flex align-items-center justify-content-center filterbody p-2"
             style={{ height: "35px" }}
           >
             <IconContext.Provider
@@ -104,7 +104,7 @@ function VoucherNumberForm() {
             >
               <div className="d-flex align-items-center">
                 <GoFilter className="Filteric" />
-                <span className="Filteric p-2">Filter</span>
+                <span className="Filteric p-1">Filter</span>
               </div>
             </IconContext.Provider>
           </div>

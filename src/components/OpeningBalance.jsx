@@ -98,11 +98,16 @@ const handleDETAILESClick = (accountId) => {
 
       <div className="row mb-2 mt-5 d-flex justify-content-between align-items-center">
         <div className="col-auto mt-2">
-          <div className="card d-flex align-items-center justify-content-center filterbody" style={{ height: "35px" }}>
-            <IconContext.Provider value={{ className: "react-icons", size: "1.5em" }}>
+        <div
+            className="card d-flex align-items-center justify-content-center filterbody p-2"
+            style={{ height: "35px" }}
+          >
+            <IconContext.Provider
+              value={{ className: "react-icons", size: "1.5em" }}
+            >
               <div className="d-flex align-items-center">
                 <GoFilter className="Filteric" />
-                <span className="Filteric p-2">Filter</span>
+                <span className="Filteric p-1">Filter</span>
               </div>
             </IconContext.Provider>
           </div>
@@ -162,7 +167,7 @@ const handleDETAILESClick = (accountId) => {
 
                     </div>
                   </td>
-                </tr>
+                </tr> 
               ))
             ) : (
               <tr>

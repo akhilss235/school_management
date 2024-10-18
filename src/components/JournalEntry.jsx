@@ -136,7 +136,7 @@ function JournalEntry() {
 
       <div className="d-flex justify-content-between mt-5">
         <div className="d-flex">
-          <div className="mx-2">   
+          <div className="mx-2">
             <GetDate
               title={"From"}
               selectedDate={fromDate}
@@ -172,16 +172,16 @@ function JournalEntry() {
 
       <div className="row mb-2 d-flex justify-content-between align-items-center">
         <div className="col-auto mt-2">
-          <div
-            className="card d-flex align-items-center justify-content-center filterbody"
-            style={{ height: "30px" }}
+        <div
+            className="card d-flex align-items-center justify-content-center filterbody p-2"
+            style={{ height: "35px" }}
           >
             <IconContext.Provider
               value={{ className: "react-icons", size: "1.5em" }}
             >
               <div className="d-flex align-items-center">
                 <GoFilter className="Filteric" />
-                <span className="Filteric p-2">Filter</span>
+                <span className="Filteric p-1">Filter</span>
               </div>
             </IconContext.Provider>
           </div>
@@ -239,13 +239,16 @@ function JournalEntry() {
                   </td>
 
                   {/* <td>{data.rp}</td> */}
-                  <td>{data.transactionMode}</td>
+                  <t>{data.transactionMode}</t>
                   <td>{accoutHead(data.accountHead) || "-"}</td>
                   <td>{accoutHead(data.subAccountHead) || "-"}</td>
                   <td>{accoutHead(data.narration) || "-"}</td>
                   <td>Rs. {getAmountWithCommas(data.amount || 0)}</td>
                   <td>
-                    <div className="d-flex" style={{textAlign:'start',justifyContent:'start'}}>
+                    <div
+                      className="d-flex"
+                      style={{ textAlign: "start", justifyContent: "start" }}
+                    >
                       <LiaEyeSolid
                         style={{ fontSize: "1.5rem" }}
                         className="mx-1"

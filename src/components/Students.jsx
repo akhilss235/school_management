@@ -76,10 +76,7 @@ function Students() {
     setSelectedGender(event.target.value);
     setCurrentPage(1); // Reset to first page on gender change
   };
-  const capitalizeFirstLetter = (string) => {
-    if (!string) return '';
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-  };
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -101,7 +98,7 @@ function Students() {
         {/* Filter Button */}
         <div className="col-auto mt-2">
           <div
-            className="card d-flex align-items-center justify-content-center filterbody"
+            className="card d-flex align-items-center justify-content-center filterbody p-2"
             style={{ height: "35px" }}
           >
             <IconContext.Provider
@@ -109,7 +106,7 @@ function Students() {
             >
               <div className="d-flex align-items-center">
                 <GoFilter className="Filteric" />
-                <span className="Filteric p-2">Filter</span>
+                <span className="Filteric p-1">Filter</span>
               </div>
             </IconContext.Provider>
           </div>
@@ -255,48 +252,48 @@ function Students() {
               </tr>
             </thead>
             <tbody>
-  {students.map((student) => (
-    <tr key={student._id}>
-      <td onClick={() => handleStudentClick(student)}>
-        {capitalizeFirstLetter(student.emisId)}
-      </td>
-      <td onClick={() => handleStudentClick(student)}>
-        {capitalizeFirstLetter(student.name)}
-      </td>
-      <td onClick={() => handleStudentClick(student)}>
+              {students.map((student) => (
+                <tr key={student._id}>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.emisId}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.name}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
                     {student.class}
                   </td>
-      <td onClick={() => handleStudentClick(student)}>
-        {capitalizeFirstLetter(student.section)}
-      </td>
-      <td onClick={() => handleStudentClick(student)}>
-        {capitalizeFirstLetter(student.fatherName)}
-      </td>
-      <td onClick={() => handleStudentClick(student)}>
-        {capitalizeFirstLetter(student.gender)}
-      </td>
-      <td onClick={() => handleStudentClick(student)}>
-        {new Date(student.dob).toLocaleDateString()}
-      </td>
-      <td onClick={() => handleStudentClick(student)}>
-        {student.phoneNumber}
-      </td>
-      <td onClick={() => handleStudentClick(student)}>
-        {student.aadharNumber}
-      </td>
-      <td>
-        <a
-          href={`/StudentRegisterupdate/${student._id}`}
-          style={{ textDecoration: "none", color: "#505050" }}
-        >
-          <LuPenLine
-            style={{ fontSize: "1.5rem", color: "#3474EB" }}
-          />
-        </a>
-      </td>
-    </tr>
-  ))}
-</tbody>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.section}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.fatherName}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.gender}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {new Date(student.dob).toLocaleDateString()}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.phoneNumber}
+                  </td>
+                  <td onClick={() => handleStudentClick(student)}>
+                    {student.aadharNumber}
+                  </td>
+                  <td>
+                    <a
+                      href={`/StudentRegisterupdate/${student._id}`}
+                      style={{ textDecoration: "none", color: "#505050" }}
+                    >
+                      <LuPenLine
+                        style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                      />
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </Table>
         ) : (
           <p>No students available.</p>

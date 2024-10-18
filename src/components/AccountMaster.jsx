@@ -149,14 +149,19 @@ function AccountMaster() {
 
             <div className="row mb-2 mt-4 align-items-center">
                 <div className="col-auto mt-2">
-                    <div className="card d-flex align-items-center justify-content-center filterbody" style={{ height: "30px" }}>
-                        <IconContext.Provider value={{ className: "react-icons", size: "1.5em" }}>
-                            <div className="d-flex align-items-center">
-                                <GoFilter className="Filteric" />
-                                <span className="Filteric p-2">Filter</span>
-                            </div>
-                        </IconContext.Provider>
-                    </div>
+                <div
+            className="card d-flex align-items-center justify-content-center filterbody p-2"
+            style={{ height: "35px" }}
+          >
+            <IconContext.Provider
+              value={{ className: "react-icons", size: "1.5em" }}
+            >
+              <div className="d-flex align-items-center">
+                <GoFilter className="Filteric" />
+                <span className="Filteric p-1">Filter</span>
+              </div>
+            </IconContext.Provider>
+          </div>
                 </div>
 
                 <div className="col-auto mt-2">

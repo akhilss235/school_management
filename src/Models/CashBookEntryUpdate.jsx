@@ -126,7 +126,7 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
               </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3">
               <Col sm={12} lg={6}>
                 <Form.Label>Date</Form.Label>
                 <Form.Control
@@ -141,7 +141,7 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
               </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3">
               <Col lg={6}>
                 <Form.Label>Account Head</Form.Label>
                 <Form.Select
@@ -176,7 +176,7 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
               </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3">
               <Col lg={4}>
                 <Form.Label>Cash Amount</Form.Label>
                 <Form.Control 
