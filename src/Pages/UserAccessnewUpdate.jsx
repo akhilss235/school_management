@@ -97,16 +97,13 @@ function UserAccessnewUpdate() {
                 toast.success("UserAccess updated successfully"); 
 
             } else {
-                setError("Failed to update user access. Please try again.");
                 console.error("Error setting user access:", response.data);
                 toast.error(error.response?.data?.message); 
 
             }
         } catch (error) {
-            setError("Error updating user. Please try again.");
             console.error("Error updating user:", error);
             toast.error(error.response?.data?.message); 
-
         }
     };
 
