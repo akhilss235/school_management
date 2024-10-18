@@ -14,17 +14,17 @@ export const MainBalance = () => {
     const mainBalanceDetails = [
         {
             id:1,
-            title:"C/B CASH:",
+            title:"C/B CASH ",
             apiTitle:"totalCash",
         },
         {
             id:2,
-            title:"C/B BANK:",
+            title:"C/B BANK ",
             apiTitle:"totalBank",
         },
         {
             id:3,
-            title:"C/B DIOCESAN:",
+            title:"C/B DIOCESAN ",
             apiTitle:"totalDiocesan",
         },
     ]
@@ -60,17 +60,18 @@ export const MainBalance = () => {
             </div>
             {
                 mainBalanceDetails.map((item) => (
-                    <div
+                  <div
                     className="d-flex justify-content-start gap-1"
-                    style={{ textAlign: "center", gap:"8px" }}
+                    style={{ textAlign: "center", gap:"8px",alignItems:'center' }}
                     key={item.id}
                     >
-                        <div>
+                        <div style={{width:'150px',textAlign:'start'}}>
                             {" "}
                             <h5>
-                            <b className="title">{item.title}</b>
+                            <b className="title" >{item.title}</b>
                             </h5>
                         </div>
+                        <p className="title mx-2" ><b>:</b></p>
                         <div className="mx-4">
                             {" "}
                             <h5>
