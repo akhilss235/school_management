@@ -48,7 +48,7 @@ export const Import = () => {
       console.log("Form submitted successfully:", response.data);
       navigate("/Students");
 
-      toast.success("data uploaded successfully");
+      toast.success("Data Uploaded Successfully");
 
 
     } catch (err) {
@@ -60,18 +60,18 @@ export const Import = () => {
   return (
     <div className="import-page">
       <div className="import-head">
-        <h3>Students</h3>
+        <h3>Student Bulk Upload</h3>
         <a href="/assets/students.xlsx" download="students.xlsx">
           <button className="download-btn">Download Sample Data</button>
         </a>
       </div>
-      <div className="details">
+      {/* <div className="details">
         <ul>
           {data.map((item) => (
             <li key={item.id}>{item.description}</li>
           ))}
         </ul>
-      </div>
+      </div> */}
       <div className="sample-table">
         <table>
           <thead>
@@ -95,7 +95,7 @@ export const Import = () => {
           <Row>
             <Col>
               <Form.Label column sm={12}>
-                Photo of Student
+               Upload Student Sheet
               </Form.Label>
             </Col>
           </Row>
@@ -114,13 +114,14 @@ export const Import = () => {
                     color: "#3474EB",
                     width: "100%",
                     border: "1px dashed #3474EB",
+                    marginLeft:"12px"
                   }}
                   onClick={handleFileClick}
                 >
                   Click here to upload an Excel file
                 </Button>
               ) : (
-                <div className="row">
+                <div className="row" style={{}}>
                   <div xs="auto" className="d-flex col align-items-center">
                     <span
                       className="me-1 mt-2"
