@@ -57,7 +57,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
     try {
       const response = await request.put(`updateJournalEntry/${accountId}`, formData);
       console.log("Form submitted successfully:", response.data);
-      toast.success("JournalEntry update successfully"); 
+      toast.success("JournalEntry updated successfully"); 
 
       onClose();
     } catch (err) {
@@ -111,7 +111,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
             </Row>
 
             {/* Form Fields */}
-            <Row>
+            <Row className="mt-3">
               <Col sm={12} lg={6}>
                 <Form.Group>
                   <Form.Label>Date</Form.Label>
@@ -141,7 +141,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
               </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3">
               <Col lg={6}>
                 <Form.Group>
                   <Form.Label>Account Head</Form.Label>
@@ -179,7 +179,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
               </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3">
               <Col lg={6}>
                 <Form.Group>
                   <Form.Label>Transaction Mode</Form.Label>
@@ -210,7 +210,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
               </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3 mb-3">
               <Col>
                 <Form.Group>
                   <Form.Label>Narration</Form.Label>
@@ -232,7 +232,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
               </Col>
               <Col xs="auto">
                 <Button className="fw-600" type="submit" disabled={loading}>
-                  {loading ? <Spinner animation="border" size="sm" /> : "Save"}
+                  {loading ? <Spinner animation="border" size="sm" /> : "Update"}
                 </Button>
               </Col>
             </Row>

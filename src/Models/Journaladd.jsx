@@ -103,7 +103,7 @@ function Journaladd({ open, onClose, initialData }) {
             className="openingbalanceform roboto-font stylelabel"
             onSubmit={handleSubmit}
           >
-            <Row className="justify-content-between align-items-center mt-2 mb-3">
+            <Row className="justify-content-between align-items-center mt-2 mb-3" >
               <Col xs={"auto"}>
                 <span className="modalformheading">Cash Book Entry</span>
               </Col>
@@ -116,7 +116,7 @@ function Journaladd({ open, onClose, initialData }) {
               </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3">
               <Col sm={12} lg={6}>
                 <Form.Group>
                   <Form.Label>Date</Form.Label>
@@ -148,7 +148,7 @@ function Journaladd({ open, onClose, initialData }) {
               </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3">
               <Col lg={6}>
                 <Form.Group>
                   <Form.Label>Account Head</Form.Label>
@@ -188,7 +188,7 @@ function Journaladd({ open, onClose, initialData }) {
               </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3">
               <Col lg={6}>
                 <Form.Group>
                   <Form.Label>Transaction Mode</Form.Label>
@@ -223,7 +223,7 @@ function Journaladd({ open, onClose, initialData }) {
               </Col>
             </Row>
 
-            <Row>
+            <Row className="mt-3">
               <Col>
                 <Form.Group>
                   <Form.Label>Narration</Form.Label>

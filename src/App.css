@@ -415,3 +415,7 @@ body {
 .Students-input::placeholder {
   color: #aaa !important; 
 }
+input::placeholder {
+  color: #aaa !important;
+  opacity: 1; /* Optional: Ensures the color is applied consistently */
+}
