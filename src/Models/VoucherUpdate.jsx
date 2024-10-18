@@ -19,7 +19,7 @@ function VoucherUpdate({ open, onClose }) {
             <IoIosCloseCircleOutline size={32} className='modalformclosebtn'  onClick={onClose}/>
           </Col>
         </Row>
-        <Row>
+        <Row className="mt-3">
           <Col lg={6} className='d-flex flex-column justify-content-between'>
             <Row>
               <Col>
@@ -54,7 +54,7 @@ function VoucherUpdate({ open, onClose }) {
 
         </Row>
 
-        <Row>
+        <Row className="mt-3">
           <Col lg={6} className='d-flex flex-column justify-content-between'>
             <Row>
               <Col>
@@ -88,7 +88,7 @@ function VoucherUpdate({ open, onClose }) {
             </Row>
           </Col>
         </Row>
-        <Row>
+        <Row className="mt-3">
           <Col lg={6} className='d-flex flex-column justify-content-between'>
             <Row>
               <Col>

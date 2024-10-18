@@ -109,7 +109,7 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
             <IoIosCloseCircleOutline size={32} className='modalformclosebtn'  onClick={onClose}/>
           </Col>
         </Row>
-        <Row>
+        <Row className="mt-3">
           <Col lg={6}>
             <Row>
               <Col>
@@ -160,7 +160,7 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
 
         </Row>
 
-        <Row>
+        <Row  className="mt-3">
           <Col lg={6}>
             <Row>
               <Col>
@@ -205,7 +205,7 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
             </Row>
           </Col>
         </Row>
-        <Row>
+        <Row className="mt-3">
           <Col lg={6}>
             <Row>
               <Col>
