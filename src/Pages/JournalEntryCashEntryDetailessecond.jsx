@@ -44,7 +44,7 @@ function JournalEntryCashEntryDetailessecond({ accountHead }) {
                     <h5><b className="title " style={{textTransform:'uppercase'}}>{head}</b></h5>
 
 
-                    <div className="d-flex justify-content-start mt-4" style={{ textAlign: "center",alignItems:'center' }}>
+                    <div className="d-flex justify-content-start" style={{ textAlign: "center",alignItems:'center' }}>
                         <h5><b className="title">C/B CASH </b></h5>
                         <p><b className="ms-3 title">:</b></p>
                         <h5 className="mx-3"><b>₹ {getAmountWithCommas(cashData?.amount?.cash || 0)}</b></h5>

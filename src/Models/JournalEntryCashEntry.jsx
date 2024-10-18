@@ -5,6 +5,8 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import useAccountHeads from "../hooks/useAccountHeads";
 import request from "../Request";
 import { toast } from 'react-toastify'; // Import toast
+import JournalEntryCashEntryDetailes from "../Pages/JournalEntryCashEntryDetailes";
+import JournalEntryCashEntryDetailessecond from "../Pages/JournalEntryCashEntryDetailessecond";
 
 function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
   const [formData, setFormData] = useState({
@@ -239,6 +241,25 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
           </Form>
         </div>
       </Modal.Body>
+      <Modal.Body
+          style={{ borderColor: "#3474EB", borderTop: "2px solid #3474EB" }}
+        >
+          <Row className="mt-2 mb-3">
+            <Col
+              style={{
+                textAlign: "start",
+              }}
+              className="mx-5"
+            >
+              <JournalEntryCashEntryDetailes />
+            </Col>
+            <Col className="mx-5" style={{ textAlign: "start" }}>
+              <JournalEntryCashEntryDetailessecond
+                accountHead={formData?.accountHead}
+              />
+            </Col>
+          </Row>
+        </Modal.Body>
     </Modal>
   );
 }
