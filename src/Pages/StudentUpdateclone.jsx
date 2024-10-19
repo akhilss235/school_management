@@ -161,8 +161,8 @@ const StudentUpdateclone = ({
                 isInvalid={!!error.gender}
               >
                 <option value="">Select gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
               </Form.Select>
               <Form.Control.Feedback type="invalid">
                 {error.gender}
@@ -668,9 +668,9 @@ const StudentUpdateclone = ({
 
               >
                 <option value="">Select Status</option>
-                <option value="Issue"> Issue</option>
-                <option value="Discontinue"> Discontinue</option>
-                <option value="Terminal Class"> Terminal Class</option>
+                <option value="issue"> Issue</option>
+                <option value="discontinue"> Discontinue</option>
+                <option value="derminal Class"> Terminal Class</option>
               </Form.Select>
               <Form.Control.Feedback type="invalid">
                     {error.tcStatus}
