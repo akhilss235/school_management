@@ -67,7 +67,7 @@ export const useLogin = () => {
             };
             handleGetUser();
         }
-    }, []);
+    }, [token]);
 
     return { onChange, formData, handleSubmit, errors, user, loading }; // Return loading state
 };

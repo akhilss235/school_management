@@ -38,8 +38,10 @@ function App() {
   return (
     <div className="App">
       <Routes>
+
         <Route path="/" element={<Login />} />
         <Route path="/Dashboard" element={withSideBarLayout(<Dashboard />, true)} />
+        
         {user?.accessTo?.isStudent && (
           <>
             <Route path="/Students" element={withSideBarLayout(<Students />, true)} />
@@ -47,7 +49,7 @@ function App() {
             <Route path="/StudentDetails/:_id" element={withSideBarLayout(<StudentDetails />, true)} />
             <Route path="/StudentRegister" element={withSideBarLayout(<StudentRegister />, true)} />
             <Route path="/StudentRegisterupdate/:_id" element={withSideBarLayout(<StudentRegisterupdate />, true)} />
-            <Route path="/StudentRegisterclone" element={withSideBarLayout(<StudentRegisterclone />, true)} />
+            {/* <Route path="/StudentRegisterclone" element={withSideBarLayout(<StudentRegisterclone />, true)} /> */}
           </>
         )}
         {user?.accessTo?.isTransaction && (
