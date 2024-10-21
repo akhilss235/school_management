@@ -151,3 +151,43 @@ export const useAccountView = () => {
     setFormData
   };
 };
+/**
+ * useAccountView Hook
+ * 
+ * This custom React hook manages the state and operations related to account views.
+ * It provides functionalities for fetching, submitting, updating, and validating account view data.
+ *
+ * Usage:
+ * 
+ * import { useAccountView } from 'path/to/useAccountView';
+ *
+ * const Component = () => {
+ *   const {
+ *     accountViewData,
+ *     accountViewTotal,
+ *     handleAllAccountView,
+ *     formData,
+ *     handleSubmitPost,
+ *     handleChange,
+ *     errors,
+ *     handleAccountHeadSelect,
+ *     handleGetAccountViewById,
+ *     handleUpdate,
+ *   } = useAccountView();
+ *
+ *   // Example to fetch account views
+ *   const fetchAccountViews = () => {
+ *     const params = { date: '2024-01-01', rp: 'someValue' };
+ *     handleAllAccountView(params);
+ *   };
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={fetchAccountViews}>Fetch Account Views</button>
+ *       <ul>
+ *         {accountViewData.map(account => (
+ *           <li key={account.id}>{account.narration}</li>
+ *         ))}
+ *       </ul>
+ *       <div>Total Account Views: {accountViewTotal}</div>
+    '*/
