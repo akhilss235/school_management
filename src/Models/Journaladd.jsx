@@ -287,3 +287,41 @@ function Journaladd({ open, onClose, initialData }) {
 }
 
 export default Journaladd;
+
+
+
+/**
+ * Journaladd Component
+ *
+ * This component is a modal for adding a new journal entry related 
+ * to cash book entries in an accounting system. It provides a form 
+ * for users to input details such as date, receipt/payment type, 
+ * account head, sub-account head, transaction mode, amount, and 
+ * narration. Upon submission, it sends the data to the server for 
+ * processing and handles errors and loading states appropriately.
+ *
+ * Props:
+ * - open (boolean): Indicates if the modal is open.
+ * - onClose (function): Function to close the modal.
+ * - initialData (object): Optional initial data for editing, if needed.
+ *
+ * State:
+ * - formData (object): Holds the values for the form fields.
+ * - loading (boolean): Indicates if the form is currently being submitted.
+ * - errors (object): Holds validation errors for form fields.
+ *
+ * Functions:
+ * - getTodayDate: Returns the current date in 'YYYY-MM-DD' format.
+ * - validate: Validates form data and returns any errors found.
+ * - handleInputChange: Updates form data based on user input.
+ * - handleSubmit: Handles form submission, validates data, 
+ *   makes API call to add journal entry, and manages loading/error states.
+ *
+ * Dependencies:
+ * - Bootstrap for styling.
+ * - React Bootstrap for modal and form components.
+ * - Icons from react-icons for UI elements.
+ * - Custom hook (useAccountHeads) to fetch account heads.
+ * - Axios or similar library for making HTTP requests.
+ * - React Toastify for displaying notifications.
+ */

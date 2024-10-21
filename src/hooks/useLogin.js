@@ -68,6 +68,7 @@ export const useLogin = () => {
             handleGetUser();
         }
     }, [token]);
+    // Return necessary state and functions for use in components
 
     return { onChange, formData, handleSubmit, errors, user, loading }; // Return loading state
 };

@@ -205,3 +205,40 @@ function CashBookEntry({ open, onClose, initialData }) {
 }
 
 export default CashBookEntry;
+/**
+ * CashBookEntry Component
+ *
+ * This component is a modal form used to create or update a cash book entry.
+ * It allows users to enter details such as account head, sub-account head,
+ * cash amount, bank amount, diocesan amount, and date. The form validates
+ * inputs and handles submission via an API request.
+ *
+ * Props:
+ * - open (boolean): Controls the visibility of the modal.
+ * - onClose (function): Function to call when the modal is closed.
+ * - initialData (object): Optional initial data to populate the form fields when editing an existing entry.
+ *
+ * State:
+ * - formData (object): Holds the values of the form fields:
+ *   - accountHead (string): Selected account head.
+ *   - subAccountHead (string): Selected sub-account head.
+ *   - cash (number): Cash amount entered.
+ *   - bank (number): Bank amount entered.
+ *   - diocesan (number): Diocesan amount entered.
+ *   - date (string): Date of the entry, defaults to today's date.
+ * - loading (boolean): Indicates whether the form is submitting.
+ * - errors (object): Holds validation errors for form fields.
+ *
+ * Functions:
+ * - getTodayDate: Returns the current date in YYYY-MM-DD format.
+ * - handleInputChange: Updates form data state based on user input.
+ * - validate: Validates form inputs and returns any errors.
+ * - handleSubmit: Handles form submission, validates data, and sends a POST request to add the opening balance.
+ *
+ * Dependencies:
+ * - React and React-Bootstrap for UI components.
+ * - `react-icons` for icons.
+ * - Custom hook `useAccountHeads` for fetching account heads and sub-account heads.
+ * - `request` for API calls.
+ * - `react-toastify` for displaying notifications.
+ */

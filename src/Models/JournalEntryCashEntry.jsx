@@ -265,3 +265,43 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
 }
 
 export default JournalEntryCashEntry;
+
+
+
+/**
+ * JournalEntryCashEntry Component
+ *
+ * This component is a modal for creating or editing a journal entry 
+ * related to cash book entries in an accounting system. It provides 
+ * a form for users to input details such as date, receipt/payment 
+ * type, account head, sub-account head, transaction mode, amount, 
+ * and narration. Upon submission, it sends the data to the server 
+ * for processing and handles errors and loading states appropriately.
+ *
+ * Props:
+ * - open (boolean): Indicates if the modal is open.
+ * - onClose (function): Function to close the modal.
+ * - edit (boolean): Determines if the form is in edit mode or not.
+ * - accountId (string): ID of the journal entry to edit.
+ *
+ * State:
+ * - formData (object): Holds the form fields' values.
+ * - loading (boolean): Indicates if the form is currently being submitted.
+ * - errors (object): Holds validation errors for form fields.
+ *
+ * Functions:
+ * - validate: Validates form data and returns any errors.
+ * - handleInputChange: Updates form data based on user input.
+ * - handleSubmit: Handles form submission, validates data, 
+ *   makes API call to update journal entry, and manages loading/error states.
+ * - useEffect: Fetches journal entry data if in edit mode and an 
+ *   account ID is provided.
+ *
+ * Dependencies:
+ * - Bootstrap for styling.
+ * - React Bootstrap for modal and form components.
+ * - Icons from react-icons for UI elements.
+ * - Custom hook (useAccountHeads) to fetch account heads.
+ * - Axios or similar library for making HTTP requests.
+ * - React Toastify for displaying notifications.
+ */

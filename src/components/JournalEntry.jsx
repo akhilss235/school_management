@@ -51,6 +51,7 @@ function JournalEntry() {
     return savedPage ? Number(savedPage) : 1;
   });
   const [selectedJournalEntryId, setSelectedJournalEntryId] = useState(null); // New state for selected entry ID
+  // Helper function to truncate account head names
 
   const accoutHead = (data) => {
     return data?.length > 18 ? `${data?.slice(0, 15)}...` : data;
@@ -59,6 +60,7 @@ function JournalEntry() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  // Effect to fetch journal data on relevant state changes
 
   useEffect(() => {
     const obj = {
@@ -277,13 +279,15 @@ function JournalEntry() {
         />
       )}
 
-      {/* Modals */}
+           {/* Modals for /updating entries */}
+
       <JournalEntryCashEntry
         open={modalJournalEntryCashEntry}
         edit={isEdit}
         onClose={() => setModalJournalEntryCashEntry(false)}
         accountId={selectedAccountId}
       />
+        {/* Modals for detailes entries */}
       <JournalEntryDetailes
         open={modalOpeningBalanceDetaies}
         onClose={() => setModalOpeningBalanceDetaies(false)}
@@ -297,6 +301,7 @@ function JournalEntry() {
         selectedEntry={selectedJournalEntryId}
         onUpdate={handleUpdateEntry}
       />
+        {/* Modals for adding entries */}
       <Journaladd open={modalss} onClose={() => setModalss(false)} />
     </div>
   );

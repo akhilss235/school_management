@@ -7,8 +7,6 @@ import { IconContext } from "react-icons";
 import { LuPenLine } from "react-icons/lu";
 import VoucherCashEnter from "../Models/VoucherCashEnter";
 import VoucherAdmin from "../Models/VoucherAdmin";
-import { FiDownload } from "react-icons/fi";
-import { IoPrintOutline } from "react-icons/io5";
 import { useVoucher } from "../hooks/useVoucher";
 import { useCommon } from "../hooks/useCommon";
 import AccountHead from "../Pages/AccountHead";
@@ -19,31 +17,40 @@ import DownloadButton from './DownloadButton';
 import request from "../Request"; 
 
 function VoucherNumberForm() {
-  const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] =
-    useState(false);
-  const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] =
-    useState(false);
+  // State for modals
+  const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] = useState(false);
+  const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] = useState(false);
+  
+  // Items per page for pagination
   const itemsPerPage = 10;
 
+  // State for search input and editing
   const [search, setSearch] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [selectedId, setSelectedId] = useState("");
   const [selectedAccountHead, setSelectedAccountHead] = useState("");
+
+  // Hooks for common utilities and voucher management
   const { getAmountWithCommas } = useCommon();
   const { voucherData, voucherTotal, handleGetAllVoucher } = useVoucher();
+  
+  // State for pagination
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = sessionStorage.getItem("currentPage");
     return savedPage ? Number(savedPage) : 1;
   });
 
-  const accoutHead = (data)=>{ 
-    return data?.length > 20 ? `${data?.slice(0, 20)}...` : data
-  }
+  // Function to truncate account head names for display
+  const accoutHead = (data) => {
+    return data?.length > 20 ? `${data?.slice(0, 20)}...` : data;
+  };
 
+  // Handle page changes in pagination
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
+  // Fetch voucher data whenever filters or page changes
   useEffect(() => {
     const obj = {
       accountHead: selectedAccountHead,
@@ -52,34 +59,34 @@ function VoucherNumberForm() {
       search: search,
     };
     handleGetAllVoucher(obj);
-  }, [selectedAccountHead, search, currentPage, modalJournalEntryCashEntry ]);
+  }, [selectedAccountHead, search, currentPage, modalJournalEntryCashEntry]);
 
+  // Function to fetch full voucher data for download
+  const fetchFullVoucherData = async () => {
+    if (!voucherTotal || voucherTotal <= 0) {
+      return [];
+    }
 
-    const fetchFullVoucherData = async () => {
-      if (!voucherTotal || voucherTotal <= 0) {
-          return [];
-      }
-
-      try {
-          const response = await request.get(`getAllVoucher?limit=${voucherTotal}`);
-          return response?.data?.data;
-      } catch (error) {
-          return [];
-      }
+    try {
+      const response = await request.get(`getAllVoucher?limit=${voucherTotal}`);
+      return response?.data?.data;
+    } catch (error) {
+      return [];
+    }
   };
 
+  // Open modal for editing an existing voucher
+  const handleOpenAdminModal = (id) => {
+    setModalCashBookEntryUpdate(true);
+    setIsEdit(true);
+    setSelectedId(id);
+  };
 
-  const handleOpenAdminModal = (id)=>{
-    setModalCashBookEntryUpdate(true)
-    setIsEdit(true)
-    setSelectedId(id)
-  }
-
-  const handleOpenPostModel = ()=>{
-    setModalJournalEntryCashEntry(true)
-    setIsEdit(false)
-  }
-
+  // Open modal for creating a new voucher
+  const handleOpenPostModel = () => {
+    setModalJournalEntryCashEntry(true);
+    setIsEdit(false);
+  };
 
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
@@ -92,53 +99,50 @@ function VoucherNumberForm() {
         <div></div>
       </div>
 
-      <div className="row mb-2  d-flex justify-content-between align-items-center">
+      <div className="row mb-2 d-flex justify-content-between align-items-center">
         {/* Filter Button */}
         <div className="col-auto d-flex mt-2">
-        <div
-            className="card d-flex align-items-center justify-content-center filterbody p-2"
-            style={{ height: "35px" }}
-          >
-            <IconContext.Provider
-              value={{ className: "react-icons", size: "1.5em" }}
-            >
+          <div className="card d-flex align-items-center justify-content-center filterbody p-2" style={{ height: "35px" }}>
+            <IconContext.Provider value={{ className: "react-icons", size: "1.5em" }}>
               <div className="d-flex align-items-center">
                 <GoFilter className="Filteric" />
                 <span className="Filteric p-1">Filter</span>
               </div>
             </IconContext.Provider>
           </div>
-
-
         </div>
+        
+        {/* Account Head Selector */}
         <div className="col-auto mt-2">
-            <AccountHead onSelect={setSelectedAccountHead} />
-          </div>
+          <AccountHead onSelect={setSelectedAccountHead} />
+        </div>
+        
+        {/* Search Input */}
         <div className="col-auto mt-2">
           <Search search={search} setSearch={setSearch} />
         </div>
+        
+        {/* Download Button */}
         <div className="col-auto mt-2">
           <div className="d-flex align-items-center">
             <DownloadButton
-                fetchData={fetchFullVoucherData}
-                columns={[
-                  { header: "Account Head", dataKey: "accountHead" },
-                  { header: "Remarks", dataKey: "remarks" },
-                  { header: "Cash", dataKey: "cash" },
-                  { header: "Bank", dataKey: "bank" },
-                  { header: "Voucher No", dataKey: "voucherNo" }
-                ]} 
-                filename="Vouchers"
-                heading="Vouchers"
+              fetchData={fetchFullVoucherData}
+              columns={[
+                { header: "Account Head", dataKey: "accountHead" },
+                { header: "Remarks", dataKey: "remarks" },
+                { header: "Cash", dataKey: "cash" },
+                { header: "Bank", dataKey: "bank" },
+                { header: "Voucher No", dataKey: "voucherNo" }
+              ]}
+              filename="Vouchers"
+              heading="Vouchers"
             />
           </div>
         </div>
 
+        {/* Button to Add Voucher */}
         <div className="col-auto mt-2">
-          <Button
-            className="addbuttons"
-            onClick={handleOpenPostModel}
-          >
+          <Button className="addbuttons" onClick={handleOpenPostModel}>
             <span>
               <FiPlus /> Voucher Number
             </span>
@@ -146,11 +150,11 @@ function VoucherNumberForm() {
         </div>
       </div>
 
-      {/* Table */}
+      {/* Table for Displaying Vouchers */}
       <div className="table-responsive">
         <Table responsive="xl">
           <thead style={{ color: "#505050" }}>
-            <tr style={{ color: "#505050" }}>
+            <tr>
               <th>Account Head</th>
               <th>Remarks</th>
               <th>Cash</th>
@@ -160,41 +164,45 @@ function VoucherNumberForm() {
             </tr>
           </thead>
           <tbody>
-          {
+            {
               voucherData.length > 0 &&
-              voucherData.map((data)=>(
-                  <tr key={data._id} style={{fontSize:"15px"}}>
-                    <td>{accoutHead(data.accountHead) || "-"}</td>
-                    <td>{accoutHead(data.remarks) || "-"}</td>
-                    <td>Rs. {getAmountWithCommas(data.cash || 0)}</td>
-                    <td>Rs. {getAmountWithCommas(data.bank || 0)}</td>
-                    <td>{getAmountWithCommas(data.voucherNo || 0)}</td>
-                    <td>
-                      <div className="d-flex">
-                        
-                        <LuPenLine
-                          style={{ fontSize: "1.5rem", color: "#3474EB" }}
-                          onClick={()=>handleOpenAdminModal(data?._id)}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                ))
+              voucherData.map((data) => (
+                <tr key={data._id} style={{ fontSize: "15px" }}>
+                  <td>{accoutHead(data.accountHead) || "-"}</td>
+                  <td>{accoutHead(data.remarks) || "-"}</td>
+                  <td>Rs. {getAmountWithCommas(data.cash || 0)}</td>
+                  <td>Rs. {getAmountWithCommas(data.bank || 0)}</td>
+                  <td>{getAmountWithCommas(data.voucherNo || 0)}</td>
+                  <td>
+                    <div className="d-flex">
+                      {/* Edit Icon for Voucher */}
+                      <LuPenLine
+                        style={{ fontSize: "1.5rem", color: "#3474EB" }}
+                        onClick={() => handleOpenAdminModal(data?._id)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))
             }
           </tbody>
         </Table>
-        <NoData model={voucherData}/>
+        
+        {/* No Data Component */}
+        <NoData model={voucherData} />
       </div>
+
+      {/* Pagination Controls */}
       {
         voucherData.length !== 0 &&
         <Pagination 
-            currentPage={currentPage}
-            totalPages={Math.ceil(voucherTotal / itemsPerPage)}
-            onPageChange={handlePageChange}
+          currentPage={currentPage}
+          totalPages={Math.ceil(voucherTotal / itemsPerPage)}
+          onPageChange={handlePageChange}
         />
       }
 
-      {/* Modals */}
+      {/* Modals for Adding and Editing Vouchers */}
       <VoucherCashEnter
         open={modalJournalEntryCashEntry}
         edit={isEdit}

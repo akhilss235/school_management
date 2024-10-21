@@ -1,3 +1,31 @@
+/**
+ * OpeningBalance  Detailes Component
+ * 
+ * This component displays detailed information about a specific opening balance entry.
+ * It retrieves data based on the provided account ID and displays it in a modal.
+ * 
+ * Props:
+ * - open (boolean): Controls the visibility of the modal. If true, the modal is displayed.
+ * - onClose (function): Function to close the modal.
+ * - accountId (string): The ID of the account whose details are to be fetched and displayed.
+ * 
+ * State:
+ * - formData (object): Stores account details including account head, sub-account head, cash,
+ *   bank, diocesan amounts, and the date of the entry.
+ * - loading (boolean): Indicates whether data is currently being fetched.
+ * - error (string): Stores any error messages related to data fetching.
+ * 
+ * Lifecycle:
+ * - useEffect: Fetches account data when the modal opens and accountId changes.
+ * 
+ * Usage:
+ * <OpeningBalanceDetaies 
+ *   open={isModalOpen} 
+ *   onClose={handleClose} 
+ *   accountId={selectedAccountId} 
+ * />
+ */
+
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Row, Col } from "react-bootstrap";

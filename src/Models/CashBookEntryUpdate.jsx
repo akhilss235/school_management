@@ -1,3 +1,36 @@
+/**
+ * CashBookEntryUpdate Component
+ * 
+ * This component is a modal form for updating cash book entries. It allows users to 
+ * modify the details of an existing entry, including account heads, amounts, and date.
+ * The component fetches initial data based on the provided account ID when opened.
+ * 
+ * Props:
+ * - open (boolean): Controls the visibility of the modal. If true, the modal is displayed.
+ * - onClose (function): Function to close the modal.
+ * - accountId (string): The ID of the account to fetch and update data for.
+ * 
+ * State:
+ * - formData (object): Stores the form values for account head, sub-account head, cash, 
+ *   bank, diocesan amounts, and date.
+ * - loading (boolean): Indicates whether data is currently being fetched or the form is submitting.
+ * - errors (object): Stores validation and fetching error messages.
+ * 
+ * Lifecycle:
+ * - useEffect: Fetches account data when the modal opens or when the accountId changes.
+ * 
+ * Validation:
+ * - Ensures that required fields are filled out before submission.
+ * 
+ * Usage:
+ * <CashBookEntryUpdate 
+ *   open={isModalOpen} 
+ *   onClose={handleClose} 
+ *   accountId={selectedAccountId} 
+ * />
+ */
+
+
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Form, Row, Col, Button, Spinner } from "react-bootstrap";
