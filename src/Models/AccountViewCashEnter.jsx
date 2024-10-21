@@ -8,17 +8,19 @@ import { MainBalance } from "../components/MainBalance";
 import { toast } from 'react-toastify'; // Import toast
 
 function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
-  
+  // Destructuring props: open (modal visibility), onClose (function to close modal), edit (flag for edit mode), selectedId (ID for selected account)
   const { formData, errors, handleAccountHeadSelect,   handleChange, handleSubmitPost, handleGetAccountViewById, handleUpdate, initialValue, setFormData } = useAccountView()
   
   const handleSubmit = async(e) => {
     e.preventDefault();
     let status = 0
+    // Determine whether to update or create a new account based on the edit flag
     if(edit){
       status = await handleUpdate(selectedId)
     }else{
       status = await handleSubmitPost()
     }
+    // Show success message based on status code
     if(status === 201 ){
       onClose()
       toast.success("Account View added successfully"); 
@@ -31,15 +33,16 @@ function AccountViewCashEnter({ open, onClose, edit=false, selectedId }) {
   };
   // console.log("isEdit", edit)
 
-
+  // Fetch account data if in edit mode and selectedId is provided
   useEffect(()=>{
     if(edit && selectedId){
       handleGetAccountViewById(selectedId)
     }else if(!edit){
       // console.log("calling all autobots")
+      // Reset form data to initial values if not editing
       setFormData(initialValue)
     }
-  },[edit])
+  },[edit])// Dependency array to run effect when edit mode changes
   
   return (
     <Modal
