@@ -187,3 +187,7 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
 }
 
 export default AccountMasterUpdate;
+
+
+
+// get detailes and edit pout 

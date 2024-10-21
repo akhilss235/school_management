@@ -38,6 +38,7 @@ function AccountMaster() {
   const [totalPages, setTotalPages] = useState(0);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [loading, setLoading] = useState(false); // Loading state
+  // Function to refresh account data (used after adding/updating)
 
   const fetchData = async () => {
     setLoading(true); // Start loading
@@ -62,7 +63,7 @@ function AccountMaster() {
       setLoading(false); // End loading
     }
   };
-
+  // Effect to fetch data when dependencies change
   const refreshData = async () => {
     setLoading(true); // Start loading
     try {
@@ -295,21 +296,21 @@ function AccountMaster() {
           </tbody>
         </Table>
 
-        <NoData model={accountData} />
+        <NoData model={accountData} /> {/* Show when there are no accounts */}
       </div>
       {accountData.length !== 0 && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={handlePageChange}
+          onPageChange={handlePageChange}   // Pagination controls
         />
       )}
       <AccountMasterEntry
-        open={modalCashBookEntry}
+        open={modalCashBookEntry} // Close new account modal
         onClose={() => setModalCashBookEntry(false)}
       />
       <AccountMasterUpdate
-        open={modalCashBookEntryUpdate}
+        open={modalCashBookEntryUpdate}// Close update modal
         onClose={() => setModalCashBookEntryUpdate(false)}
         accountId={selectedAccountId}
         refreshData={refreshData}

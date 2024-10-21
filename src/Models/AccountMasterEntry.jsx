@@ -9,16 +9,19 @@ import { toast } from "react-toastify"; // Import toast
 import Spinner from 'react-bootstrap/Spinner';
 
 function AccountMasterEntry({ open, onClose }) {
+  // State variables
   const [accountHead, setAccountHead] = useState("");
   const [subAccountHead, setSubAccountHead] = useState("");
   const { subAccountHeads, setSubAccountHeads } = useAccountHeads();
   const [errors, setErrors] = useState({ accountHead: "", subAccountHead: "" });
   const [loading, setLoading] = useState(false);
+  // Function to handle form submission
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setErrors({ accountHead: "", subAccountHead: "" });
+    // Validate sub-account head input
 
     let isValid = true;
 
@@ -40,6 +43,7 @@ function AccountMasterEntry({ open, onClose }) {
     }
 
     if (!isValid) return;// If not valid, exit early
+    // Prepare data for submission
 
     const data = {
       accountHead,
@@ -48,6 +52,8 @@ function AccountMasterEntry({ open, onClose }) {
     setLoading(true);
 
     try {
+            // Make API call to add account master
+
       await request.post("addAccountMaster/", data);
       setAccountHead("");
       setSubAccountHead("");
