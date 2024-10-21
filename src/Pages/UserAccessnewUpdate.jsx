@@ -5,6 +5,12 @@ import request from "../Request";
 import { toast } from "react-toastify";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
+/**
+ * UserAccessnewUpdate component is responsible for fetching user details
+ * and allowing the admin to update user access rights and information.
+ *
+ */
+
 function UserAccessnewUpdate() {
     const { userId } = useParams();
     const location = useLocation();
@@ -27,9 +33,9 @@ function UserAccessnewUpdate() {
             isAccountMaster: false,
         },
     });
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);// State for password visibility toggle
 
-    const togglePasswordVisibility = () => setShowPassword(prev => !prev);
+    const togglePasswordVisibility = () => setShowPassword(prev => !prev); // Function to toggle password visibility
 
     const navigate = useNavigate();
 
@@ -65,6 +71,11 @@ function UserAccessnewUpdate() {
         }
     };
 
+    /**
+     * Handles changes to input fields and checkboxes.
+     * Updates the formData state accordingly.
+     */
+
     const handleChange = (e) => {
         const { name, type, value, checked } = e.target;
         if (type === "checkbox") {
@@ -72,16 +83,21 @@ function UserAccessnewUpdate() {
                 ...prevState,
                 accessTo: {
                     ...prevState.accessTo,
-                    [name]: checked,
+                    [name]: checked,// Update checkbox state
                 },
             }));
         } else {
             setFormData((prevState) => ({
                 ...prevState,
-                [name]: value,
+                [name]: value, // Update text field state
             }));
         }
     };
+
+    /**
+     * Handles form submission to update user access details.
+     * Sends a PUT request to update the user information.
+     */
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -108,7 +124,7 @@ function UserAccessnewUpdate() {
     };
 
     useEffect(() => {
-        fetchUserDetails();
+        fetchUserDetails(); // Fetch user details when component mounts
     }, [userId]);
 
     if (loading) return <div>Loading...</div>;

@@ -21,6 +21,8 @@ function AccountMasterEntry({ open, onClose }) {
     setErrors({ accountHead: "", subAccountHead: "" });
 
     let isValid = true;
+
+    // Validate account head input
     if (!accountHead) {
       setErrors((prev) => ({
         ...prev,
@@ -28,6 +30,7 @@ function AccountMasterEntry({ open, onClose }) {
       }));
       isValid = false;
     }
+        // Validate sub-account head input
     if (!subAccountHead) {
       setErrors((prev) => ({
         ...prev,
@@ -36,7 +39,7 @@ function AccountMasterEntry({ open, onClose }) {
       isValid = false;
     }
 
-    if (!isValid) return;
+    if (!isValid) return;// If not valid, exit early
 
     const data = {
       accountHead,
@@ -57,6 +60,13 @@ function AccountMasterEntry({ open, onClose }) {
       setLoading(false);
     }
   };
+
+
+  /**
+   * Removes a sub-account head from the list.
+   *
+   *indexToRemove - The index of the sub-account head to remove.
+   */
   const removeSubAccountHead = (indexToRemove) => {
     setSubAccountHeads((prev) =>
       prev.filter((_, index) => index !== indexToRemove)

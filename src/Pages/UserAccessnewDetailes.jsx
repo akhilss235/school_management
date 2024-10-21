@@ -14,13 +14,14 @@ function UserAccessnewDetailes() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Function to fetch user details based on userId.
   const fetchUserDetails = async () => {
-    setLoading(true);
-    setError(null);
+    setLoading(true);// Set loading to true while fetching data.
+    setError(null); // Reset any previous errors.
     try {
       const response = await request.get(`getUserById/${userId}`);
       if (response.data) {
-        setUserDetails(response.data.data); // Access the nested data
+        setUserDetails(response.data.data);// Store user details in state if available.
       } else {
         throw new Error("User details not found");
       }
@@ -28,14 +29,16 @@ function UserAccessnewDetailes() {
       setError("Error fetching user details");
       console.error("Error fetching data:", error);
     } finally {
-      setLoading(false);
+      setLoading(false); // Set loading to false after the fetch operation completes.
     }
   };
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchUserDetails();
-  }, []);
+  }, []);// Empty dependency array to run only once on mount.
+
+  // Function to handle user deletion.
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
@@ -47,6 +50,7 @@ function UserAccessnewDetailes() {
       }
     }
   };
+  // Define access items to display user access rights.
   const accessItems = [
     { label: "Students", key: "isStudent" },
     { label: "Transaction", key: "isTransaction" },

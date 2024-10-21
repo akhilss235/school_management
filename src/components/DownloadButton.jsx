@@ -5,16 +5,33 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { useCommon } from '../hooks/useCommon';
 
-const DownloadButton = ({ fetchData, columns, filename,heading }) => {
-    const { getAmountWithCommas, getDate } = useCommon();
-    const handleDownload = async () => {
+/**fetchData: A function that returns a promise resolving to an array of data objects.
+columns: An array of objects, each with a dataKey and potentially other properties (like title).
+eg:columns = [
+    { header: "Date", dataKey: "date" },          
+    { header: "Receipt / Payment", dataKey: "rp" },    
+    { header: "Transaction Mode", dataKey: "transactionMode" }, 
+    { header: "Account Head", dataKey: "accountHead" },  
+];
+filename: A string representing the base name of the PDF file.
+heading: A string that will serve as the title of the PDF document. */
 
+const DownloadButton = ({ fetchData, columns, filename,heading }) => {
+    const { getAmountWithCommas, getDate } = useCommon();// Destructuring utility functions from custom hook
+
+    /**
+     * handleDownload
+     * This function is triggered when the download button is clicked. It generates the PDF using jsPDF.
+     */
+    const handleDownload = async () => {
+        // Fetch the data for the table
         const fullData = await fetchData();
 
         if (!fullData || fullData.length === 0) {
             return; 
         }
 
+        // Create a new PDF document
         const doc = new jsPDF();
 
         // Calculate the center position for the dynamic heading
@@ -37,10 +54,11 @@ const DownloadButton = ({ fetchData, columns, filename,heading }) => {
             const dataSet = columns.map(column => {
                 let value = dataRow[column.dataKey];
                 
-
+                // Format date fields if applicable
                 if (column.dataKey.toLowerCase().includes('date') && value) {
                     value = getDate(value);
                 }
+                // Format numeric fields with commas
                 if (typeof value === 'number') {
                     value = getAmountWithCommas(value);
                 }
@@ -50,13 +68,14 @@ const DownloadButton = ({ fetchData, columns, filename,heading }) => {
             tableRows.push(dataSet);
         });
 
+        // Add the table to the document with the formatted data
         doc.autoTable(tableColumn, tableRows, {
             startY: 24, // Set startY to avoid overlapping with the heading
             theme: 'striped', // Optional: Set a table theme
             headStyles: { fillColor: headerColor, textColor: [255, 255, 255] }, // Set header color
             styles: { cellPadding: 3, fontSize: 10 }, // Adjust cell padding and font size
         });
-
+        // Save the generated PDF with the given filename
         doc.save(`${filename}.pdf`);
     };
 

@@ -15,6 +15,7 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
   });
   const [formErrors, setFormErrors] = useState({});
 
+  // Fetch account data when component mounts or accountId changes
   useEffect(() => {
     const fetchAccountData = async () => {
       if (accountId) {
@@ -55,7 +56,7 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
     }));
     setFormErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: value ? "" : "This field is required",
+      [name]: value ? "" : "This field is required",// Validate each field
     }));
   };
 
@@ -65,7 +66,7 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
     if (!formData.subAccountHead)
       errors.subAccountHead = "Sub Account Head is required";
     setFormErrors(errors);
-    return Object.keys(errors).length === 0;
+    return Object.keys(errors).length === 0; // Return true if no errors
   };
 
   const handleSubmit = async (e) => {

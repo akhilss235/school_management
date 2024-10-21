@@ -16,7 +16,7 @@ function UserAccessnew() {
         phoneNumber: '',
         userName: '',
         password: '',
-        accessTo: {
+        accessTo: { // Object to manage access permissions
             isStudent: false,
             isTransaction: false,
             isAccountView: false,
@@ -24,26 +24,29 @@ function UserAccessnew() {
             isAccountMaster: false,
         },
     });
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);// State to toggle password visibility
 
-    const togglePasswordVisibility = () => setShowPassword(prev => !prev);
+    const togglePasswordVisibility = () => setShowPassword(prev => !prev); // Function to toggle password visibility
     
     const handleChange = (e) => {
         const { name, type, value, checked } = e.target;
 
         setFormData((prevState) => ({
             ...prevState,
-            [type === "checkbox" ? "accessTo" : name]: type === "checkbox"
-                ? { ...prevState.accessTo, [name]: checked }
-                : value,
+            [type === "checkbox" ? "accessTo" : name]: type === "checkbox"// Check if input is a checkbox
+                ? { ...prevState.accessTo, [name]: checked }// Update accessTo object
+                : value,// Update other fields
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("form", formData.accessTo)
+
+        // Check if at least one access checkbox is selected
         const hasAccess = Object.values(formData.accessTo).some((val)=> val === true)
         const { name, phoneNumber, userName, password } = formData;
+        // Validation for required fields
         if (!name || !phoneNumber || !userName || !password) {
         toast.warn("Please fill in all required fields.");
         return;
@@ -53,12 +56,14 @@ function UserAccessnew() {
         }
   
         try {
+            // Send a POST request to create a new user
             const response = await request.post('addUser/', JSON.stringify(formData), {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
     
+            // Check response status and provide feedback
             if (response.status === 201) {
                 toast.success(response.data.message || "User created successfully"); 
                 navigate("/UserAccess");
