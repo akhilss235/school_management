@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import request from "../Request"; // Adjust the import path according to your project structure
 
+// Custom hook to fetch account heads and sub-account heads from the API
 const useAccountHeads = () => {
     const [accountHeads, setAccountHeads] = useState([]);
     const [subAccountHeads, setSubAccountHeads] = useState([]);

@@ -6,13 +6,19 @@ import { toast } from "react-toastify";
 // import JournalEntryUpdate from "../Models/JournalEntryUpdate"; 
 
 const AdminPower = ({ open, onClose, accountId, setModalJournalEntryCashEntry }) => {
+    // State for storing the admin password input and its visibility
     const [adminPassword, setAdminPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     // const [modalJournalEntryUpdate, setModalJournalEntryUpdate] = useState(false);
-
+    /**
+     * Toggles the visibility of the admin password.
+     */
     const togglePasswordVisibility = () => setShowPassword(prev => !prev);
-
+    /**
+     * Handles the verification of the admin password by sending a request to the server.
+     * If verification is successful, opens the Journal Entry modal.
+     */
     const handleVerify = async () => {
         if (!adminPassword) return toast("Please enter your password.");
 
@@ -20,7 +26,7 @@ const AdminPower = ({ open, onClose, accountId, setModalJournalEntryCashEntry })
         try {
             const response = await request.post('checkAdmin', { password: adminPassword });
             if (response.status === 201) {
-                setModalJournalEntryCashEntry(true);
+                setModalJournalEntryCashEntry(true);// Show the Journal Entry modal
                 onClose(); 
             } else {
                 toast("Failed to verify admin password.");

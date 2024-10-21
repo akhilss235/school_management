@@ -6,7 +6,7 @@ import { useAccountView } from "../hooks/useAccountView";
 
 function AccountViewDetailes({ open, onClose,selectedId }) {
   const { formData, handleGetAccountViewById } = useAccountView()
-
+  // Fetch account view details when the component mounts or when selectedId changes
   useEffect(()=>{
     if(selectedId){
       handleGetAccountViewById(selectedId)
