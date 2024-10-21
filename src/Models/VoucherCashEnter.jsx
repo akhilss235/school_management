@@ -8,6 +8,7 @@ import useAccountHeads from "../hooks/useAccountHeads"; // Adjust the import pat
 import { toast } from "react-toastify"; // Import toast
 
 function VoucherCashEnter({ open, onClose, edit, selectedId }) {
+    // Initial form state
   const initialValue = {
     accountHead: "",
     remarks: "",
@@ -15,7 +16,7 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
     bank: 0,
     voucherNo: 0,
   };
-
+  // State variables
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(initialValue);
@@ -35,6 +36,7 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
 
     setErrors((prevErrors) => ({ ...prevErrors, [name]: null }));
   };
+  // Validate form data
 
   const validate = () => {
     const newErrors = {};
@@ -48,9 +50,10 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
       newErrors.voucherNo = "Voucher Number is required.";
     return newErrors;
   };
+  // Handle form submission
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault();// Prevent default form submission behavior
     setLoading(true);
     setErrors({});
 
@@ -60,6 +63,8 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
       setLoading(false);
       return;
     }
+        // Determine API endpoint based on edit mode
+
     const url = edit
       ? request.put(`updateVoucher/${selectedId}`, formData)
       : request.post("addVoucher", formData);
@@ -84,6 +89,7 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
         setLoading(false);
       });
   };
+  // Fetch voucher data if editing an existing voucher
 
   useEffect(() => {
     if (selectedId && edit) {
