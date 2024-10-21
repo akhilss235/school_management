@@ -119,6 +119,7 @@ function Reports() {
                 ]} 
                 filename="Reports"
                 heading="Reports"
+                disabled={reportData.length===0}
             />
           </div>
         </div>

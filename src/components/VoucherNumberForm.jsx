@@ -136,6 +136,7 @@ function VoucherNumberForm() {
               ]}
               filename="Vouchers"
               heading="Vouchers"
+              disabled={voucherData.length===0}
             />
           </div>
         </div>

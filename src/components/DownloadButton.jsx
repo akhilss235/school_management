@@ -16,7 +16,7 @@ eg:columns = [
 filename: A string representing the base name of the PDF file.
 heading: A string that will serve as the title of the PDF document. */
 
-const DownloadButton = ({ fetchData, columns, filename,heading }) => {
+const DownloadButton = ({ fetchData, columns, filename,heading,disabled }) => {
     const { getAmountWithCommas, getDate } = useCommon();// Destructuring utility functions from custom hook
 
     /**
@@ -85,6 +85,7 @@ const DownloadButton = ({ fetchData, columns, filename,heading }) => {
             className="text-center me-3"
             style={{ textDecoration: "none" }}
             onClick={handleDownload}
+            disabled={disabled}
         >
             <FiDownload style={{ fontSize: "1.5rem", color: "#3474EB" }} />
             {/* <br /> */}

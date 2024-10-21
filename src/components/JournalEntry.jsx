@@ -168,6 +168,7 @@ function JournalEntry() {
             ]}
             filename="JournalEntry"
             heading="JournalEntry"
+            disabled={journalData.length===0}
           />
         </div>
       </div>
