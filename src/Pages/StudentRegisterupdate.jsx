@@ -230,7 +230,7 @@ function StudentRegisterupdate() {
   };
   return (
     <div className="container-fluid bg-pale-blue py-3">
-      <Form className="studentregisterform roboto-font" onSubmit={handleSubmit}>
+      <Form className="studentregisterform roboto-font" onSubmit={handleSubmit} style={{marginBottom:'20%'}}>
         <div className="p-3 bg-white rounded-4">
           <Row className="justify-content-between align-items-center mt-2 mb-3">
             <Col xs={"auto"}>

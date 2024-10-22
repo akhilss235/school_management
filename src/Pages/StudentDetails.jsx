@@ -85,7 +85,7 @@ const StudentDetails = () => {
   };
 
   return (
-    <div className="container-fluid bg-pale-blue roboto-font">
+    <div className="container-fluid bg-pale-blue roboto-font" style={{marginBottom:'20%'}}>
       <Row className="p-0 py-2 ps-1 bg-pale-blue">
         <Col className="p-0">
           <a

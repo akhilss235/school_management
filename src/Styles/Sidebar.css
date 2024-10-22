@@ -70,12 +70,17 @@ border-left: 4px solid #3474eb;
   display: flex;
   align-items: center;
 }
-
+body {
+  overflow-y: hidden;
+}
 .content {
+
   flex: 1;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
+  height: 100vh;
+
   /* padding: 20px; */
   background-color: #FAFDFF;
   overflow-y: auto;
