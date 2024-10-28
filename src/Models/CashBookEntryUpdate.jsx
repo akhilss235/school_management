@@ -49,9 +49,10 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
     date: '',
   });
 
-  const { accountHeads, subAccountHeads } = useAccountHeads();
+  const { accountHeads, subAccountHeads, setSelectedHead } = useAccountHeads();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+
 
   useEffect(() => {
     const fetchAccountData = async () => {
@@ -63,7 +64,7 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
 
           if (response.data && response.data.message) {
             const accountData = response.data.message; // Access the message object
-
+            setSelectedHead(accountData?.accountHead)
             setFormData({
               accountHead: accountData.accountHead || '',
               subAccountHead: accountData.subAccountHead || '',
@@ -91,6 +92,9 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if(name === "accountHead"){
+      setSelectedHead(value)
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -137,7 +141,11 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error(error.response?.data?.message); 
+      if(error.response.status === 400){
+          toast.error(error.response.data.message);
+      }else{
+          toast.error("An error occurred while verifying");
+      }
 
       setErrors({ submit: "Error submitting form. Please try again later." });
     } finally {
@@ -196,11 +204,11 @@ function CashBookEntryUpdate({ open, onClose, accountId }) {
                 <Form.Label>Sub Account Head</Form.Label>
                 <Form.Select
                   name="subAccountHead"
-                  value={formData.subAccountHead}
+                  value={formData?.subAccountHead}
                   onChange={handleInputChange}
                 >
                   <option value="">Select Sub Account Head</option>
-                  {subAccountHeads.map((subAccountHead, index) => (
+                  {subAccountHeads?.map((subAccountHead, index) => (
                     <option key={index} value={subAccountHead}>
                       {subAccountHead}
                     </option>

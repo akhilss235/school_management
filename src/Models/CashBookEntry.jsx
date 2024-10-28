@@ -59,7 +59,7 @@ function CashBookEntry({ open, onClose, initialData }) {
     date: getTodayDate(),
   });
 
-  const { accountHeads, subAccountHeads } = useAccountHeads();
+  const { accountHeads, subAccountHeads, setSelectedHead } = useAccountHeads();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -79,6 +79,9 @@ function CashBookEntry({ open, onClose, initialData }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if(name === "accountHead"){
+      setSelectedHead(value);
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: name.includes('Amount') ? Number(value) : value, // Convert to number for amount fields

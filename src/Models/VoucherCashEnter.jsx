@@ -20,7 +20,7 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState(initialValue);
-  const { accountHeads } = useAccountHeads();
+  const { accountHeads   } = useAccountHeads();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -74,9 +74,11 @@ function VoucherCashEnter({ open, onClose, edit, selectedId }) {
         console.log("Form submitted successfully:", response.data);
         if (response.status === 201) {
           toast.success("Voucher added successfully!");
+          setFormData(initialValue)
           onClose();
         } else if (response.status === 200) {
           toast.success("Voucher updated successfully!");
+          setFormData(initialValue)
           onClose();
         }
       })

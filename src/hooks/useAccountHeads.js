@@ -5,18 +5,15 @@ import request from "../Request"; // Adjust the import path according to your pr
 const useAccountHeads = () => {
     const [accountHeads, setAccountHeads] = useState([]);
     const [subAccountHeads, setSubAccountHeads] = useState([]);
+    const [selectedHead, setSelectedHead] = useState("")
 
     useEffect(() => {
         const fetchAccountHeads = () => {
             request.get("getAccountMasterWithoutLimit")
                 .then((response) => {
-                    const data = response.data.data; // Adjust based on your API response structure
-                    
+                    const data = response.data.data; 
                     const uniqueAccountHeads = [...new Set(data.map(account => account.accountHead))];
-                    const uniqueSubAccountHeads = [...new Set(data.map(account => account.subAccountHead))];
-
                     setAccountHeads(uniqueAccountHeads);
-                    setSubAccountHeads(uniqueSubAccountHeads);
                 })
                 .catch((err) => {
                     console.error("Error fetching account heads:", err);
@@ -26,7 +23,22 @@ const useAccountHeads = () => {
         fetchAccountHeads(); 
     }, []);
 
-    return { accountHeads, subAccountHeads, setSubAccountHeads }; 
+    useEffect(()=>{
+        if(selectedHead){
+            const fetchSubAccountHead = async()=>{
+                try {
+                    const response = await request.get(`getSubAccountByHead/${selectedHead}`)
+                    setSubAccountHeads(response.data.data)
+                    console.log("subAccountHead",response.data )
+                } catch (error) {
+                    console.log("error while getting the subAccountHead", error.message)
+                }
+            }
+            fetchSubAccountHead()
+        }
+    },[selectedHead])
+
+    return { accountHeads, subAccountHeads, setSubAccountHeads, setSelectedHead }; 
 };
 
 export default useAccountHeads;

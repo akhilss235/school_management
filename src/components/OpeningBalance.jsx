@@ -17,6 +17,7 @@ import { GetDate } from "../Pages/Date";
 import Pagination from "./Pagination";
 import { NoData } from "./NoData";
 import { isToday, parseISO } from 'date-fns'; // Import date-fns functions
+import VoucherAdmin from "../Models/VoucherAdmin";
 
 function OpeningBalance() {
   const { getAmountWithCommas, getDate } = useCommon();
@@ -25,7 +26,7 @@ function OpeningBalance() {
     openingBalanceTotal,
     handleGetAllOpeningBalance,
   } = useOpening();
-  
+  const [modalJournalEntryCashEntry, setModalJournalEntryCashEntry] = useState(false)
   const [modalCashBookEntry, setModalCashBookEntry] = useState(false);
   const [modalOpeningBalanceDetails, setModalOpeningBalanceDetails] = useState(false);
   const [modalCashBookEntryUpdate, setModalCashBookEntryUpdate] = useState(false);
@@ -51,7 +52,7 @@ function OpeningBalance() {
 
   const handleEditClick = (accountId) => {
     setSelectedAccountId(accountId);
-    setModalCashBookEntryUpdate(true);
+    setModalJournalEntryCashEntry(true);
 };
 
 const handleDETAILESClick = (accountId) => {
@@ -161,10 +162,7 @@ const handleDETAILESClick = (accountId) => {
                   <td>
                     <div className="d-flex " style={{textAlign:'start',justifyContent:'start'}}>
                       <LiaEyeSolid className="mx-1" style={{ fontSize: "1.5rem" }} onClick={() => handleDETAILESClick(data._id)} />
-                      {isToday(parseISO(data.date)) && ( // Check if date is today
-                        <LuPenLine style={{ fontSize: "1.5rem", color: "#3474EB" }} onClick={() => handleEditClick(data._id)} />
-                      )}
-
+                      <LuPenLine style={{ fontSize: "1.5rem", color: "#3474EB" }} onClick={() => handleEditClick(data._id)} />
                     </div>
                   </td>
                 </tr> 
@@ -190,6 +188,11 @@ const handleDETAILESClick = (accountId) => {
       <CashBookEntry open={modalCashBookEntry} onClose={() => setModalCashBookEntry(false)} />
       <OpeningBalanceDetaies open={modalOpeningBalanceDetails} onClose={() => setModalOpeningBalanceDetails(false)} accountId={selectedAccountId} />
       <CashBookEntryUpdate open={modalCashBookEntryUpdate} onClose={() => setModalCashBookEntryUpdate(false)} accountId={selectedAccountId} />
+      <VoucherAdmin 
+          open={modalJournalEntryCashEntry}
+          onClose={() => setModalJournalEntryCashEntry(false)}
+          setModalJournalEntryCashEntry={setModalCashBookEntryUpdate}      
+      />
     </div>
   );
 }

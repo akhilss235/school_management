@@ -23,7 +23,7 @@ function Journaladd({ open, onClose, initialData }) {
   };
   const [formData, setFormData] = useState(initialValue);
 
-  const { accountHeads, subAccountHeads } = useAccountHeads();
+  const { accountHeads, subAccountHeads, setSelectedHead } = useAccountHeads();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -52,8 +52,9 @@ function Journaladd({ open, onClose, initialData }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    // Convert the amount input to a number if it's the amount field
+    if(name === "accountHead"){
+      setSelectedHead(value)
+    }
     const updatedValue = name === "amount" ? parseFloat(value) : value;
 
     setFormData((prevData) => ({ ...prevData, [name]: updatedValue }));

@@ -62,7 +62,11 @@ export const useLogin = () => {
                     setUser(response?.data?.data);
                 } catch (error) {
                     console.log("error at fetching user data", error);
-                    toast.error(error.response.data.message);
+                    if(error.response.status === 400){
+                        toast.error(error.response.data.message);
+                    }else{
+                        toast.error("An error occurred while verifying");
+                    }
                 }
             };
             handleGetUser();

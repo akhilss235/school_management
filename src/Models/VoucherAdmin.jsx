@@ -20,13 +20,17 @@ function VoucherAdmin({ open, onClose, setModalJournalEntryCashEntry }) {
             const response = await request.post('checkAdmin', { password: adminPassword });
             if (response.status === 201) {
                 setModalJournalEntryCashEntry(true);
+                setAdminPassword("")
                 onClose(); 
             } else {
                 toast.error("Failed to verify admin password.");
             }
         } catch (error) {
-            console.error("Error verifying admin password:", error);
-            toast.error("An error occurred while verifying the password.");
+            if(error.response.status === 400){
+                toast.error(error.response.data.message);
+            }else{
+                toast.error("An error occurred while verifying the password");
+            }
         } finally {
             setLoading(false);
         }

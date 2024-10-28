@@ -16,7 +16,6 @@ import UserAccessnewUpdate from "./Pages/UserAccessnewUpdate";
 import UserAccessnewDetailes from "./Pages/UserAccessnewDetailes";
 import StudentRegister from "./Pages/StudentRegister";
 import StudentRegisterupdate from "./Pages/StudentRegisterupdate";
-import StudentRegisterclone from "./Pages/StudentRegisterclone";
 import withSideBarLayout from "./components/Sidebar";
 import { useLogin } from "./hooks/useLogin";
 import { ToastContainer } from 'react-toastify'; 
@@ -36,6 +35,11 @@ function App() {
       navigate('/'); // Redirect to login if no token is found
     }
   }, [navigate]);
+
+  if (!user) {
+    console.log("no user found")
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="App">

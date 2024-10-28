@@ -20,7 +20,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
     date: "",
   });
 
-  const { accountHeads, subAccountHeads } = useAccountHeads();
+  const { accountHeads, subAccountHeads, setSelectedHead } = useAccountHeads();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -40,6 +40,9 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if(name === "accountHead"){
+      setSelectedHead(value);
+    }
     const updatedValue = name === "amount" ? parseFloat(value) : value;
     setFormData((prevData) => ({ ...prevData, [name]: updatedValue }));
   };
@@ -77,6 +80,7 @@ function JournalEntryCashEntry({ open, onClose, edit, accountId }) {
         try {
           const response = await request.get(`getJournalEntryById/${accountId}`);
           const fetchedData = response.data.data || {};
+          setSelectedHead(fetchedData?.accountHead)
           setFormData({
             rp: fetchedData.rp || "",
             transactionMode: fetchedData.transactionMode || "",
