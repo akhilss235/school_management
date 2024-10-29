@@ -198,38 +198,3 @@ const handleDETAILESClick = (accountId) => {
 }
 
 export default OpeningBalance;
-/**
- * OpeningBalance Component
- *
- * This component displays a list of opening balances in a table format,
- * allowing users to view, filter, and manage cash book entries. It supports
- * adding new opening balances, viewing details, and editing existing entries.
- *
- * State:
- * - modalCashBookEntry (boolean): Controls the visibility of the modal to add a new cash book entry.
- * - modalOpeningBalanceDetails (boolean): Controls the visibility of the modal to view details of an opening balance.
- * - modalCashBookEntryUpdate (boolean): Controls the visibility of the modal to update an existing cash book entry.
- * - selectedAccountHead (string): Holds the selected account head for filtering.
- * - selectedSubAccountHead (string): Holds the selected sub-account head for filtering.
- * - selectedAccountId (string): Holds the ID of the selected account for detail and update modals.
- * - fromDate (string): Holds the start date for filtering.
- * - toDate (string): Holds the end date for filtering.
- * - currentPage (number): Holds the current page for pagination.
- *
- * Props:
- * - None
- *
- * Functions:
- * - handleGetAllOpeningBalance: Fetches opening balance data based on the applied filters and pagination.
- * - handleEditClick: Sets the selected account ID and opens the update modal.
- * - handleDETAILESClick: Sets the selected account ID and opens the details modal.
- * - accountHead: Formats the account head string for display, truncating if necessary.
- * - handlePageChange: Updates the current page based on pagination interaction.
- *
- * Dependencies:
- * - React Bootstrap for styling and layout.
- * - React Icons for displaying icons.
- * - Custom hooks (useOpening, useCommon) for data fetching and common utilities.
- * - Components (AccountHead, SubAccountHead, GetDate, Pagination, NoData) for specific functionalities.
- * - date-fns for date manipulation.
- */
