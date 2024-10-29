@@ -158,6 +158,9 @@ function AccountMaster() {
     }
   };
 
+
+
+
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
       <div className="d-flex justify-content-between">
@@ -281,7 +284,7 @@ function AccountMaster() {
                   </td>
                   <td>{getDate(account?.createdAt)}</td>
                   <td>{account.accountHead}</td>
-                  <td>{account.subAccountHead || "N/A"}</td>
+                  <td>{account.subAccountHead.length > 1 ? account.subAccountHead.map(item => item + ', ').join('') : account.subAccountHead.map(item => item) }</td>
                   <td>
                     <div className="d-flex">
                       <LuPenLine

@@ -11,8 +11,8 @@ import Spinner from 'react-bootstrap/Spinner';
 function AccountMasterEntry({ open, onClose }) {
   // State variables
   const [accountHead, setAccountHead] = useState("");
-  const [subAccountHead, setSubAccountHead] = useState("");
-  const { subAccountHeads, setSubAccountHeads } = useAccountHeads();
+  const [inputValue, setInputValue] = useState("");
+  const [subAccountHead, setSubAccountHead] = useState([]);
   const [errors, setErrors] = useState({ accountHead: "", subAccountHead: "" });
   const [loading, setLoading] = useState(false);
   // Function to handle form submission
@@ -34,10 +34,10 @@ function AccountMasterEntry({ open, onClose }) {
       isValid = false;
     }
         // Validate sub-account head input
-    if (!subAccountHead) {
+    if (subAccountHead.length === 0) {
       setErrors((prev) => ({
         ...prev,
-        subAccountHead: "Sub Account Head is required.",
+        subAccountHead: "Please atleast add on sub Account Head.",
       }));
       isValid = false;
     }
@@ -72,11 +72,29 @@ function AccountMasterEntry({ open, onClose }) {
    * Removes a sub-account head from the list.
    *
    *indexToRemove - The index of the sub-account head to remove.
+
    */
+   
+   const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  // Handle pressing "Enter"
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && inputValue.trim() !== "") {
+      e.preventDefault(); // Prevent form submission on Enter
+      addSubAccountHead();
+    }
+  };
+
+   const addSubAccountHead = () => {
+    setSubAccountHead([...subAccountHead, inputValue.trim()]);
+    setInputValue(""); // Clear the input field
+  };
+
+  // Remove a Sub Account Head
   const removeSubAccountHead = (indexToRemove) => {
-    setSubAccountHeads((prev) =>
-      prev.filter((_, index) => index !== indexToRemove)
-    );
+    setSubAccountHead(subAccountHead.filter((_, index) => index !== indexToRemove));
   };
   return (
     <Modal show={open} onHide={onClose} size="lg" centered>
@@ -123,65 +141,53 @@ function AccountMasterEntry({ open, onClose }) {
                 </Row>
               </Col>
             </Row>
-
             <Row>
-              <Col className="d-flex flex-column justify-content-between">
-                <Row>
-                  <Col>
-                    <Form.Label column sm={12}>
-                      Sub Account Head
-                    </Form.Label>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Form.Control
-                      type="text"
-                      value={subAccountHead}
-                      onChange={(e) => setSubAccountHead(e.target.value)}
-                      placeholder=""
-                    />
-                    {errors.subAccountHead && (
-                      <div className="text-danger">{errors.subAccountHead}</div>
-                    )}
-                  </Col>
-                </Row>
+              <Col>
+                <Form.Label column sm={12}>Sub Account Head</Form.Label>
               </Col>
             </Row>
             <Row>
-              <Col className="py-2">
-                {subAccountHeads.map((subAccount, index) => (
-                  <div
-                    className="mt-3 me-3"
-                    key={index}
-                    style={{ display: "inline-block" }}
-                  >
-                    <button
-                      type="button"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        padding: "5px",
-                        backgroundColor: "#ECF3FF",
-                        color: "#3474EB",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {subAccount}
-                      <IoIosCloseCircleOutline
-                        size={18}
+              <Col>
+                <Form.Control 
+                    type="text" 
+                    placeholder="" 
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col className='py-2'>
+                  {subAccountHead?.map((subAccount, index) => (
+                    <div className='mt-3 me-3' key={index} style={{ display: "inline-block"}}>
+                      <button
+                        type="button"
                         style={{
-                          marginLeft: "5px",
-                          color: "red",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          padding: "5px",
+                          backgroundColor: "#ECF3FF",
+                          color:'#3474EB',
+                          border: "none",
+                          borderRadius: "5px",
                           cursor: "pointer",
                         }}
-                        onClick={() => removeSubAccountHead(index)}
-                      />
-                    </button>
-                  </div>
-                ))}
+                      >
+                        {subAccount}
+                        <IoIosCloseCircleOutline
+                        size={18}
+                          style={{
+                            marginLeft: "5px",
+                            color: "red",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => removeSubAccountHead(index)}
+                        />
+                      </button>
+                    </div>
+                  ))}
+              
               </Col>
             </Row>
             <Row className="justify-content-end align-items-center my-4 gy-2">

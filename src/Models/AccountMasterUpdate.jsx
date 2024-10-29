@@ -9,9 +9,10 @@ import Spinner from "react-bootstrap/Spinner";
 function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [inputValue, setInputValue] = useState("");
   const [formData, setFormData] = useState({
     accountHead: "",
-    subAccountHead: "",
+    subAccountHead: [],
   });
   const [formErrors, setFormErrors] = useState({});
 
@@ -52,13 +53,17 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: value
     }));
     setFormErrors((prevErrors) => ({
       ...prevErrors,
       [name]: value ? "" : "This field is required",// Validate each field
     }));
   };
+
+  const handleSubAccountChange = (e)=>{
+    setInputValue(e.target.value);
+  }
 
   const validateForm = () => {
     const errors = {};
@@ -101,6 +106,25 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
     }
   };
 
+  // Handle pressing "Enter"
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && inputValue.trim() !== "") {
+      e.preventDefault(); // Prevent form submission on Enter
+      addSubAccountHead();
+    }
+  };
+
+   const addSubAccountHead = () => {
+    setFormData((prev)=>({...prev, subAccountHead:[...prev.subAccountHead, inputValue.trim()]}))
+    setInputValue(""); // Clear the input field
+  };
+
+  // Remove a Sub Account Head
+
+  const removeSubAccountHead = (indexToRemove) => {
+    setFormData((prev)=> ({...prev, subAccountHead: prev.subAccountHead.filter((_, index)=> index !== indexToRemove)}))
+  };
+
   return (
     <Modal show={open} onHide={onClose} size="lg" centered>
       <Modal.Body>
@@ -138,21 +162,53 @@ function AccountMasterUpdate({ open, onClose, accountId, refreshData }) {
               </Col>
             </Row>
 
-            <Row className="mt-3">
-              <Col className="d-flex flex-column justify-content-between">
-                <Form.Label>Sub Account Head</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="subAccountHead"
-                  value={formData.subAccountHead}
-                  onChange={handleInputChange}
-                  placeholder="Enter Sub Account Head"
-                  required
-                  isInvalid={!!formErrors.subAccountHead}
+            <Row>
+              <Col>
+                <Form.Label column sm={12}>Sub Account Head</Form.Label>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Control 
+                    type="text" 
+                    placeholder="" 
+                    value={inputValue}
+                    onChange={handleSubAccountChange}
+                    onKeyDown={handleKeyDown}
                 />
-                <Form.Control.Feedback type="invalid">
-                  {formErrors.subAccountHead}
-                </Form.Control.Feedback>
+              </Col>
+            </Row>
+            <Row>
+              <Col className='py-2'>
+                  {formData.subAccountHead?.map((subAccount, index) => (
+                    <div className='mt-3 me-3' key={index} style={{ display: "inline-block"}}>
+                      <button
+                        type="button"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          padding: "5px",
+                          backgroundColor: "#ECF3FF",
+                          color:'#3474EB',
+                          border: "none",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {subAccount}
+                        <IoIosCloseCircleOutline
+                        size={18}
+                          style={{
+                            marginLeft: "5px",
+                            color: "red",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => removeSubAccountHead(index)}
+                        />
+                      </button>
+                    </div>
+                  ))}
+              
               </Col>
             </Row>
 
