@@ -284,7 +284,7 @@ function AccountMaster() {
                   </td>
                   <td>{getDate(account?.createdAt)}</td>
                   <td>{account.accountHead}</td>
-                  <td>{account.subAccountHead.length > 1 ? account.subAccountHead.map(item => item + ', ').join('') : account.subAccountHead.map(item => item) }</td>
+                  <td>{account.subAccountHead.length > 1 ? account.subAccountHead.slice(0,5).map(item => item + ', ').join('') : account.subAccountHead.map(item => item) }</td>
                   <td>
                     <div className="d-flex">
                       <LuPenLine
