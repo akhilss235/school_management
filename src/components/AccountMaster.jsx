@@ -158,6 +158,13 @@ function AccountMaster() {
     }
   };
 
+  const join = (item) => {
+    if (Array.isArray(item)) {
+      return item.join(", ");
+    }
+    return item || "N/A"; 
+  };
+
   return (
     <div className="container-fluid p-3" style={{ backgroundColor: "#FFFFFF" }}>
       <div className="d-flex justify-content-between">
@@ -281,7 +288,7 @@ function AccountMaster() {
                   </td>
                   <td>{getDate(account?.createdAt)}</td>
                   <td>{account.accountHead}</td>
-                  <td>{account.subAccountHead || "N/A"}</td>
+                  <td>{join(account.subAccountHead)}</td>
                   <td>
                     <div className="d-flex">
                       <LuPenLine
