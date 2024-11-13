@@ -36,11 +36,7 @@ function App() {
     }
   }, [navigate]);
 
-  if (!user) {
-    console.log("no user found")
-    return <div>Loading...</div>;
-  }
-
+  
   return (
     <div className="App">
       <Routes>

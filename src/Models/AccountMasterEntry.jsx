@@ -159,7 +159,7 @@ function AccountMasterEntry({ open, onClose }) {
             </Row>
             <Row>
               <Col className='py-2'>
-                  {subAccountHead?.map((subAccount, index) => (
+                  {subAccountHead && subAccountHead?.map((subAccount, index) => (
                     <div className='mt-3 me-3' key={index} style={{ display: "inline-block"}}>
                       <button
                         type="button"
