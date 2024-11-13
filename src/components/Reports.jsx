@@ -4,8 +4,6 @@ import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FaSearch } from "react-icons/fa";
-import { FiDownload } from "react-icons/fi";
-import { IoPrintOutline } from "react-icons/io5";
 import { useCommon } from "../hooks/useCommon";
 import { useReports } from "../hooks/useReports";
 import AccountHead from "../Pages/AccountHead";
